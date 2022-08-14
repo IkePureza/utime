@@ -10,7 +10,6 @@ const EmailPasswordAuthSignUp = () => {
 
   const signupHandler = useCallback(
     async (event: any) => {
-      console.log("signupHandler called");
       event.preventDefault();
       const { email, password } = event.target.elements;
       try {

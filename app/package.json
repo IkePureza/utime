@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.6.9",
     "autoprefixer": "^10.4.8",
     "firebase": "^9.9.2",
     "next": "12.2.4",
