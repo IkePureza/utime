@@ -133,7 +133,8 @@ const Login = () => {
                         {isAmenityBooked(doc.data())
                           ? `Already booked for ${doc
                               .data()
-                              ?.latestBooking?.to.toDate()}`
+                              ?.latestBooking?.to.toDate()}
+                              by ${doc.data()?.latestBooking?.userId}`
                           : "Book now"}
                       </button>
                     </div>
