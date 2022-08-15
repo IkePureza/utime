@@ -1,12 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { AuthContext } from "../../../context/AuthContext";
 import { useRouter } from "next/router";
 
-import { addDoc, doc, collection, Timestamp } from "firebase/firestore";
+import {
+  addDoc,
+  doc,
+  collection,
+  Timestamp,
+  where,
+  query,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../firebase/clientApp";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import Link from "next/link";
+import { DocumentData } from "@google-cloud/firestore";
 
 const Login = () => {
   const router = useRouter();
@@ -14,12 +23,13 @@ const Login = () => {
   const authContext = useContext(AuthContext);
   const currentUser = authContext?.userData;
   const householdRef = doc(db, "household", id);
-  const booking = doc(db, "booking");
   const amenityRef = collection(householdRef, "amenity");
+  const bookingsRef = collection(db, "booking");
 
   const [value, loading, error] = useDocument(householdRef);
-  const [bookingValue, bookingLoading, bookingError] =
-    useDocument(householdRef);
+  const [bookingValue, bookingLoading, bookingError] = useCollection(
+    query(bookingsRef, where("householdId", "==", id))
+  );
   const [amenityValue, amenityLoading, amenityError] =
     useCollection(amenityRef);
 
@@ -39,10 +49,30 @@ const Login = () => {
       amenityId,
       userId: currentUser?.userId,
       householdId: id,
-      from: Timestamp.now,
-      to: Timestamp.now,
+      from: Timestamp.now(),
+      to: Timestamp.now(),
     });
+    const updateAmenity = await updateDoc(
+      doc(householdRef, "amenity", amenityId),
+      {
+        "latestBooking.from": Timestamp.now(),
+        "latestBooking.to": Timestamp.now(),
+        "latestBooking.userId": currentUser?.userId,
+      }
+    );
+
     console.log("Document written with ID: ", docRef.id);
+  };
+
+  const isAmenityBooked = (data: DocumentData): boolean => {
+    const now = new Date();
+    const booking = data?.latestBooking?.to.toDate();
+    console.log("day now", data?.name, now.getDay(), booking?.getDay());
+    if (now.getDay() == booking?.getDay()) {
+      return true;
+    }
+
+    return false;
   };
 
   return (
@@ -97,9 +127,14 @@ const Login = () => {
                       </Link>
                       <button
                         onClick={() => handleBooking(doc.id)}
-                        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="inline-flex disabled:bg-red-500 disabled:hover:bg-red-500 items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        disabled={isAmenityBooked(doc.data())}
                       >
-                        Book
+                        {isAmenityBooked(doc.data())
+                          ? `Already booked for ${doc
+                              .data()
+                              ?.latestBooking?.to.toDate()}`
+                          : "Book now"}
                       </button>
                     </div>
                   </React.Fragment>
