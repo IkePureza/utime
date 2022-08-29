@@ -16,9 +16,10 @@ const Login = () => {
   } else {
     return (
       <div className="grid place-content-center px-10 py-10 shadow-lg w-max mx-auto mt-6">
-        <h1 className="text-center font-black text-3xl mb-2">Login Using</h1>
+        <h1 className="text-center font-black text-3xl mb-2">Login</h1>
         <div className="flex flex-col gap-y-3">
           <EmailPasswordAuthLogin />
+          <div className="divider">OR</div>
           <GoogleSignIn />
         </div>
       </div>

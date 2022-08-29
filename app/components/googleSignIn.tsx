@@ -22,17 +22,14 @@ const GoogleSignIn = () => {
     }
   }, [Router]);
   return (
-    <button
-      className="p-3 shadow-lg rounded-lg border-2 flex cursor-pointer hover:bg-gray-100 hover:shadow-2xl transition-all duration-500"
-      onClick={loginHandler}
-    >
+    <button className="btn-lg" onClick={loginHandler}>
       <div className="flex items-center">
         <Image
           className="w-8 h-8  "
           src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png"
           alt="google"
-          width="200"
-          height="200"
+          width="50"
+          height="50"
         />
         <h3 className="ml-4 text-blue-600 text-lg font-semibold  my-auto ">
           Continue with Google
