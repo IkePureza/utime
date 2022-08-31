@@ -10,6 +10,7 @@ import AuthRoute from "../HOC/authRoute";
 import { AuthContext } from "../context/AuthContext";
 import Link from "next/link";
 import NavBar from "../components/navBar";
+import HouseholdCard from "../components/householdCard"
 
 function Index() {
   const appContext = useContext(AuthContext);
@@ -35,48 +36,28 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="place-content-center min-h-screen min-w-full px-5 py-5 w-max mx-auto mt-6">
-        <h1 className="text-6xl text-center font-black mb-4">Home</h1>
-
-        <h1 className="text-4xl mb-4 text-center">Your Households</h1>
-        <div>
-          <p>
-            {error && <strong>Error: {JSON.stringify(error)}</strong>}
-            {loading && <span>Collection: Loading...</span>}
-            {value && (
-              <div className="flex flex-col justify-around items-center">
-                {value.docs.map((doc) => (
-                  <React.Fragment key={doc.id}>
-                    <div className="card card-side w-96 bg-base-100 shadow-xl mb-2">
-                      <figure>
-                        <img
-                          src="https://placeimg.com/400/225/arch"
-                          alt="Shoes"
-                        />
-                      </figure>
-                      <div className="card-body">
-                        <h2 className="card-title">{doc.data().name}</h2>
-                        <div className="card-actions justify-end">
-                          <Link
-                            href="household/[id]"
-                            as={`household/${doc.id}`}
-                          >
-                            <a className="btn btn-primary ml-5"> Go to House</a>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* <div className="justify-center flex-1 block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                      
-                    </div> */}
-                  </React.Fragment>
-                ))}
-              </div>
-            )}
-          </p>
+      <div className="flex flex-row flew-wrap sm:flex-nowrap min-h-screen min-w-full px-5 py-5 w-max mx-auto mt-6">
+        <div className='w-full'>
+          Recent Activity Goes Here
         </div>
-        <form
+        <div className='w-full mx-auto flex flex-col items-center pb-40'>
+          <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
+          <div className="container mb-auto">
+            <p>
+              {error && <strong>Error: {JSON.stringify(error)}</strong>}
+              {loading && <span>Collection: Loading...</span>}
+              {value && (
+                <div className="flex flex-col justify-around items-center">
+                  {value.docs.map((doc) => (
+                    <HouseholdCard desc="" id={doc.id} name={doc.data().name}/>
+                  ))}
+                </div>
+              )}
+            </p>
+          </div>
+          <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/>
+        </div>
+        {/* <form
           onSubmit={handleCreateHousehold}
           className="bg-slate-200 shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
@@ -101,37 +82,39 @@ function Index() {
               Create household
             </button>
           </div>
-        </form>
-        <div className="mt-4 flex flex-col gap-y-2">
-          <div className="flex gap-x-3 items-center justify-center">
-            <h4>Authentication method:</h4>
-            <h6>{userData?.userProviderId}</h6>
-          </div>
-          <div className="flex gap-x-3 items-center justify-center">
-            <h4>userId:</h4>
-            <h6>{userData?.userId}</h6>
-          </div>
-          <div className="flex gap-x-3 items-center justify-center">
-            <h4>display name:</h4>
-            <h6>{userData?.userName || "null"}</h6>
-          </div>
-          <div className="flex gap-x-3 items-center justify-center">
-            <h4>email:</h4>
-            <h6>{userData?.userEmail}</h6>
-          </div>
-          <div className="flex gap-x-3 items-center justify-center">
-            <h4>Profile picture</h4>
-            {userData?.userPhotoLink ? (
-              <Image
-                className="rounded-full object-contain w-32 h-32"
-                src={userData?.userPhotoLink}
-                alt={userData?.userName ?? ""}
-                width="32"
-                height="32"
-              />
-            ) : (
-              "null"
-            )}
+        </form> */}
+        <div className="w-full">
+          <div className="mt-4 flex flex-col gap-y-2">
+            <div className="flex gap-x-3 items-center justify-center">
+              <h4>Authentication method:</h4>
+              <h6>{userData?.userProviderId}</h6>
+            </div>
+            <div className="flex gap-x-3 items-center justify-center">
+              <h4>userId:</h4>
+              <h6>{userData?.userId}</h6>
+            </div>
+            <div className="flex gap-x-3 items-center justify-center">
+              <h4>display name:</h4>
+              <h6>{userData?.userName || "null"}</h6>
+            </div>
+            <div className="flex gap-x-3 items-center justify-center">
+              <h4>email:</h4>
+              <h6>{userData?.userEmail}</h6>
+            </div>
+            <div className="flex gap-x-3 items-center justify-center">
+              <h4>Profile picture</h4>
+              {userData?.userPhotoLink ? (
+                <Image
+                  className="rounded-full object-contain w-32 h-32"
+                  src={userData?.userPhotoLink}
+                  alt={userData?.userName ?? ""}
+                  width="32"
+                  height="32"
+                />
+              ) : (
+                "null"
+              )}
+            </div>
           </div>
         </div>
       </div>
