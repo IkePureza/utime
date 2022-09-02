@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useRef } from "react";
 import Image from "next/image";
 
 import { auth, db } from "../firebase/clientApp";
@@ -9,8 +9,10 @@ import AuthRoute from "../HOC/authRoute";
 
 import { AuthContext } from "../context/AuthContext";
 import Link from "next/link";
+
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard"
+import NewHouseForm from "../components/newHouseForm"
 
 function Index() {
   const appContext = useContext(AuthContext);
@@ -23,12 +25,15 @@ function Index() {
   );
   console.log(JSON.parse(JSON.stringify(userData)));
 
+        // Need to refernce input newHouse modal to close the model on submit
+
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
-    const { name } = event.target.elements;
+    const house_name = event.target.elements.house_name;
+    const house_desc = event.target.elements.house_desc; // Need to check if description is supported on Firebase DB
     const docRef = await addDoc(collection(db, "household"), {
-      name: name.value,
-      users: [userData?.userId],
+      name: house_name.value,
+      users: [userData?.userId], //need to change this bit to match the form inputs
     });
     console.log("Document written with ID: ", docRef.id);
   };
@@ -55,7 +60,8 @@ function Index() {
               )}
             </p>
           </div>
-          <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/>
+          <label htmlFor="new-house-modal" className="btn btn-wide modal-button">+ Add a new Household</label>
+          {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
         </div>
         {/* <form
           onSubmit={handleCreateHousehold}
@@ -116,6 +122,16 @@ function Index() {
               )}
             </div>
           </div>
+        </div>
+      </div>
+
+      <input type="checkbox" id="new-house-modal" className="modal-toggle"/>
+      <div className="modal">
+        <div className="modal-box relative">
+          <label htmlFor="new-house-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+          <h3 className="text-lg font-bold">Add a new Household</h3>
+          <p className="py-4">Enter the details of your new home below.</p>
+          <NewHouseForm handleClick={handleCreateHousehold}/>
         </div>
       </div>
     </AuthRoute>
