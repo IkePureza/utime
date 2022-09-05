@@ -32,7 +32,25 @@ function Index() {
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
     const house_name = event.target.elements.house_name;
-    const house_desc = event.target.elements.house_desc; // Need to check if description is supported on Firebase DB
+    const house_desc = event.target.elements.house_desc;
+
+    var flag = false;
+    // Input Validation
+    if(house_name.value === "") {
+      house_name.classList.add("input-error")
+      console.log("INPUT_ERROR: House name is empty!");
+      flag =true;
+    }
+    if(house_desc.value.length>50) {
+      house_desc.classList.add("textarea-error")
+      console.log("INPUT_ERROR: Description must be less than 50 characters!");
+      flag=true;
+    }
+
+    if(flag) {
+      return;
+    }
+
     const docRef = await addDoc(collection(db, "household"), {
       name: house_name.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
@@ -53,14 +71,14 @@ function Index() {
         </div>
         <div className='w-full mx-auto flex flex-col items-center'>
           <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto h-1/4 container ">
+          <div className="overflow-auto h-1/3 container shadow-md rounded-md">
             <p>
               {error && <strong>Error: {JSON.stringify(error)}</strong>}
               {loading && <span>Collection: Loading...</span>}
               {value && (
                 <div className="flex flex-col justify-around items-center">
                   {value.docs.map((doc) => (
-                    <HouseholdCard desc="" id={doc.id} name={doc.data().name}/>
+                    <HouseholdCard desc="" id={doc.id} key={doc.id} name={doc.data().name}/>
                   ))}
                 </div>
               )}

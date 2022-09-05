@@ -12,8 +12,9 @@ function NewHouseForm(props: NewHouseFormProps) {
             <div className="form-control w-full max-w-xs">
                 <label className="label">
                     <span className="label-text">House Name</span>
+                    <span className="label-text-alt">(Required)</span>
                 </label> 
-                <input id="house_name" name="house_name" type="text w-full max-w-xs" placeholder="House Name" className="input input-bordered" />
+                <input id="house_name" name="house_name" type="input w-full max-w-xs" placeholder="House Name" className="input input-bordered" />
             </div>
             <br/>
             <div className="form-control">
@@ -25,7 +26,7 @@ function NewHouseForm(props: NewHouseFormProps) {
             </div>
             <br/>
             <div className="min-w-full flex place-content-center">
-                <input className="btn" type="submit"></input>  
+                <input className="btn" type="submit" value="create house"></input>  
             </div>
         </form>
     )
