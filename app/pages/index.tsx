@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useContext,useRef } from "react";
+import React, { useContext,useRef } from "react";
 import Image from "next/image";
 
 import { auth, db } from "../firebase/clientApp";
