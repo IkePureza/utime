@@ -13,8 +13,8 @@ function NewHouseForm(props: NewHouseFormProps) {
           <span className="label-text-alt">(Required)</span>
         </label>
         <input
-          id="house_name"
-          name="house_name"
+          id="houseName"
+          name="houseName"
           type="input w-full max-w-xs"
           placeholder="House Name"
           className="input input-bordered"

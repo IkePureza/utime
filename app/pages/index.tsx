@@ -20,9 +20,10 @@ function Index() {
   const [value, loading, error] = useCollection(
     query(
       collection(db, "household"),
-      where("users", "array-contains", userData?.userId ?? null)
+      where("users", "array-contains", userData?.userId)
     )
   );
+  console.log(JSON.parse(JSON.stringify(userData)));
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
@@ -30,18 +31,18 @@ function Index() {
 
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
-    const house_name = event.target.elements.house_name;
-    const house_desc = event.target.elements.house_desc;
+    const houseName = event.target.elements.houseName;
+    const houseDesc = event.target.elements.houseDesc;
 
     var flag = false;
     // Input Validation
-    if (house_name.value === "") {
-      house_name.classList.add("input-error");
+    if (houseName.value === "") {
+      houseName.classList.add("input-error");
       console.log("INPUT_ERROR: House name is empty!");
       flag = true;
     }
-    if (house_desc.value.length > 50) {
-      house_desc.classList.add("textarea-error");
+    if (houseDesc.value.length > 50) {
+      houseDesc.classList.add("textarea-error");
       console.log("INPUT_ERROR: Description must be less than 50 characters!");
       flag = true;
     }
@@ -51,7 +52,7 @@ function Index() {
     }
 
     const docRef = await addDoc(collection(db, "household"), {
-      name: house_name.value,
+      name: houseName.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
     });
     console.log("Document written with ID: ", docRef.id);
@@ -64,11 +65,11 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row min-w-full px-5 py-5 w-max mx-auto">
+      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
         <div className="w-full">Recent Activity Goes Here</div>
         <div className="w-full mx-auto flex flex-col items-center">
           <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto h-1/3 container shadow-md rounded-md">
+          <div className="overflow-auto container h-1/2 shadow-md rounded-md">
             <p>
               {error && <strong>Error: {JSON.stringify(error)}</strong>}
               {loading && <span>Collection: Loading...</span>}
