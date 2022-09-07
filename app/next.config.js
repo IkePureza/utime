@@ -4,11 +4,11 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: [
-      'www.freepnglogos.com', 
-      'lh3.googleusercontent.com',
-      'placeimg.com'
+      "www.freepnglogos.com",
+      "lh3.googleusercontent.com",
+      "placeimg.com",
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

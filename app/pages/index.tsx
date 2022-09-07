@@ -1,4 +1,4 @@
-import React, { useContext,useRef } from "react";
+import React, { useContext, useRef } from "react";
 import Image from "next/image";
 
 import { auth, db } from "../firebase/clientApp";
@@ -11,8 +11,8 @@ import { AuthContext } from "../context/AuthContext";
 import Link from "next/link";
 
 import NavBar from "../components/navBar";
-import HouseholdCard from "../components/householdCard"
-import NewHouseForm from "../components/newHouseForm"
+import HouseholdCard from "../components/householdCard";
+import NewHouseForm from "../components/newHouseForm";
 
 function Index() {
   const appContext = useContext(AuthContext);
@@ -27,7 +27,7 @@ function Index() {
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
-        // Need to refernce input newHouse modal to close the model on submit
+  // Need to refernce input newHouse modal to close the model on submit
 
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
@@ -36,18 +36,18 @@ function Index() {
 
     var flag = false;
     // Input Validation
-    if(house_name.value === "") {
-      house_name.classList.add("input-error")
+    if (house_name.value === "") {
+      house_name.classList.add("input-error");
       console.log("INPUT_ERROR: House name is empty!");
-      flag =true;
+      flag = true;
     }
-    if(house_desc.value.length>50) {
-      house_desc.classList.add("textarea-error")
+    if (house_desc.value.length > 50) {
+      house_desc.classList.add("textarea-error");
       console.log("INPUT_ERROR: Description must be less than 50 characters!");
-      flag=true;
+      flag = true;
     }
 
-    if(flag) {
+    if (flag) {
       return;
     }
 
@@ -57,19 +57,17 @@ function Index() {
     });
     console.log("Document written with ID: ", docRef.id);
 
-    if(modalCheckboxRef.current!==null) {
-      modalCheckboxRef.current.checked= !(modalCheckboxRef.current.checked);
-    } 
+    if (modalCheckboxRef.current !== null) {
+      modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
+    }
   };
 
   return (
     <AuthRoute>
       <NavBar></NavBar>
       <div className="flex flex-row min-w-full px-5 py-5 w-max mx-auto">
-        <div className='w-full'>
-          Recent Activity Goes Here
-        </div>
-        <div className='w-full mx-auto flex flex-col items-center'>
+        <div className="w-full">Recent Activity Goes Here</div>
+        <div className="w-full mx-auto flex flex-col items-center">
           <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
           <div className="overflow-auto h-1/3 container shadow-md rounded-md">
             <p>
@@ -78,13 +76,23 @@ function Index() {
               {value && (
                 <div className="flex flex-col justify-around items-center">
                   {value.docs.map((doc) => (
-                    <HouseholdCard desc="" id={doc.id} key={doc.id} name={doc.data().name}/>
+                    <HouseholdCard
+                      desc=""
+                      id={doc.id}
+                      key={doc.id}
+                      name={doc.data().name}
+                    />
                   ))}
                 </div>
               )}
             </p>
           </div>
-          <label htmlFor="new-house-modal" className="btn btn-wide modal-button mt-10">+ Add a new Household</label>
+          <label
+            htmlFor="new-house-modal"
+            className="btn btn-wide modal-button mt-10"
+          >
+            + Add a new Household
+          </label>
           {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
         </div>
         <div className="w-full">
@@ -123,13 +131,23 @@ function Index() {
         </div>
       </div>
 
-      <input type="checkbox" id="new-house-modal" ref={modalCheckboxRef} className="modal-toggle"/>
+      <input
+        type="checkbox"
+        id="new-house-modal"
+        ref={modalCheckboxRef}
+        className="modal-toggle"
+      />
       <div className="modal">
         <div className="modal-box relative">
-          <label htmlFor="new-house-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+          <label
+            htmlFor="new-house-modal"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            ✕
+          </label>
           <h3 className="text-lg font-bold">Add a new Household</h3>
           <p className="py-4">Enter the details of your new home below.</p>
-          <NewHouseForm handleClick={handleCreateHousehold}/>
+          <NewHouseForm handleClick={handleCreateHousehold} />
         </div>
       </div>
     </AuthRoute>
