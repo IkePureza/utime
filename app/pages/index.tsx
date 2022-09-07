@@ -20,10 +20,9 @@ function Index() {
   const [value, loading, error] = useCollection(
     query(
       collection(db, "household"),
-      where("users", "array-contains", userData?.userId)
+      where("users", "array-contains", userData?.userId ?? null)
     )
   );
-  console.log(JSON.parse(JSON.stringify(userData)));
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
