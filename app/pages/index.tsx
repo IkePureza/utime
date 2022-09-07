@@ -1,40 +1,40 @@
 import React, { useContext, useRef } from "react";
 import Image from "next/image";
 
-import { auth, db } from "../firebase/clientApp";
-import { collection, addDoc, query, where } from "firebase/firestore";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { auth, db } from '../firebase/clientApp'
+import { collection, addDoc, query, where } from 'firebase/firestore'
+import { useCollection } from 'react-firebase-hooks/firestore'
 
-import AuthRoute from "../HOC/authRoute";
+import AuthRoute from '../HOC/authRoute'
 
-import { AuthContext } from "../context/AuthContext";
-import Link from "next/link";
+import { AuthContext } from '../context/AuthContext'
+import Link from 'next/link'
 
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
 import NewHouseForm from "../components/newHouseForm";
 
 function Index() {
-  const appContext = useContext(AuthContext);
-  const userData = appContext?.userData;
+  const appContext = useContext(AuthContext)
+  const userData = appContext?.userData
   const [value, loading, error] = useCollection(
     query(
-      collection(db, "household"),
-      where("users", "array-contains", userData?.userId)
+      collection(db, 'household'),
+      where('users', 'array-contains', userData?.userId)
     )
-  );
-  console.log(JSON.parse(JSON.stringify(userData)));
+  )
+  console.log(JSON.parse(JSON.stringify(userData)))
 
-  const modalCheckboxRef = useRef<HTMLInputElement>(null);
+  const modalCheckboxRef = useRef<HTMLInputElement>(null)
 
   // Need to refernce input newHouse modal to close the model on submit
 
   const handleCreateHousehold = async (event: any) => {
-    event.preventDefault();
-    const house_name = event.target.elements.house_name;
-    const house_desc = event.target.elements.house_desc;
+    event.preventDefault()
+    const houseName = event.target.elements.houseName
+    const houseDesc = event.target.elements.houseDesc
 
-    var flag = false;
+    var flag = false
     // Input Validation
     if (house_name.value === "") {
       house_name.classList.add("input-error");
@@ -51,11 +51,11 @@ function Index() {
       return;
     }
 
-    const docRef = await addDoc(collection(db, "household"), {
-      name: house_name.value,
+    const docRef = await addDoc(collection(db, 'household'), {
+      name: houseName.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
-    });
-    console.log("Document written with ID: ", docRef.id);
+    })
+    console.log('Document written with ID: ', docRef.id)
 
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
@@ -65,11 +65,11 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row min-w-full px-5 py-5 w-max mx-auto">
+      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
         <div className="w-full">Recent Activity Goes Here</div>
         <div className="w-full mx-auto flex flex-col items-center">
           <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto h-1/3 container shadow-md rounded-md">
+          <div className="overflow-auto container h-1/2 shadow-md rounded-md">
             <p>
               {error && <strong>Error: {JSON.stringify(error)}</strong>}
               {loading && <span>Collection: Loading...</span>}
@@ -107,7 +107,7 @@ function Index() {
             </div>
             <div className="flex gap-x-3 items-center justify-center">
               <h4>display name:</h4>
-              <h6>{userData?.userName || "null"}</h6>
+              <h6>{userData?.userName || 'null'}</h6>
             </div>
             <div className="flex gap-x-3 items-center justify-center">
               <h4>email:</h4>
@@ -119,12 +119,12 @@ function Index() {
                 <Image
                   className="rounded-full object-contain w-32 h-32"
                   src={userData?.userPhotoLink}
-                  alt={userData?.userName ?? ""}
+                  alt={userData?.userName ?? ''}
                   width="32"
                   height="32"
                 />
               ) : (
-                "null"
+                'null'
               )}
             </div>
           </div>
@@ -151,7 +151,7 @@ function Index() {
         </div>
       </div>
     </AuthRoute>
-  );
+  )
 }
 
-export default Index;
+export default Index

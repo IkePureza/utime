@@ -38,7 +38,5 @@ function NewHouseForm(props: NewHouseFormProps) {
         <input className="btn" type="submit" value="create house"></input>
       </div>
     </form>
-  );
-}
 
 export default NewHouseForm;
