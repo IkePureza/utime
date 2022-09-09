@@ -66,9 +66,9 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
-        <div className="w-full">Recent Activity Goes Here</div>
-        <div className="w-full mx-auto flex flex-col items-center">
+      <div className="flex flex-row max-h-screen min-w-full place-content-center gap-5 px-5 py-5 w-max mx-auto">
+        <div className="w-fit">Recent Activity Goes Here</div>
+        <div className="w-fit place-item-center mx-auto flex flex-col items-center">
           <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
           <div className="overflow-auto container h-1/2 shadow-md rounded-md">
             <p>
@@ -96,7 +96,7 @@ function Index() {
           </label>
           {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
         </div>
-        <div className="w-full flex-col" id="userInvites">
+        <div className="w-fit flex-col" id="userInvites">
           <UserInvites />
           <div className="mt-4 flex flex-col gap-y-2">
             <div className="flex gap-x-3 items-center justify-center">

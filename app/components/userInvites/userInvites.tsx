@@ -46,14 +46,14 @@ export default function UserInvites() {
     <React.Fragment>
       <h1 className="text-2xl text-center font-black mb-10">Invites</h1>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
-      {loading && <span>Collection: Loading...</span>}
+      {loading && <span>Loading...</span>}
       {invites && (
-        <div className="flex flex-col justify-around items-center">
+        <div className="flex flex-col mx-auto">
           {invites.docs.map((doc) => (
             <UserInviteCard
               key={doc.id}
               inviteId={doc.id}
-              houseId={doc.data().houseid}
+              houseId={doc.data().houseId}
               expiry_time={doc.data().expiry_time}
               invitee={doc.data().invitee}
               acceptHandler={inviteAcceptHandler}
@@ -62,7 +62,6 @@ export default function UserInvites() {
           ))}
         </div>
       )}
-      {!invites && <p>Failed to fetch invites!</p>}
     </React.Fragment>
   );
 }
