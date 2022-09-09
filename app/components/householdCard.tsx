@@ -1,16 +1,16 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface HouseHoldCardProps {
-  id: string
-  name: string
-  desc?: string
-  icon?: string //URL of image, if none provided, default icon is used
+  id: string;
+  name: string;
+  desc?: string;
+  icon?: string; //URL of image, if none provided, default icon is used
 }
 
 function HouseholdCard(props: HouseHoldCardProps) {
-  const icon = props.icon || 'https://placeimg.com/148/148/arch'
+  const icon = props.icon || "https://placeimg.com/148/148/arch";
 
   return (
     <React.Fragment key={props.id}>
@@ -42,7 +42,7 @@ function HouseholdCard(props: HouseHoldCardProps) {
         
         </div> */}
     </React.Fragment>
-  )
+  );
 }
 
-export default HouseholdCard
+export default HouseholdCard;

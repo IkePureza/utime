@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 interface NewHouseFormProps {
-  handleClick: (event: any) => Promise<void>
+  handleClick: (event: any) => Promise<void>;
 }
 
 function NewHouseForm(props: NewHouseFormProps) {
@@ -38,7 +38,7 @@ function NewHouseForm(props: NewHouseFormProps) {
         <input className="btn" type="submit" value="create house"></input>
       </div>
     </form>
-  )
+  );
 }
 
-export default NewHouseForm
+export default NewHouseForm;
