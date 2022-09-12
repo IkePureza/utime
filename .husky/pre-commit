@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-cd ./app yarn lint
+cd ./app 
+
+npx lint-staged
+
+yarn lint

@@ -1,66 +1,47 @@
-import React, { useContext, useRef } from 'react'
-import Image from 'next/image'
+import React, { useContext, useRef } from "react";
+import Image from "next/image";
 
-import { auth, db } from '../firebase/clientApp'
-import { collection, addDoc, query, where } from 'firebase/firestore'
-import { useCollection } from 'react-firebase-hooks/firestore'
+import { auth, db } from "../firebase/clientApp";
+import { collection, addDoc, query, where } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 
-import AuthRoute from '../HOC/authRoute'
+import AuthRoute from "../HOC/authRoute";
 
-import { AuthContext } from '../context/AuthContext'
-import Link from 'next/link'
+import { AuthContext } from "../context/AuthContext";
+import Link from "next/link";
 
-import NavBar from '../components/navBar'
-import HouseholdCard from '../components/householdCard'
-import NewHouseForm from '../components/newHouseForm'
+import NavBar from "../components/navBar";
+import HouseholdCard from "../components/householdCard";
+import NewHouseForm from "../components/newHouseForm";
 
 function Index() {
-  const appContext = useContext(AuthContext)
-  const userData = appContext?.userData
+  const appContext = useContext(AuthContext);
+  const userData = appContext?.userData;
   const [value, loading, error] = useCollection(
     query(
-      collection(db, 'household'),
-      where('users', 'array-contains', userData?.userId)
+      collection(db, "household"),
+      where("users", "array-contains", userData?.userId ?? null)
     )
-  )
-  console.log(JSON.parse(JSON.stringify(userData)))
+  );
 
-  const modalCheckboxRef = useRef<HTMLInputElement>(null)
+  const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
   // Need to refernce input newHouse modal to close the model on submit
 
   const handleCreateHousehold = async (event: any) => {
-    event.preventDefault()
-    const houseName = event.target.elements.houseName
-    const houseDesc = event.target.elements.houseDesc
+    event.preventDefault();
+    const houseName = event.target.elements.houseName;
+    const houseDesc = event.target.elements.houseDesc;
 
-    var flag = false
-    // Input Validation
-    if (houseName.value === '') {
-      houseName.classList.add('input-error')
-      console.log('INPUT_ERROR: House name is empty!')
-      flag = true
-    }
-    if (houseDesc.value.length > 50) {
-      houseDesc.classList.add('textarea-error')
-      console.log('INPUT_ERROR: Description must be less than 50 characters!')
-      flag = true
-    }
-
-    if (flag) {
-      return
-    }
-
-    const docRef = await addDoc(collection(db, 'household'), {
+    const docRef = await addDoc(collection(db, "household"), {
       name: houseName.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
-    })
-    console.log('Document written with ID: ', docRef.id)
+    });
 
     if (modalCheckboxRef.current !== null) {
-      modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked
+      modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }
-  }
+  };
 
   return (
     <AuthRoute>
@@ -107,7 +88,7 @@ function Index() {
             </div>
             <div className="flex gap-x-3 items-center justify-center">
               <h4>display name:</h4>
-              <h6>{userData?.userName || 'null'}</h6>
+              <h6>{userData?.userName || "null"}</h6>
             </div>
             <div className="flex gap-x-3 items-center justify-center">
               <h4>email:</h4>
@@ -119,12 +100,12 @@ function Index() {
                 <Image
                   className="rounded-full object-contain w-32 h-32"
                   src={userData?.userPhotoLink}
-                  alt={userData?.userName ?? ''}
+                  alt={userData?.userName ?? ""}
                   width="32"
                   height="32"
                 />
               ) : (
-                'null'
+                "null"
               )}
             </div>
           </div>
@@ -151,7 +132,7 @@ function Index() {
         </div>
       </div>
     </AuthRoute>
-  )
+  );
 }
 
-export default Index
+export default Index;
