@@ -23,7 +23,6 @@ function Index() {
       where("users", "array-contains", userData?.userId ?? null)
     )
   );
-  console.log(JSON.parse(JSON.stringify(userData)));
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
