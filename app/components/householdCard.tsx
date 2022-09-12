@@ -31,7 +31,7 @@ function HouseholdCard(props: HouseHoldCardProps) {
             <p>Description of {props.name}</p>
           )}
           <div className="card-actions justify-end">
-            <Link href="household/[id]" as={`household/${props.id}`}>
+            <Link href="household/[houseId]" as={`household/${props.id}`}>
               <a className="btn btn-primary ml-5 mt-2"> Go to House</a>
             </Link>
           </div>
