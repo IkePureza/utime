@@ -35,3 +35,6 @@ next-env.d.ts
 
 # prettier
 .prettierrc.json
+
+serviceAccount.json
+cypress.env.json

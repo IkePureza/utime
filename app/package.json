@@ -12,6 +12,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "emulators": "firebase emulators:start --only database,firestore",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "prepare": "cd ../ && husky install"
   },
   "dependencies": {
@@ -33,9 +36,13 @@
     "@types/node": "18.6.4",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "cross-env": "^7.0.3",
+    "cypress": "^10.8.0",
+    "cypress-firebase": "^2.2.2",
     "eslint": "^8.22.0",
     "eslint-config-next": "12.2.4",
     "eslint-config-prettier": "^8.5.0",
+    "firebase-admin": "^11.0.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "2.7.1",
