@@ -12,7 +12,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "emulators": "firebase emulators:start --only database,firestore",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "prepare": "cd ../ && husky install"
