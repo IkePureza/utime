@@ -26,7 +26,7 @@ import { FieldValue } from "@google-cloud/firestore";
 interface userInvitesProps {
   inviteId: string;
   houseId: string;
-  expiry_time: Timestamp;
+  expiry_time: Date;
   icon?: string;
   invitee: string;
   acceptHandler: (event: any) => void;
@@ -43,8 +43,6 @@ export default function UserInviteCard(props: userInvitesProps) {
     doc(db, "household", props.houseId)
   );
 
-  const expiry_time = new Date(props.expiry_time.seconds * 1000).toLocaleString("en-au");
-
   return (
     <React.Fragment key={props.inviteId}>
       <div className="card card-side card-compact w-64 h-fit bg-base-100 shadow-xl mb-2">
@@ -60,7 +58,6 @@ export default function UserInviteCard(props: userInvitesProps) {
         {houseData && (
           <React.Fragment>
             <div className="card-body">
-              {/* <h2 className="card-title">{houseData.name}</h2> */}
               <label
                 htmlFor={`modal-${props.inviteId}`}
                 className="card-title btn btn-ghost modal-button"
@@ -101,7 +98,7 @@ export default function UserInviteCard(props: userInvitesProps) {
                   You've been invited by {props.invitee} to join in a UTime Group together!
                   <br>
                   </br>
-                  This invitation expires on {expiry_time}
+                  This invitation expires on {props.expiry_time.toString()}
                 </p>
                 <div className="modal-action">
                   <label htmlFor={`modal-${props.inviteId}`} className="btn h-fit w-fit">

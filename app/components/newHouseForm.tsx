@@ -15,7 +15,7 @@ function NewHouseForm(props: NewHouseFormProps) {
         <input
           id="houseName"
           name="houseName"
-          type="input w-full max-w-xs"
+          type="text"
           placeholder="House Name"
           className="input input-bordered"
         />

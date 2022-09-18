@@ -1,6 +1,5 @@
 import React from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
-import { useDocument } from "react-firebase-hooks/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 import {
   collection,
@@ -13,21 +12,28 @@ import {
 
 import { db } from "../../firebase/clientApp";
 
+import MemberCard from "../household/memberCard";
+
 interface Props {
-  id: string;
+  houseId: string;
 }
 
 export default function HouseholdMembers(props: Props) {
-  const [members, loading, error] = useDocument(doc(db, "household", props.id));
+  const [members, loading, error] = useDocumentData(
+    doc(db, "household", props.houseId)
+  );
 
   return (
     <React.Fragment>
-      <h1 className="text-left text-3xl">Members:</h1>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Loading...</span>}
       {members && (
-        
-      )}
+        <div className="flex flex-col justify-around items-center">
+          {members.users.map((userId: string) => (
+            <MemberCard key={userId} userId={userId} />
+          ))}
+        </div>
+      )} 
     </React.Fragment>
   );
 }

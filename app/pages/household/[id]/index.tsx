@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import AuthRoute from "../../../HOC/authRoute";
 
@@ -19,6 +19,9 @@ import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import Link from "next/link";
 import { DocumentData } from "@google-cloud/firestore";
 import NavBar from "../../../components/navBar";
+import HouseholdMembers from "../../../components/household/householdMembers";
+import { user } from "firebase-functions/v1/auth";
+import InviteCard from "../../../components/userInvites/inviteCard";
 
 const Login = () => {
   const router = useRouter();
@@ -28,6 +31,7 @@ const Login = () => {
   const householdRef = doc(db, "household", id);
   const amenityRef = collection(householdRef, "amenity");
   const bookingsRef = collection(db, "booking");
+  const invitesRef = collection(db, "inviteTokens");
 
   const [value, loading, error] = useDocument(householdRef);
   const [bookingValue, bookingLoading, bookingError] = useCollection(
@@ -78,6 +82,7 @@ const Login = () => {
     return false;
   };
 
+  
   return (
     <AuthRoute>
       <NavBar></NavBar>
@@ -156,8 +161,13 @@ const Login = () => {
             </div>
           </div>
         </div>
-        <div className="w-fit" id="householdMembers">
-          
+        <div
+          className="w-fit flex flex-col place-items-center"
+          id="householdMembers"
+        >
+          <h2 className="text-2xl text-center font-black mt-10">Members</h2>
+          <HouseholdMembers houseId={id} />
+          <InviteCard houseId={id}/>
         </div>
       </div>
     </AuthRoute>
