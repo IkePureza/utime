@@ -10,7 +10,10 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../../firebase/clientApp";
-import { reauthenticateWithCredential, reauthenticateWithRedirect } from "firebase/auth";
+import {
+  reauthenticateWithCredential,
+  reauthenticateWithRedirect,
+} from "firebase/auth";
 
 interface inviteCardProps {
   houseId: string;
@@ -81,7 +84,7 @@ export default function InviteCard(props: inviteCardProps) {
       <div className="text-xl text-center font-black mt-10">
         Invite By Email Address
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col place-items-center mt-2">
         <form onSubmit={handleUserInvite} action="#">
           <div className="form-control">
             <div className="input-group">
