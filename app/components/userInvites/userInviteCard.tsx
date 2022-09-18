@@ -95,13 +95,16 @@ export default function UserInviteCard(props: userInvitesProps) {
                   Invitation to {houseData.name}
                 </h3>
                 <p className="py-4">
-                  You've been invited by {props.invitee} to join in a UTime Group together!
-                  <br>
-                  </br>
+                  You`&apos;`ve been invited by {props.invitee} to join in a
+                  UTime Group together!
+                  <br></br>
                   This invitation expires on {props.expiry_time.toString()}
                 </p>
                 <div className="modal-action">
-                  <label htmlFor={`modal-${props.inviteId}`} className="btn h-fit w-fit">
+                  <label
+                    htmlFor={`modal-${props.inviteId}`}
+                    className="btn h-fit w-fit"
+                  >
                     Yay!
                   </label>
                 </div>

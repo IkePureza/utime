@@ -21,10 +21,9 @@ function Index() {
   const [value, loading, error] = useCollection(
     query(
       collection(db, "household"),
-      where("users", "array-contains", userData?.userId)
+      where("users", "array-contains", userData?.userId ?? null)
     )
   );
-  console.log(JSON.parse(JSON.stringify(userData)));
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
@@ -35,28 +34,10 @@ function Index() {
     const houseName = event.target.elements.houseName;
     const houseDesc = event.target.elements.houseDesc;
 
-    var flag = false;
-    // Input Validation
-    if (houseName.value === "") {
-      houseName.classList.add("input-error");
-      console.log("INPUT_ERROR: House name is empty!");
-      flag = true;
-    }
-    if (houseDesc.value.length > 50) {
-      houseDesc.classList.add("textarea-error");
-      console.log("INPUT_ERROR: Description must be less than 50 characters!");
-      flag = true;
-    }
-
-    if (flag) {
-      return;
-    }
-
     const docRef = await addDoc(collection(db, "household"), {
       name: houseName.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
     });
-    console.log("Document written with ID: ", docRef.id);
 
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;

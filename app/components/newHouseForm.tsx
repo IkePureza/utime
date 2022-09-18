@@ -18,6 +18,7 @@ function NewHouseForm(props: NewHouseFormProps) {
           type="text"
           placeholder="House Name"
           className="input input-bordered"
+          required
         />
       </div>
       <br />
@@ -31,6 +32,7 @@ function NewHouseForm(props: NewHouseFormProps) {
           name="house_desc"
           className="textarea textarea-bordered h-24"
           placeholder="Description"
+          maxLength={50}
         ></textarea>
       </div>
       <br />
