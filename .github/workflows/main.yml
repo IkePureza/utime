@@ -31,7 +31,7 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
-          build: npm run build:emulators
-          start: npm run start:emulators
+          build: npm run build:emulator
+          start: npm run start:emulator
 
           working-directory: app
