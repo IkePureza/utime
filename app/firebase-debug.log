@@ -1,0 +1,28 @@
+[debug] [2022-09-19T02:40:07.829Z] ----------------------------------------------------------------------
+[debug] [2022-09-19T02:40:07.831Z] Command:       /usr/local/bin/firebase /Users/nagaikeigo/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase emulators:exec npm run dev --import=scripts/firebase/firestore-export/ --ui
+[debug] [2022-09-19T02:40:07.831Z] CLI Version:   11.9.0
+[debug] [2022-09-19T02:40:07.831Z] Platform:      darwin
+[debug] [2022-09-19T02:40:07.831Z] Node Version:  v16.16.0
+[debug] [2022-09-19T02:40:07.841Z] Time:          Mon Sep 19 2022 12:40:07 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2022-09-19T02:40:07.841Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-09-19T02:40:07.901Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-09-19T02:40:07.901Z] > authorizing via signed-in user (nagaik@student.unimelb.edu.au)
+[debug] [2022-09-19T02:40:08.645Z] java version "14.0.2" 2020-07-14
+Java(TM) SE Runtime Environment (build 14.0.2+12-46)
+Java HotSpot(TM) 64-Bit Server VM (build 14.0.2+12-46, mixed mode, sharing)
+
+[debug] [2022-09-19T02:40:08.651Z] Parsed Java major version: 14
+[info] i  emulators: Starting emulators: auth, functions, firestore, database {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, database"}}
+[debug] [2022-09-19T02:40:08.672Z] [hub] writing locator at /var/folders/0g/7n3jkc5n1v9cw4lq7p21jf380000gn/T/hub-shitimes-f199b.json
+[info] i  emulators: Shutting down emulators. {"metadata":{"emulator":{"name":"hub"},"message":"Shutting down emulators."}}
+[info] i  hub: Stopping emulator hub {"metadata":{"emulator":{"name":"hub"},"message":"Stopping emulator hub"}}
+[debug] [2022-09-19T02:40:08.689Z] Error: ENOENT: no such file or directory, lstat '/Users/nagaikeigo/Documents/shitimes/app/scripts/firebase/firestore-export'
+    at Object.lstatSync (node:fs:1529:3)
+    at Object.lstatSync (pkg/prelude/bootstrap.js:1506:33)
+    at findExportMetadata (/Users/nagaikeigo/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/emulator/controller.js:171:32)
+    at Object.startAll (/Users/nagaikeigo/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/emulator/controller.js:268:31)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async emulatorExec (/Users/nagaikeigo/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/emulator/commandUtils.js:306:35)
+[error] 
+[error] Error: An unexpected error has occurred.

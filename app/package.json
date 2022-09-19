@@ -8,12 +8,15 @@
   },
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3020",
+    "dev:emulator": "firebase emulators:exec 'npm run dev' --import=scripts/firebase/firestore-export/ --ui",
     "build": "next build",
+    "build:emulator": "firebase emulators:exec 'npm run build' --import=scripts/firebase/firestore-export/",
     "start": "next start",
+    "start:emulator": "firebase emulators:exec 'npm start' --import=scripts/firebase/firestore-export/",
     "lint": "next lint",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
+    "cy:open": "cypress open",
+    "cy:run": "CYPRESS_BASE_URL=http://localhost:3021 cypress run",
     "prepare": "cd ../ && husky install"
   },
   "dependencies": {
