@@ -21,14 +21,12 @@ export default function MemberCard(props: Props) {
       {loading && <span>Loading...</span>}
       {userData && (
         <>
-          <div className="avatar">
-            <div className="w-20 mask mask-squircle">
-              <Image
-                src={userData.data.photoURL || "/user.png"}
-                alt={userData.data.displayName ?? ""}
-                layout="fill"
-              />
-            </div>
+          <div className="w-20 mask mask-squircle">
+            <Image
+              src={userData.data.photoURL || "/user.png"}
+              alt={userData.data.displayName ?? ""}
+              layout="fill"
+            />
           </div>
 
           <div className="card-body">
