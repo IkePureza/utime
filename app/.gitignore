@@ -38,3 +38,7 @@ next-env.d.ts
 
 serviceAccount.json
 cypress.env.json
+
+# firebase debug logs
+database-debug.log
+firestore-debug.log

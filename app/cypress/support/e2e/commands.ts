@@ -16,4 +16,19 @@ const fbConfig = {
 
 firebase.initializeApp(fbConfig);
 
+// Emulate Firestore if Env variable is passed
+const firestoreEmulatorHost = Cypress.env("FIRESTORE_EMULATOR_HOST");
+if (firestoreEmulatorHost) {
+  firebase.firestore().settings({
+    host: firestoreEmulatorHost,
+    ssl: false,
+  });
+}
+
+const authEmulatorHost = Cypress.env("FIREBASE_AUTH_EMULATOR_HOST");
+if (authEmulatorHost) {
+  firebase.auth().useEmulator(`http://${authEmulatorHost}/`);
+  console.debug(`Using Auth emulator: http://${authEmulatorHost}/`);
+}
+
 attachCustomCommands({ Cypress, cy, firebase });

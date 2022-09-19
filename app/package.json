@@ -9,14 +9,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3020",
-    "dev:emulator": "firebase emulators:exec 'npm run dev' --import=scripts/firebase/firestore-export/ --ui",
+    "dev:emulator": "firebase emulators:exec 'npm run dev' --ui",
     "build": "next build",
     "build:emulator": "firebase emulators:exec 'npm run build' --import=scripts/firebase/firestore-export/",
     "start": "next start",
     "start:emulator": "firebase emulators:exec 'npm start' --import=scripts/firebase/firestore-export/",
     "lint": "next lint",
-    "cy:open": "cypress open",
-    "cy:run": "CYPRESS_BASE_URL=http://localhost:3021 cypress run",
+    "emulators": "firebase emulators:start --only database,firestore",
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "test:emulate": "cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.auth.port)\" FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.database.port)\" FIRESTORE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.firestore.port)\" yarn test:open",
     "prepare": "cd ../ && husky install"
   },
   "dependencies": {
