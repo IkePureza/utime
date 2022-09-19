@@ -52,3 +52,8 @@ jobs:
         env:
           # Authorization for running the firebase CLI (emulator)
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+          # Authorization for firebase-admin (server-side)
+          FIREBASE_PROJECT_ID: shitimes-f199b
+          FIREBASE_PRIVATE_KEY:  ${{ secrets.FIREBASE_PRIVATE_KEY }}
+          FIREBASE_CLIENT_EMAIL:  ${{ secrets.FIREBASE_CLIENT_EMAIL }}
