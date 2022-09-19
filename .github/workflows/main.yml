@@ -33,6 +33,3 @@ jobs:
           browser: chrome
           build: npm run build:emulators
           start: npm run start:emulators
-    
-          # Working directory containing Cypress folder
-          working-directory: cypress/e2e/examples
