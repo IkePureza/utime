@@ -16,7 +16,7 @@ import {
 import { db } from "../../../../../firebase/clientApp";
 import { useCollection, useDocumentData } from "react-firebase-hooks/firestore";
 import Link from "next/link";
-import { DocumentData } from "@google-cloud/firestore";
+import { DocumentData, DocumentReference } from "@google-cloud/firestore";
 import NavBar from "../../../../../components/navBar";
 import UtilityBookingForm from "../../../../../components/utilityBookingForm";
 
@@ -27,39 +27,71 @@ const Login = () => {
   const currentUser = authContext?.userData;
   const householdRef = doc(db, "household", houseId);
   const amenityRef = doc(householdRef, "amenity", utilityId);
-  const [value, loading, error, snapshot] = useDocumentData(amenityRef);
+  const [amenityData, loading, error, snapshot] = useDocumentData(amenityRef);
 
-  const handleBooking = async (amenityId: string) => {
+  const handleBooking = async (event: any) => {
+    event.preventDefault();
+    const bookingDesc = event.target.elements.desc.value;
+    const bookingTo = event.target.elements.to.value;
+    const bookingFrom = event.target.elements.from.value;
+
     const bookingRef = collection(db, "booking");
+
+    // Call checks here
+
+    console.log(bookingDesc, bookingTo, bookingFrom);
+
     const docRef = await addDoc(bookingRef, {
-      amenityId,
+      utilityId,
+      desc: bookingDesc,
       userId: currentUser?.userId,
       householdId: houseId,
-      from: Timestamp.now(),
-      to: Timestamp.now(),
+      from: bookingFrom, //
+      to: bookingTo,
     });
-    const updateAmenity = await updateDoc(
-      doc(householdRef, "amenity", amenityId),
-      {
-        "latestBooking.from": Timestamp.now(),
-        "latestBooking.to": Timestamp.now(),
-        "latestBooking.userId": currentUser?.userId,
-      }
-    );
 
-    console.log("Document written with ID: ", docRef.id);
+    const updateAmenity = await updateDoc(amenityRef, {
+      "latestBooking.from": bookingFrom,
+      "latestBooking.to": bookingTo,
+      "latestBooking.userId": currentUser?.userId,
+      "latestBooking.bookingID": docRef.id,
+    });
+
+    // console.log("Document wbookingFromritten with ID: ", docRef.id);
   };
 
-  const isAmenityBooked = (data: DocumentData): boolean => {
-    const now = new Date();
-    const booking = data?.latestBooking?.to.toDate();
-    console.log("day now", data?.name, now.getDay(), booking?.getDay());
-    if (now.getDay() == booking?.getDay()) {
-      return true;
-    }
+  // Checks if utility is currently booked
+  // Current booking date is equal or less to the latest booking toDate
+  // const isAmenityBooked = (bookingFrom: any, bookingTo: any, amenityData: DocumentData): boolean => {
 
-    return false;
-  };
+  //   // get latestBookingFrom and latestBookingTo from UtilityID
+  //   const LBFrom = new Date(amenityData.latestBooking.from);
+  //   const LBTo = new Date(amenityData.latestBooking.to);
+
+  //   if (bookingFrom < LBFrom){
+  //     return false;
+  //   }
+
+  //   if (bookingFrom){
+
+  //   }
+
+  //   if (currBooking.getDay() <= booking?.getDay()) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
+
+  // 1. Check if theres clash in bookings
+  //  - Current booking is not within the latest known booking
+
+  //  2. Check the booking dates make sense
+  //  - From > RN (Can't book in the past)
+  //  - From-date can't be < to-date
+  // const datesWellFormed = (data: DocumentData): boolean => {
+  //   const now = new Date();
+
+  // };
 
   return (
     <>
