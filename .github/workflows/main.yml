@@ -33,3 +33,5 @@ jobs:
           browser: chrome
           build: npm run build:emulators
           start: npm run start:emulators
+
+          working-directory: app
