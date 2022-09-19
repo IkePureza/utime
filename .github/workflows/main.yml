@@ -31,8 +31,8 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
-          build: npm run build
-          start: npm start
+          build: npm run build:emulators
+          start: npm run start:emulators
     
           # Working directory containing Cypress folder
           working-directory: cypress/e2e/examples
