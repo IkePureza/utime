@@ -59,8 +59,4 @@ jobs:
           FIREBASE_CLIENT_EMAIL:  ${{ secrets.FIREBASE_CLIENT_EMAIL }}
           FIRESTORE_EMULATOR_HOST: localhost:8080
           FIRESTORE_AUTH_EMULATOR_HOST: localhost:9099
-
-          # # Authorization for firebase web API
-          # NEXT_PUBLIC_FIREBASE_PROJECT_ID: shitimes-f199b
-          # NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
-          # NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          FIRESTORE_FUNCTIONS_EMULATOR_HOST: localhost:5001

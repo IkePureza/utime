@@ -12,11 +12,11 @@
     "dev:emulator": "firebase emulators:exec 'npm run dev' --ui",
     "build": "next build",
     "build:emulator": "firebase emulators:exec 'npm run build'",
-    "start": "next start",
+    "start": "next start -p 3021",
     "start:emulator": "firebase emulators:exec 'npm start'",
     "lint": "next lint",
     "emulators": "firebase emulators:start --only database,firestore,auth",
-    "test": "cypress run",
+    "test": "CYPRESS_BASE_URL=http://localhost:3021 cypress run",
     "test:open": "cypress open",
     "test:emulate": "cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.auth.port)\" FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.database.port)\" FIRESTORE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.firestore.port)\" yarn test:open",
     "prepare": "cd ../ && husky install"

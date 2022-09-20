@@ -36,10 +36,11 @@ next-env.d.ts
 # prettier
 .prettierrc.json
 
-serviceAccount.json
-cypress.env.json
-
 # firebase debug logs
 database-debug.log
 firestore-debug.log
 firebase-debug.log
+
+# Cypress (Could include later for documentation purposes
+cypress/screenshots
+cypress/videos
