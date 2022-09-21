@@ -65,7 +65,7 @@ jobs:
           FIREBASE_CLIENT_EMAIL:  ${{ secrets.FIREBASE_CLIENT_EMAIL }}
 
           #Auth for FB web API
-          NEXT_PUBLIC_FIREBASE_PROJECT_ID: player-tiers
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: shitimes-f199b
 
           # Emulators
           FIRESTORE_EMULATOR_HOST: localhost:8080
