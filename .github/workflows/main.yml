@@ -50,6 +50,7 @@ jobs:
           browser: chrome
           build: npm run build:emulator
           start: npm run start:emulator
+          wait-on: 'http://localhost:3021'
 
           working-directory: app
         env:
