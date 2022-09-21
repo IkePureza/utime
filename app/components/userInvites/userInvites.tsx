@@ -8,6 +8,7 @@ import {
   where,
   updateDoc,
   deleteDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 
@@ -31,7 +32,7 @@ export default function UserInvites() {
     const houseId = event.target.getAttribute("data-arg2");
     // Add user to household
     updateDoc(doc(db, "household", houseId), {
-      users: FieldValue.arrayUnion(userData?.userId),
+      users: arrayUnion(userData?.userId),
     });
     // Delete invite token
     deleteDoc(doc(db, "inviteTokens", inviteId));

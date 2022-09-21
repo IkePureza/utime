@@ -28,8 +28,8 @@ function NewHouseForm(props: NewHouseFormProps) {
           <span className="label-text-alt">Maximum 50 words</span>
         </label>
         <textarea
-          id="house_desc"
-          name="house_desc"
+          id="houseDesc"
+          name="houseDesc"
           className="textarea textarea-bordered h-24"
           placeholder="Description"
           maxLength={50}

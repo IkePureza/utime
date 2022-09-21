@@ -76,7 +76,8 @@ export default function InviteCard(props: inviteCardProps) {
     });
     console.log("Document written with ID: ", createInvite.id);
 
-    inviteEmail.placeholder = "Sent!";
+    inviteEmail.value = "Sent!";
+    inviteEmail.classList.add("input-success");
   };
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 
 import Image from "next/image";
 
-import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import { db } from "../../firebase/clientApp";
 import { doc } from "firebase/firestore";
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function MemberCard(props: Props) {
-  const [userData, loading, error, snapshot, reload] = useDocumentDataOnce(
+  const [userData, loading, error] = useDocumentData(
     doc(db, "users", props.userId)
   );
 
@@ -21,16 +21,19 @@ export default function MemberCard(props: Props) {
       {loading && <span>Loading...</span>}
       {userData && (
         <>
-          <div className="w-20 mask mask-squircle">
-            <Image
-              src={userData.data.photoURL || "/user.png"}
-              alt={userData.data.displayName ?? ""}
-              layout="fill"
-            />
+          <div className="avatar">
+            <div className="w-20 mask mask-squircle">
+              <Image
+                src={userData.data.photoURL || "/user.png"}
+                alt={userData.data.displayName ?? ""}
+                layout="fill"
+              />
+            </div>
           </div>
-
           <div className="card-body">
-            <h2 className="card-title">{userData.data.displayName}</h2>
+            <h2 className="card-title">
+              {userData.data.displayName || userData.data.email}
+            </h2>
             <p>Member</p>
           </div>
         </>

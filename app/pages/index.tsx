@@ -36,6 +36,7 @@ function Index() {
 
     const docRef = await addDoc(collection(db, "household"), {
       name: houseName.value,
+      desc: houseDesc.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
     });
 
@@ -59,7 +60,7 @@ function Index() {
                 <div className="flex flex-col justify-around items-center">
                   {value.docs.map((doc) => (
                     <HouseholdCard
-                      desc=""
+                      desc={doc.data().desc}
                       id={doc.id}
                       key={doc.id}
                       name={doc.data().name}
