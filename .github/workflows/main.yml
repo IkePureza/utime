@@ -40,7 +40,9 @@ jobs:
           distribution: "adopt"
           java-version: "11"
 
-      - run: npm install -g firebase-tools
+      - run: 
+        npm install -g firebase-tools
+        firebase login
 
       - name: Run Cypress Sample Tests
         # You may pin to the exact commit or the version.
