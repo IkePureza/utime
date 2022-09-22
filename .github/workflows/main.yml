@@ -75,3 +75,16 @@ jobs:
           FIRESTORE_EMULATOR_HOST: localhost:8080
           FIRESTORE_AUTH_EMULATOR_HOST: localhost:9099
           FIRESTORE_FUNCTIONS_EMULATOR_HOST: localhost:5001
+
+      # Store Cypress test screenshot if failed
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      # Test run video was always captured, so this action uses "always()" condition
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
