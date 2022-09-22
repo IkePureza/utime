@@ -34,28 +34,32 @@ const Login = () => {
     bookingTo: undefined,
     bookingFrom: undefined,
   });
+  const bookingRef = collection(db, "booking");
 
   useEffect(() => {
-    // Checks if amenity is already booked
-    var utilityAvail = isUtilityAvail(
-      bookingData.bookingFrom,
-      bookingData.bookingTo,
-      amenityData
-    );
-    console.log("Is current utility available? ", utilityAvail);
+    if (amenityData) {
+      // Checks if amenity is already booked
+      var utilityAvail = isUtilityAvail(
+        bookingData.bookingFrom,
+        bookingData.bookingTo
+        // amenityData
+      );
 
-    // Checks if user is booking into the past
-    var bookingMakesSense = datesWellFormed(
-      bookingData.bookingFrom,
-      bookingData.bookingTo
-    );
+      // Checks if user is booking into the past
+      var bookingMakesSense = datesWellFormed(
+        bookingData.bookingFrom,
+        bookingData.bookingTo
+      );
+      console.log("Are the dates well formed?:", bookingMakesSense);
+      console.log("Is current utility available? ", utilityAvail);
 
-    // If booking dont make sense OR its unavailable
-    if ((bookingMakesSense || utilityAvail) == false) {
-      setValidity(false); // *********************************************************
-      console.log("Booking invalid"); // not printing
+      // If booking dont make sense OR its unavailable
+      if (bookingMakesSense == false || utilityAvail == false) {
+        setValidity(false);
+        console.log("BOOKING INVALID");
+      }
     }
-  }, [bookingData, amenityData]);
+  }, [bookingData]); // Unsure what to do with this
 
   const handleBooking = async (event: any) => {
     // Prevents page from auto reloading every form submit
@@ -66,25 +70,45 @@ const Login = () => {
     const bookingFrom = event.target.elements.from.value;
     setBookingData({ bookingDesc, bookingTo, bookingFrom });
 
-    const bookingRef = collection(db, "booking");
+    if (amenityData) {
+      // Checks if amenity is already booked
+      var utilityAvail = isUtilityAvail(
+        bookingFrom,
+        bookingTo
+        // amenityData
+      );
+      // Checks if user is booking into the past
+      var bookingMakesSense = datesWellFormed(bookingFrom, bookingTo);
 
-    // Do below if ((bookingMakesSense && alreadyBooked) == true)
-    const docRef = await addDoc(bookingRef, {
-      utilityId,
-      desc: bookingDesc,
-      userId: currentUser?.userId,
-      householdId: houseId,
-      from: bookingFrom,
-      to: bookingTo,
-    });
+      console.log("UTIL AVAIL?", utilityAvail);
+      console.log("BOOKING GOOD?", bookingMakesSense);
 
-    const updateAmenity = await updateDoc(amenityRef, {
-      "latestBooking.from": bookingFrom,
-      "latestBooking.to": bookingTo,
-      "latestBooking.userId": currentUser?.userId,
-      "latestBooking.bookingID": docRef.id,
-    });
+      // Do below if ((bookingMakesSense && alreadyBooked) == true)
+      if (bookingMakesSense == true && utilityAvail == true) {
+        console.log("HELLO WORLDDDDDDD");
+        const docRef = await addDoc(bookingRef, {
+          utilityId,
+          desc: bookingDesc,
+          userId: currentUser?.userId,
+          householdId: houseId,
+          from: bookingFrom,
+          to: bookingTo,
+        });
 
+        const updateAmenity = await updateDoc(amenityRef, {
+          "latestBooking.from": bookingFrom,
+          "latestBooking.to": bookingTo,
+          "latestBooking.userId": currentUser?.userId,
+          "latestBooking.bookingID": docRef.id,
+        });
+        setValidity(true);
+
+        // ToDo:
+        // 1. Change last booking system to an array of bookings?
+        //    Will have to further check validity in a loop maybe
+        // 2. Implement delete booking feature
+      }
+    }
     // console.log("Document wbookingFromritten with ID: ", docRef.id);
   };
 
@@ -93,17 +117,21 @@ const Login = () => {
   // Current booking date is equal or less to the latest booking toDate
   const isUtilityAvail = (
     bookingFrom: any,
-    bookingTo: any,
-    amenityData: DocumentData
+    bookingTo: any
+    // amenityData: DocumentData
   ): boolean => {
     // if amenityData is undefined (no amenity?) then return true as no prev booking
-    if ((amenityData || bookingFrom || bookingTo) == undefined) {
+    if (
+      amenityData == undefined ||
+      bookingFrom == undefined ||
+      bookingTo == undefined
+    ) {
       return true;
     }
 
     // get latestBookingFrom and latestBookingTo from UtilityID
-    const LBFrom = new Date(amenityData.latestBooking.from);
-    const LBTo = new Date(amenityData.latestBooking.to);
+    const LBFrom = new Date(amenityData?.latestBooking.from);
+    const LBTo = new Date(amenityData?.latestBooking.to);
     const BFrom = new Date(bookingFrom);
     const BTo = new Date(bookingTo);
 
@@ -113,8 +141,13 @@ const Login = () => {
     console.log("BookingFrom:", BFrom);
     console.log("BookingTo:", BTo);
 
-    // If BookingFrom is > LastBookingTo
+    // If booking from is after last booking to
     if (BFrom > LBTo) {
+      return true;
+    }
+
+    // If booking to is before last booking from
+    if (BTo < LBFrom) {
       return true;
     }
 
