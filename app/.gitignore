@@ -41,6 +41,6 @@ database-debug.log
 firestore-debug.log
 firebase-debug.log
 
-# Cypress (Could include later for documentation purposes
-cypress/screenshots
-cypress/videos
+# Cypress Test artifacts (folders are kept)
+cypress/screenshots/*
+cypress/videos/*
