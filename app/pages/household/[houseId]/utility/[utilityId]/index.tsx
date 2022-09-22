@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 
 import { AuthContext } from "../../../../../context/AuthContext";
 import { useRouter } from "next/router";
@@ -28,26 +28,47 @@ const Login = () => {
   const householdRef = doc(db, "household", houseId);
   const amenityRef = doc(householdRef, "amenity", utilityId);
   const [amenityData, loading, error, snapshot] = useDocumentData(amenityRef);
+  const [validBooking, setValidity] = useState(true);
+  const [bookingData, setBookingData] = useState({
+    bookingDesc: undefined,
+    bookingTo: undefined,
+    bookingFrom: undefined,
+  });
+
+  useEffect(() => {
+    // Checks if amenity is already booked
+    var utilityAvail = isUtilityAvail(
+      bookingData.bookingFrom,
+      bookingData.bookingTo,
+      amenityData
+    );
+    console.log("Is current utility available? ", utilityAvail);
+
+    // Checks if user is booking into the past
+    var bookingMakesSense = datesWellFormed(
+      bookingData.bookingFrom,
+      bookingData.bookingTo
+    );
+
+    // If booking dont make sense OR its unavailable
+    if ((bookingMakesSense || utilityAvail) == false) {
+      setValidity(false); // *********************************************************
+      console.log("Booking invalid"); // not printing
+    }
+  }, [bookingData, amenityData]);
 
   const handleBooking = async (event: any) => {
     // Prevents page from auto reloading every form submit
     event.preventDefault();
+
     const bookingDesc = event.target.elements.desc.value;
     const bookingTo = event.target.elements.to.value;
     const bookingFrom = event.target.elements.from.value;
+    setBookingData({ bookingDesc, bookingTo, bookingFrom });
+
     const bookingRef = collection(db, "booking");
 
-    // Checks if amenity is already booked
-    var validBooking = isAmenityBooked(bookingFrom, bookingTo, amenityData);
-    console.log("Is current booking valid? ", validBooking);
-
-    // Checks if user is booking into the past
-    var bookingMakesSense = datesWellFormed(bookingFrom, bookingTo);
-
-    // Not sure what to do if ((bookingMakesSense || validBooking) == false)
-    // How to change UI to ask users to book new date
-
-    // Do below if ((bookingMakesSense && validBooking) == true)
+    // Do below if ((bookingMakesSense && alreadyBooked) == true)
     const docRef = await addDoc(bookingRef, {
       utilityId,
       desc: bookingDesc,
@@ -68,14 +89,15 @@ const Login = () => {
   };
 
   // Checks if utility is currently booked
+  // Returns true if utility is available
   // Current booking date is equal or less to the latest booking toDate
-  const isAmenityBooked = (
+  const isUtilityAvail = (
     bookingFrom: any,
     bookingTo: any,
-    amenityData: DocumentData | undefined
+    amenityData: DocumentData
   ): boolean => {
     // if amenityData is undefined (no amenity?) then return true as no prev booking
-    if (amenityData == undefined) {
+    if ((amenityData || bookingFrom || bookingTo) == undefined) {
       return true;
     }
 
@@ -107,6 +129,10 @@ const Login = () => {
     const now = new Date(Date.now());
     const BFrom = new Date(bookingFrom);
     const BTo = new Date(bookingTo);
+
+    if ((bookingFrom || bookingTo) == undefined) {
+      return true;
+    }
 
     if (BFrom > now) {
       return true;
@@ -164,7 +190,10 @@ const Login = () => {
         <p className="text-center mb-8">
           {amenityData?.desc ?? "No Description"}
         </p>
-        <UtilityBookingForm handleSubmit={handleBooking}></UtilityBookingForm>
+        <UtilityBookingForm
+          handleSubmit={handleBooking}
+          validBooking={validBooking}
+        ></UtilityBookingForm>
       </div>
     </>
   );

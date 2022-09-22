@@ -2,9 +2,11 @@ import React, { useState } from "react";
 
 interface UtilityBookingFormProps {
   handleSubmit: (event: any) => Promise<void>;
+  validBooking: boolean;
 }
 
 function UtilityBookingForm(props: UtilityBookingFormProps) {
+  console.log("Props.validBooking:", props.validBooking);
   return (
     <>
       <h1 className="text-left font-black text-2xl mb-2">Book</h1>
@@ -58,8 +60,10 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
           </div>
         </div>
         <br />
+
+        {props.validBooking === false && <p>Bad booking!!!</p>}
         <div className="min-w-full flex place-content-center">
-          <input className="btn" type="submit" value="Book"></input>
+          <input className="btn" type="submit" value="Book Utility"></input>
         </div>
       </form>
     </>
