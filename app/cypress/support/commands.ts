@@ -16,7 +16,7 @@ const fbConfig = {
 };
 
 const app = firebase.initializeApp(fbConfig);
-const auth = getAuth(app);
+const auth = getAuth();
 const db = getFirestore(app);
 const functions = getFunctions(app);
 

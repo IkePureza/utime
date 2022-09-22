@@ -7,7 +7,9 @@ const cypressConfig = defineConfig({
     baseUrl: "http://localhost:3020",
     supportFile: "cypress/support/e2e.ts",
     setupNodeEvents(on, config) {
-      cypressFirebasePlugin(on, config, admin);
+      cypressFirebasePlugin(on, config, admin, {
+        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      });
     },
   },
 });
