@@ -18,7 +18,10 @@
     "emulators": "firebase emulators:start --only database,firestore,auth",
     "test": "CYPRESS_BASE_URL=http://localhost:3021 cypress run",
     "test:open": "cypress open",
-    "test:emulate": "cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.auth.port)\" FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.database.port)\" FIRESTORE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.firestore.port)\" yarn test:open",
+    "test:dev-run": "CYPRESS_BASE_URL=http://localhost:3020 cypress run",
+    "test:dev-open": "CYPRESS_BASE_URL=http://localhost:3020 cypress open",
+    "test:emulate-run": "cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.auth.port)\" FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.database.port)\" FIRESTORE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.firestore.port)\" NEXT_PUBLIC_FIREBASE_PROJECT_ID=\"shitimes-f199b\" yarn test:dev-run",
+    "test:emulate-open": "cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.auth.port)\" FIREBASE_DATABASE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.database.port)\" FIRESTORE_EMULATOR_HOST=\"localhost:$(cat firebase.json | jq .emulators.firestore.port)\" NEXT_PUBLIC_FIREBASE_PROJECT_ID=\"shitimes-f199b\" yarn test:dev-open",
     "prepare": "cd ../ && husky install"
   },
   "dependencies": {
