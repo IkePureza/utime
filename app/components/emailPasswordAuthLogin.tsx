@@ -29,13 +29,13 @@ const EmailPasswordAuthLogin = () => {
       >
         <div className="form-control w-full max-w-md mb-4">
           <label
-            className="label text-gray-700 text-sm font-bold mb-2"
+            className="label text-gray-700 text-lg font-bold mb-2"
             htmlFor="email"
           >
             Email
           </label>
           <input
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full text-xl rounded-lg"
             name="email"
             id="email"
             type="email"
@@ -44,28 +44,29 @@ const EmailPasswordAuthLogin = () => {
         </div>
         <div className="form-control w-full max-w-md mb-6">
           <label
-            className="label text-gray-700 text-sm font-bold mb-2"
+            className="label text-gray-700 text-lg font-bold mb-2"
             htmlFor="password"
+            
           >
             Password
           </label>
           <input
-            className="input input-bordered max-w-xs shadow appearance-none w-full"
+            className="input input-bordered shadow appearance-none w-full text-xl rounded-lg"
             name="password"
             id="password"
             type="password"
-            placeholder="******************"
+            placeholder="*************"
           />
         </div>
         <button
-          className="btn btn-primary btn-wide transition-all duration-500 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="btn btn-primary transition-all duration-500 py-5 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full h-full mb-4 text-3xl"
           type="submit"
         >
           Sign In
         </button>
         <br />
         <Link href="/signUp">
-          <a className="link link-primary link-hover transition-all duration-500">
+          <a className="link link-primary link-hover transition-all duration-500 text-2xl">
             Sign up?
           </a>
         </Link>

@@ -23,15 +23,15 @@ const GoogleSignIn = () => {
   }, [Router]);
   return (
     <button className="btn-lg" onClick={loginHandler}>
-      <div className="flex items-center">
+      <div className="flex items-center justify-center">
         <Image
           className="w-8 h-8  "
           src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png"
           alt="google"
-          width="50"
-          height="50"
+          width="70"
+          height="70"
         />
-        <h3 className="ml-4 text-blue-600 text-lg font-semibold  my-auto ">
+        <h3 className="ml-4 text-blue-600 text-2xl font-semibold  my-auto ">
           Continue with Google
         </h3>
       </div>
