@@ -16,6 +16,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@grpc/grpc-js": "^1.6.9",
+    "@sendgrid/mail": "^7.7.0",
     "firebase": "^9.9.2",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0"
