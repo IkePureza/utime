@@ -28,7 +28,7 @@ const Login = () => {
   const householdRef = doc(db, "household", houseId);
   const amenityRef = doc(householdRef, "amenity", utilityId);
   const [amenityData, loading, error, snapshot] = useDocumentData(amenityRef);
-  const [validBooking, setValidity] = useState(true);
+  const [validBooking, setValidity] = useState(-1);
   const [bookingData, setBookingData] = useState({
     bookingDesc: undefined,
     bookingTo: undefined,
@@ -55,7 +55,7 @@ const Login = () => {
 
       // If booking dont make sense OR its unavailable
       if (bookingMakesSense == false || utilityAvail == false) {
-        setValidity(false);
+        setValidity(0);
         console.log("BOOKING INVALID");
       }
     }
@@ -101,7 +101,7 @@ const Login = () => {
           "latestBooking.userId": currentUser?.userId,
           "latestBooking.bookingID": docRef.id,
         });
-        setValidity(true);
+        setValidity(1);
 
         // ToDo:
         // 1. Change last booking system to an array of bookings?
@@ -124,12 +124,14 @@ const Login = () => {
     if (
       amenityData == undefined ||
       bookingFrom == undefined ||
-      bookingTo == undefined
+      bookingTo == undefined ||
+      amenityData?.latestBooking == undefined
     ) {
       return true;
     }
 
     // get latestBookingFrom and latestBookingTo from UtilityID
+    // latestBooking now only has name, desc, type
     const LBFrom = new Date(amenityData?.latestBooking.from);
     const LBTo = new Date(amenityData?.latestBooking.to);
     const BFrom = new Date(bookingFrom);
@@ -226,6 +228,8 @@ const Login = () => {
         <UtilityBookingForm
           handleSubmit={handleBooking}
           validBooking={validBooking}
+          bookingFrom={bookingData.bookingFrom}
+          bookingTo={bookingData.bookingTo}
         ></UtilityBookingForm>
       </div>
     </>

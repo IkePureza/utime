@@ -3,7 +3,14 @@ import React, { useContext, useRef } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useRouter } from "next/router";
 
-import { addDoc, doc, collection, where, query } from "firebase/firestore";
+import {
+  addDoc,
+  doc,
+  collection,
+  where,
+  query,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../firebase/clientApp";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import NavBar from "../../../components/navBar";
@@ -12,11 +19,12 @@ import NewUtilityForm from "../../../components/newUtilityForm";
 
 const Login = () => {
   const router = useRouter();
-  const { houseId }: any = router.query;
+  const { houseId, utilityId }: any = router.query;
   const authContext = useContext(AuthContext);
   const currentUser = authContext?.userData;
   const householdRef = doc(db, "household", houseId);
   const amenityRef = collection(householdRef, "amenity");
+  // const amenityRefDoc = doc(householdRef, "amenity");
   const bookingsRef = collection(db, "booking");
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
@@ -37,6 +45,13 @@ const Login = () => {
       type: type.value,
       desc: desc.value,
     });
+
+    // This tries to create a LBTo and LBFrom at creation
+    // Uses a Document Ref instead of a Collection Ref
+    // const updateAmenity = await updateDoc(amenityRefDoc, {
+    //   "latestBooking.from": new Date(Date.now()),
+    //   "latestBooking.to": new Date(Date.now()),
+    // });
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }

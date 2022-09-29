@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 interface UtilityBookingFormProps {
   handleSubmit: (event: any) => Promise<void>;
-  validBooking: boolean;
+  validBooking: number;
+  bookingFrom: undefined;
+  bookingTo: undefined;
 }
 
 function UtilityBookingForm(props: UtilityBookingFormProps) {
@@ -60,8 +62,15 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
           </div>
         </div>
         <br />
+        {props.validBooking == 1 && <p> Booking successful! </p>}
+        {props.validBooking == 1 && <p> From: {props.bookingFrom} </p>}
+        {props.validBooking == 1 && <p> To: {props.bookingTo} </p>}
 
-        {props.validBooking === false && <p>Bad booking!!!</p>}
+        {props.validBooking === 0 && <p>Booking unsuccessful!</p>}
+        {props.validBooking === 0 && <p>Possible reasons:</p>}
+        {props.validBooking === 0 && <p>- *To* needs to be after *From*</p>}
+        {props.validBooking === 0 && <p>- Utility is already booked</p>}
+
         <div className="min-w-full flex place-content-center">
           <input className="btn" type="submit" value="Book Utility"></input>
         </div>
