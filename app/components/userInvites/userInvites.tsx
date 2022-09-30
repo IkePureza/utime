@@ -45,11 +45,20 @@ export default function UserInvites() {
   }
 
   return (
-    <React.Fragment>
-      <h1 className="text-2xl text-center font-black mb-10">Invites</h1>
+    <div className="mx-10">
+      <div className="indicator">
+        {invites && (
+          <span className="indicator-item badge badge-primary">
+            {invites.docs.length}
+          </span>
+        )}
+        <div>
+          <h1 className="text-2xl text-center font-black mb-10">Invites</h1>
+        </div>
+      </div>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span>Loading...</span>}
-      {invites && (
+      {invites && invites.docs.length > 0 ? (
         <div className="flex flex-col mx-auto">
           {invites.docs.map((doc) => (
             <UserInviteCard
@@ -63,7 +72,9 @@ export default function UserInvites() {
             />
           ))}
         </div>
+      ) : (
+        <p className="text-center">🌵 😭 🌵</p>
       )}
-    </React.Fragment>
+    </div>
   );
 }

@@ -72,7 +72,7 @@ export default function InviteCard(props: inviteCardProps) {
       email: inviteEmail.value,
       expiry_time: expiry_date,
       houseId: props.houseId,
-      invitee: currentUser?.userName,
+      invitee: currentUser?.userName || currentUser?.userEmail,
     });
     console.log("Document written with ID: ", createInvite.id);
 

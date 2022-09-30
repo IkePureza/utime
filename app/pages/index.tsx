@@ -56,7 +56,7 @@ function Index() {
             <p>
               {error && <strong>Error: {JSON.stringify(error)}</strong>}
               {loading && <span>Collection: Loading...</span>}
-              {value && (
+              {value && value.docs.length > 0 ? (
                 <div className="flex flex-col justify-around items-center">
                   {value.docs.map((doc) => (
                     <HouseholdCard
@@ -67,6 +67,11 @@ function Index() {
                     />
                   ))}
                 </div>
+              ) : (
+                <p className="text-center text-2xl font-bold text-teal-500">
+                  Add a House by clicking the button below!
+                  <br />
+                </p>
               )}
             </p>
           </div>
@@ -80,38 +85,6 @@ function Index() {
         </div>
         <div className="w-fit flex-col" id="userInvites">
           <UserInvites />
-          <div className="mt-4 flex flex-col gap-y-2">
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>Authentication method:</h4>
-              <h6>{userData?.userProviderId}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>userId:</h4>
-              <h6>{userData?.userId}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>display name:</h4>
-              <h6>{userData?.userName || "null"}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>email:</h4>
-              <h6>{userData?.userEmail}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>Profile picture</h4>
-              {userData?.userPhotoLink ? (
-                <Image
-                  className="rounded-full object-contain w-32 h-32"
-                  src={userData?.userPhotoLink}
-                  alt={userData?.userName ?? ""}
-                  width="32"
-                  height="32"
-                />
-              ) : (
-                "null"
-              )}
-            </div>
-          </div>
         </div>
       </div>
 
