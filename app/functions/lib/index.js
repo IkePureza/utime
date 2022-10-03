@@ -1,13 +1,13 @@
 "use strict";
-
-import functions = require("firebase-functions");
-import admin = require("firebase-admin");
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createUserDocument = void 0;
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 admin.initializeApp();
-
-export const createUserDocument = functions
+exports.createUserDocument = functions
   .region("australia-southeast1")
   .auth.user()
-  .onCreate(async (user: any): Promise<any> => {
+  .onCreate(async (user) => {
     admin
       .firestore()
       .collection("users")
@@ -22,3 +22,4 @@ export const createUserDocument = functions
         return;
       });
   });
+//# sourceMappingURL=index.js.map

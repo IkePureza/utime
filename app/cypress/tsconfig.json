@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "isolatedModules": false,
+    // Explicit about types included to avoid clashing with Jest global types
+    "types": ["cypress", "node", "cypress-firebase"]
+  },
+  "include": ["../node_modules/cypress", "./**/*.ts"],
+  "exclude": ["../node_modules"]
+}

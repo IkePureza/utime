@@ -35,3 +35,15 @@ next-env.d.ts
 
 # prettier
 .prettierrc.json
+
+# firebase debug logs
+database-debug.log
+firestore-debug.log
+firebase-debug.log
+
+# Cypress Test artifacts (folders are kept)
+cypress/screenshots/*
+cypress/videos/*
+
+# Firebase Service Account
+serviceAccount.json
