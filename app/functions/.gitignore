@@ -5,3 +5,6 @@ typings/
 node_modules/
 
 package-lock.json
+
+# Sendgrid api keys
+.runtimeconfig.json
