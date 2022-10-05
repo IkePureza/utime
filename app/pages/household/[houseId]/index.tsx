@@ -6,6 +6,9 @@ import { useRouter } from "next/router";
 import {
   addDoc,
   deleteDoc,
+  updateDoc,
+  arrayRemove,
+  getDoc,
   doc,
   collection,
   where,
@@ -17,6 +20,7 @@ import NavBar from "../../../components/navBar";
 import UtilityCard from "../../../components/utilityCard";
 import NewUtilityForm from "../../../components/newUtilityForm";
 import DeleteHouseForm from "../../../components/deleteHouseForm";
+import LeaveHouseForm from "../../../components/leaveHouseForm";
 
 const Login = () => {
   const router = useRouter();
@@ -25,6 +29,7 @@ const Login = () => {
   const currentUser = authContext?.userData;
   const householdRef = doc(db, "household", houseId);
   const amenityRef = collection(householdRef, "amenity");
+  //const userRef = doc(householdRef, "users");
   const bookingsRef = collection(db, "booking");
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
@@ -60,6 +65,25 @@ const Login = () => {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }
     console.log("House deleted");
+  };
+
+  const handleLeaveHouse = async (event: any) => {
+    event.preventDefault();
+    const currentUserId = currentUser?.userId;
+    const docRef = doc(db, "household", householdRef.id);
+    // max users 20 assumed
+    for (let i = 0; i< 20; i++){
+      if (value?.data()?.users[i] == currentUserId){
+        const a = value?.data()?.users[i];
+        await updateDoc(docRef, { users: arrayRemove(a) });
+        break;
+      }
+    }
+
+    if (modalCheckboxRef.current !== null) {
+      modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
+    }
+    console.log("House left");
   };
 
   return (
@@ -148,9 +172,14 @@ const Login = () => {
               <label htmlFor="delete-house-modal" className="text-red-500">
                 Delete
               </label>
+              {/*
+              <label htmlFor="leave-house-modal" className="text-red-500">
+                Leave
+                </label>*/}
             </li>
           </ul>
         </div>
+        
         <input
           type="checkbox"
           id="delete-house-modal"
@@ -171,10 +200,36 @@ const Login = () => {
             <p className="py-4">
               This action will delete the house for all users.
             </p>
+            <LeaveHouseForm handleClick={handleLeaveHouse} />
+            <br></br>
             <DeleteHouseForm handleClick={handleDeleteHouse} />
           </div>
         </div>
-      </div>
+{/* 
+        <input
+          type="checkbox"
+          id="leave-house-modal"
+          ref={modalCheckboxRef}
+          className="modal-toggle"
+        />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor="leave-house-modal"
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold">
+              Are you sure you want to leave the house?
+            </h3>
+            <p className="py-4">
+              You will need to be invited again to join in the future.
+            </p>
+            <LeaveHouseForm handleClick={handleLeaveHouse} />
+          </div>
+        </div>*/}
+      </div> 
     </>
   );
 };
