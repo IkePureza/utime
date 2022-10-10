@@ -39,11 +39,12 @@ jobs:
 
       - run: npm install -g firebase-tools
 
-      - name: Get firebase functions config variables
-        run: cd app/functions/ && firebase functions:config:get > .runtimeconfig.json
-
       - name: Build Firebase Functions
-        run: cd app/functions/ && npm install
+        script:
+          - cd app/functions
+          - npm install
+          - firebase use "shitimes-f199b"
+          - firebase functions:config:get > .runtimeconfig.json
 
         # Authenticate Google App for Cloud Functions
       - id: 'auth'
