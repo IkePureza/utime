@@ -46,7 +46,7 @@ const Login = () => {
   return (
     <>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
+      <div className="flex flex-row max-h-screen min-w-full px-5 pb-5 pt-24 w-max mx-auto">
         <div className="flex flex-col basis-1/4 items-center justify-start">
           <h1 className="text-center font-black text-2xl mb-2">Utilities</h1>
           <div className="flex flex-col gap-y-3 w-full">

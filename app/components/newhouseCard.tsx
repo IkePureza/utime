@@ -14,26 +14,25 @@ function HouseholdCard(props: HouseHoldCardProps) {
 
   return (
     <React.Fragment key={props.id}>
-      <div className="card card-side card-compact w-96 shadow-xl mb-2 bg-zinc-100 rounded-xl">
+      <div className="card card-side card-compact w-80 shadow-xl mb-2 bg-zinc-100 rounded-xl mt-10">
         <Image
-          src={"/houseDefault.jpg"}
+          src={"/plus.jpg"}
           width={80}
-          height={100}
+          height={80}
           alt="Shoes"
           className="rounded-r-xl object-cover shadow-md"
         />
 
         <div className="card-body gap-0">
-          <h2 className="card-title leading-4">{props.name}</h2>
-          {props.desc ? (
-            <p className="text-xs">{props.desc}</p>
-          ) : (
-            <p className = "text-xs break-normal break-words">Description of {props.name}</p>
-          )}
+          <h2 className="card-title leading-4">New House</h2>
+          <p className="text-xs">Add a new household</p>
           <div className="card-actions justify-end">
-            <Link href="household/[houseId]" as={`household/${props.id}`}>
-              <a className="btn btn-accent btn-xs ml-5 text-xs mt-2 rounded-lg normal-case shadow-md"> Go to House</a>
-            </Link>
+            <label
+              htmlFor="new-house-modal"
+              className="btn btn-xs btn-accent w-16 modal-button normal-case text-xs shadow-lg"
+            >
+            Go!
+          </label>
           </div>
         </div>
       </div>

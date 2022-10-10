@@ -18,6 +18,7 @@ function NewHouseForm(props: NewHouseFormProps) {
           type="input w-full max-w-xs"
           placeholder="House Name"
           className="input input-bordered"
+          maxLength={20}
           required
         />
       </div>
@@ -44,3 +45,5 @@ function NewHouseForm(props: NewHouseFormProps) {
 }
 
 export default NewHouseForm;
+
+//description not working. Does it save correctly to the DB?

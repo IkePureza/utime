@@ -12,6 +12,7 @@ import Link from "next/link";
 
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
+import NewHouseCard from "../components/newhouseCard";
 import NewHouseForm from "../components/newHouseForm";
 
 function Index() {
@@ -46,11 +47,11 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
-        <div className="w-full">Recent Activity Goes Here</div>
+      <div className="flex flex-row max-h-screen min-w-full px-5 pt-24 pb-10 w-max mx-auto">
+        <div className="w-full">{/*Recent Activity Goes Here*/}</div>
         <div className="w-full mx-auto flex flex-col items-center">
-          <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto container h-1/2 shadow-md rounded-md">
+          <a className="text-4xl text-center mb-8 font-semibold">Your Homes</a>
+          <div className="overflow-auto container h-3/5 rounded-md">
             <p>
               {error && <strong>Error: {JSON.stringify(error)}</strong>}
               {loading && <span>Collection: Loading...</span>}
@@ -68,15 +69,17 @@ function Index() {
               )}
             </p>
           </div>
+          {/*
           <label
             htmlFor="new-house-modal"
-            className="btn btn-wide modal-button mt-10"
+            className="btn btn-wide btn-primary modal-button mt-10 normal-case text-base shadow-lg"
           >
-            + Add a new Household
-          </label>
-          {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
+            New House
+                  </label>*/}
+          <label htmlFor="new-house-modal"><NewHouseCard id="" name="" /></label>
         </div>
         <div className="w-full">
+          {/*
           <div className="mt-4 flex flex-col gap-y-2">
             <div className="flex gap-x-3 items-center justify-center">
               <h4>Authentication method:</h4>
@@ -108,7 +111,9 @@ function Index() {
                 "null"
               )}
             </div>
-          </div>
+              </div>
+              <img src="./logo.png" alt="..." className="justify-center px-7"/>
+              */}
         </div>
       </div>
 
