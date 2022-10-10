@@ -26,8 +26,10 @@ function HouseholdCard(props: HouseHoldCardProps) {
         />
 
         <div className="card-body">
-          <h2 className="card-title">{props.name}</h2>
-          <p>{props.desc}</p>
+          <h2 className="card-title" id="houseName">
+            {props.name}
+          </h2>
+          <p id="houseDesc">{props.desc}</p>
 
           <div className="card-actions justify-end">
             <Link href="household/[houseId]" as={`household/${props.id}`}>

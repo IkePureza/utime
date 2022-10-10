@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  initializeFirestore,
+} from "firebase/firestore";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 
 const clientCredentials = {
@@ -14,9 +18,16 @@ const clientCredentials = {
 
 const app = initializeApp(clientCredentials);
 const auth = getAuth();
-const db = getFirestore(app);
+var db;
+try {
+  db = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+    ignoreUndefinedProperties: true,
+  });
+} catch {
+  db = getFirestore(app);
+}
 const functions = getFunctions(app);
-
 var node_env = process.env.NODE_ENV || "development";
 
 if (node_env !== "production") {

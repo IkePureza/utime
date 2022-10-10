@@ -6,7 +6,7 @@ interface NewHouseFormProps {
 
 function NewHouseForm(props: NewHouseFormProps) {
   return (
-    <form onSubmit={props.handleClick} action="#">
+    <form onSubmit={props.handleClick} action="#" id="createHouse">
       <div className="form-control w-full max-w-xs">
         <label className="label">
           <span className="label-text">House Name</span>

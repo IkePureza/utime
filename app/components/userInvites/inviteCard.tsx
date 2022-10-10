@@ -99,6 +99,7 @@ export default function InviteCard(props: inviteCardProps) {
               />
               <input
                 className="btn btn-primary btn-sm justify-end"
+                id="submitInvite"
                 type="submit"
                 value="Add"
               ></input>

@@ -52,7 +52,10 @@ function Index() {
         <div className="w-fit">Recent Activity Goes Here</div>
         <div className="w-fit place-item-center mx-auto flex flex-col items-center">
           <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto container h-1/2 shadow-md rounded-md">
+          <div
+            className="overflow-auto container h-1/2 shadow-md rounded-md"
+            id="houseHolds"
+          >
             <p>
               {error && <strong>Error: {JSON.stringify(error)}</strong>}
               {loading && <span>Collection: Loading...</span>}
@@ -78,6 +81,7 @@ function Index() {
           <label
             htmlFor="new-house-modal"
             className="btn btn-wide modal-button mt-10"
+            id="createHousehold"
           >
             + Add a new Household
           </label>
