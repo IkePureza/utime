@@ -8,7 +8,6 @@ import {
   deleteDoc,
   updateDoc,
   arrayRemove,
-  FieldValue,
   doc,
   collection,
   where,
@@ -71,9 +70,12 @@ const Login = () => {
     event.preventDefault();
     const currentUserId = currentUser?.userId;
     const docRef = doc(db, "household", householdRef.id);
-    
-    await updateDoc(docRef, { users: arrayRemove(currentUserId) });
-    
+    try {
+      await updateDoc(docRef, { users: arrayRemove(currentUserId) });
+    } catch (error) {
+      console.log("error");
+      alert(error);
+    }
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }
