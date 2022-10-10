@@ -106,6 +106,7 @@ const Login = () => {
       <div className="flex flex-col justify-center items-center">
         <h2 className="text-lg text-2xl text-center text-bo">Description</h2>
         <p className="text-center mb-8">{value?.desc ?? "No Description"}</p>
+        <UtilityBookingForm handleSubmit={handleBooking}></UtilityBookingForm>
       </div>
     </>
   );

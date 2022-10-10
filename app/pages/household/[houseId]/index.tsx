@@ -8,7 +8,7 @@ import {
   deleteDoc,
   updateDoc,
   arrayRemove,
-  getDoc,
+  FieldValue,
   doc,
   collection,
   where,
@@ -71,15 +71,9 @@ const Login = () => {
     event.preventDefault();
     const currentUserId = currentUser?.userId;
     const docRef = doc(db, "household", householdRef.id);
-    // max users 20 assumed
-    for (let i = 0; i< 20; i++){
-      if (value?.data()?.users[i] == currentUserId){
-        const a = value?.data()?.users[i];
-        await updateDoc(docRef, { users: arrayRemove(a) });
-        break;
-      }
-    }
-
+    
+    await updateDoc(docRef, { users: arrayRemove(currentUserId) });
+    
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }
@@ -205,30 +199,6 @@ const Login = () => {
             <DeleteHouseForm handleClick={handleDeleteHouse} />
           </div>
         </div>
-{/* 
-        <input
-          type="checkbox"
-          id="leave-house-modal"
-          ref={modalCheckboxRef}
-          className="modal-toggle"
-        />
-        <div className="modal">
-          <div className="modal-box relative">
-            <label
-              htmlFor="leave-house-modal"
-              className="btn btn-sm btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">
-              Are you sure you want to leave the house?
-            </h3>
-            <p className="py-4">
-              You will need to be invited again to join in the future.
-            </p>
-            <LeaveHouseForm handleClick={handleLeaveHouse} />
-          </div>
-        </div>*/}
       </div> 
     </>
   );
