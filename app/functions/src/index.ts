@@ -3,11 +3,28 @@
 import * as functions from "firebase-functions";
 import * as sgMail from "@sendgrid/mail";
 import * as admin from "firebase-admin";
+import * as serviceAccount from "../../serviceAccount.json";
 
+// API Key for SendGrid Service, along with dynamic template ID
 const TEMPLATE_ID = functions.config().sendgrid.template;
 sgMail.setApiKey(functions.config().sendgrid.key);
 
-admin.initializeApp();
+const params = {
+  type: serviceAccount.type,
+  projectId: serviceAccount.project_id,
+  privateKeyId: serviceAccount.private_key_id,
+  privateKey: serviceAccount.private_key,
+  clientEmail: serviceAccount.client_email,
+  clientId: serviceAccount.client_id,
+  authUri: serviceAccount.auth_uri,
+  tokenUri: serviceAccount.token_uri,
+  authProviderX509CertUrl: serviceAccount.auth_provider_x509_cert_url,
+  clientC509CertUrl: serviceAccount.client_x509_cert_url,
+};
+
+admin.initializeApp({
+  credential: admin.credential.cert(params),
+});
 
 export const createUserDocument = functions
   .region("australia-southeast1")
@@ -28,7 +45,7 @@ export const createUserDocument = functions
       });
   });
 
-// onCreate inviteToken send an invite email to the invited user!
+// onCreate on collection inviteToken, send an invite email to the invited user.
 export const sendInviteEmail = functions
   .region("australia-southeast1")
   .firestore.document("/inviteTokens/{documentId}")

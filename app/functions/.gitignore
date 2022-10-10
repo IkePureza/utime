@@ -6,5 +6,6 @@ node_modules/
 
 package-lock.json
 
+# Sendgrid api keys
 # local test runtime config (run: "firebase functions:config:get > .runtimeconfig.json" in functions directory
 .runtimeconfig.json
