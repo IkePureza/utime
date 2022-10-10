@@ -4,7 +4,7 @@ import { AuthContext } from "../../../../../context/AuthContext";
 import { useRouter } from "next/router";
 
 import {
-  getDoc,
+  getDocs,
   addDoc,
   doc,
   collection,
@@ -35,6 +35,12 @@ const Login = () => {
     bookingFrom: undefined,
   });
   const bookingRef = collection(db, "booking");
+  // const q = query(bookingRef, where("amenityId", "==", utilityId));
+  // const querySnapshot = await getDocs(q);
+  // querySnapshot.forEach((doc) => {
+  //   // doc.data() is never undefined for query doc snapshots
+  //   console.log(doc.id, " => ", doc.data());
+  // });
 
   useEffect(() => {
     if (amenityData) {
@@ -102,11 +108,6 @@ const Login = () => {
           "latestBooking.bookingID": docRef.id,
         });
         setValidity(1);
-
-        // ToDo:
-        // 1. Change last booking system to an array of bookings?
-        //    Will have to further check validity in a loop maybe
-        // 2. Implement delete booking feature
       }
     }
     // console.log("Document wbookingFromritten with ID: ", docRef.id);
@@ -132,6 +133,9 @@ const Login = () => {
 
     // get latestBookingFrom and latestBookingTo from UtilityID
     // latestBooking now only has name, desc, type
+
+    // TO CHANGE:
+    // Change from last booking to all the bookings in collection
     const LBFrom = new Date(amenityData?.latestBooking.from);
     const LBTo = new Date(amenityData?.latestBooking.to);
     const BFrom = new Date(bookingFrom);
