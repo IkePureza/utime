@@ -4,6 +4,7 @@ import {
   getFirestore,
   connectFirestoreEmulator,
   initializeFirestore,
+  Firestore,
 } from "firebase/firestore";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 
@@ -18,7 +19,7 @@ const clientCredentials = {
 
 const app = initializeApp(clientCredentials);
 const auth = getAuth();
-var db;
+var db: Firestore;
 try {
   db = initializeFirestore(app, {
     experimentalForceLongPolling: true,
