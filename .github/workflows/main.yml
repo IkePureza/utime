@@ -43,8 +43,8 @@ jobs:
         run: |
           cd app/functions
           npm install
-          npx firebase-tools use "shitimes-f199b"
-          npx firebase-tools functions:config:get > .runtimeconfig.json
+          npx firebase-tools use "shitimes-f199b" --token "${{ secrets.FIREBASE_TOKEN }}"
+          npx firebase-tools functions:config:get > .runtimeconfig.json --token "${{ secrets.FIREBASE_TOKEN }}"
 
         # Authenticate Google App for Cloud Functions
       - id: 'auth'
