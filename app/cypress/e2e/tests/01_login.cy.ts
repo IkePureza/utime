@@ -16,10 +16,6 @@ describe("User Registration and Authentication", () => {
     cy.get("input[id=password-signup]").type("123456");
     cy.get("button[type=submit]").click();
     cy.hash().should("eq", "");
-    cy.get("svg[id=hamburger]").click();
-    cy.contains("Logout").should("be.visible").click();
-    cy.visit("/login");
-    cy.location("href").should("include", "/login");
     cy.logout();
   });
 
