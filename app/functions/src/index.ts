@@ -1,7 +1,7 @@
 "use strict";
 
 import * as functions from "firebase-functions";
-import * as sgMail from "@sendgrid/mail";
+import sgMail from "@sendgrid/mail";
 import * as admin from "firebase-admin";
 
 // API Key for SendGrid Service, along with dynamic template ID

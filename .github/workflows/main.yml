@@ -66,8 +66,8 @@ jobs:
         with:
           browser: chrome
           build: npm run build:emulator
-          start: npm run start:emulator
-          wait-on: 'http://localhost:3021'
+          start: npm run dev:emulator
+          wait-on: 'http://localhost:3020'
 
           working-directory: app
         env:
@@ -75,7 +75,7 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
           # Cypress Variables
-          CYPRESS_BASE_URL: http://localhost:3021
+          CYPRESS_BASE_URL: http://localhost:3020
 
           # Authorization for firebase-admin (server-side)
           FIREBASE_PROJECT_ID: shitimes-f199b
