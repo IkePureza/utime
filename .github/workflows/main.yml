@@ -53,11 +53,11 @@ jobs:
           npm run build
 
       - name: create-json
-        working-directory: app/functions
         uses: jsdaniell/create-json@1.1.2
         with:
           name: ".runtimeconfig.json"
           json: '{"sendgrid": {"template": "","key": ""}}'
+          dir: "app/functions"
 
       - name: Run Cypress Sample Tests
         # You may pin to the exact commit or the version.
