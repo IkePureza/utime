@@ -52,14 +52,6 @@ jobs:
           npm install
           npm run build
 
-      - name: Retrieve firebase functions runtime config
-        uses: w9jds/firebase-action@master
-        with:
-          args: functions:config:get > .runtimeconfig.json
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_PATH: ./app/functions 
-
       - name: Run Cypress Sample Tests
         # You may pin to the exact commit or the version.
         # uses: cypress-io/github-action@30008f1458a5a2c97054bfe118fe33d75976c482
