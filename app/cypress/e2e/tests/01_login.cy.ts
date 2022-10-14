@@ -19,14 +19,12 @@ describe("User Registration and Authentication", () => {
     cy.get("svg[id=hamburger]").click();
     cy.contains("Logout").should("be.visible").click();
     cy.visit("/login");
-    cy.contains("h1", "Login");
     cy.location("href").should("include", "/login");
     cy.logout();
   });
 
   it("Can login", () => {
     cy.location("href").should("include", "/login");
-    cy.contains("h1", "Login");
     cy.get("input[id=email-login]").type("cypresstest@mail.com");
     cy.get("input[id=password-login]").type("123456");
     cy.get("button[type=submit]").click();
