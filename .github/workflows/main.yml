@@ -54,11 +54,11 @@ jobs:
 
       - name: Retrieve firebase functions runtime config
         uses: joinflux/firebase-tools@v10.7.0
-        with:
-          args: functions:config:get > .runtimeconfig.json
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_PATH: ./app/functions 
+        with:
+          args: functions:config:get > .runtimeconfig.json
 
       - name: Run Cypress Sample Tests
         # You may pin to the exact commit or the version.
