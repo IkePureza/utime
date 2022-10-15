@@ -14,11 +14,11 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../../../firebase/clientApp";
-import { useCollection, useDocumentData } from "react-firebase-hooks/firestore";
-import Link from "next/link";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 import { DocumentData } from "@google-cloud/firestore";
 import NavBar from "../../../../../components/navBar";
 import UtilityBookingForm from "../../../../../components/utilityBookingForm";
+import UtilityCalendar from "../../../../../components/utilityCalendar";
 
 const Login = () => {
   const router = useRouter();
@@ -102,11 +102,42 @@ const Login = () => {
           </ul>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <h2 className="text-lg text-2xl text-center text-bo">Description</h2>
+      <div className="flex flex-col justify-center items-center ">
+        <h2 className="text-lg text-center font-semibold text-bo">
+          Description
+        </h2>
         <p className="text-center mb-8">{value?.desc ?? "No Description"}</p>
-        <UtilityBookingForm handleSubmit={handleBooking}></UtilityBookingForm>
+        <label
+          htmlFor="new-booking-modal"
+          className="btn btn-wide btn-primary modal-button mb-4"
+        >
+          Book
+        </label>
+        <input
+          type="checkbox"
+          id="new-booking-modal"
+          className="modal-toggle"
+        />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor="new-booking-modal"
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold">Create a new booking</h3>
+            <p className="py-4">Enter the details of your new booking below.</p>
+            <UtilityBookingForm
+              handleSubmit={handleBooking}
+            ></UtilityBookingForm>
+          </div>
+        </div>
       </div>
+      <UtilityCalendar
+        houseId={houseId}
+        utilityId={utilityId}
+      ></UtilityCalendar>
     </>
   );
 };

@@ -7,7 +7,6 @@ interface UtilityBookingFormProps {
 function UtilityBookingForm(props: UtilityBookingFormProps) {
   return (
     <>
-      <h1 className="text-left font-black text-2xl mb-2">Book</h1>
       <form onSubmit={props.handleSubmit} action="#">
         <div className="form-control w-full max-w-xs">
           <label className="label">
@@ -17,7 +16,7 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
           <input
             id="desc"
             name="desc"
-            type="input w-full max-w-xs"
+            type="text"
             placeholder="Booking Description"
             className="input input-bordered error-"
             required
@@ -35,7 +34,7 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
               name="from"
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
-              className="input input-bordered error-"
+              className="input input-bordered w-full max-w-xs"
               required
             />
           </div>
@@ -52,7 +51,7 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
               name="to"
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
-              className="input input-bordered error-"
+              className="input input-bordered w-full max-w-xs"
               required
             />
           </div>
