@@ -5,6 +5,12 @@ interface UtilityBookingFormProps {
 }
 
 function UtilityBookingForm(props: UtilityBookingFormProps) {
+  const [bookingFrom, setBookingFrom] = useState();
+
+  const handleBookingFromChange = (event: any) => {
+    setBookingFrom(event?.target?.value);
+  };
+
   return (
     <>
       <form onSubmit={props.handleSubmit} action="#">
@@ -35,6 +41,9 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
               className="input input-bordered w-full max-w-xs"
+              step="any"
+              min={new Date().toISOString().split(".")[0]}
+              onChange={handleBookingFromChange}
               required
             />
           </div>
@@ -52,6 +61,9 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
               className="input input-bordered w-full max-w-xs"
+              disabled={!bookingFrom}
+              step="any"
+              min={bookingFrom}
               required
             />
           </div>

@@ -70,7 +70,7 @@ function Index() {
         </div>
         <div className="w-full mx-auto flex flex-col items-center">
           <h1 className="text-4xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto container h-1/2 shadow-md rounded-md">
+          <div className="overflow-auto container h-2/3  shadow-md rounded-md">
             <p>
               {householdsError && (
                 <strong>Error: {JSON.stringify(householdsError)}</strong>

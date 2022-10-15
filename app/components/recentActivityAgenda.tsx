@@ -9,11 +9,8 @@ import {
 import moment from "moment";
 import { db } from "../firebase/clientApp";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import {
-  useCollection,
-  useDocumentDataOnce,
-} from "react-firebase-hooks/firestore";
-import { query, where, collectionGroup, doc } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { query, where, collectionGroup } from "firebase/firestore";
 moment.locale("en-GB");
 //momentLocalizer(moment);
 const localizer = momentLocalizer(moment);
@@ -31,7 +28,9 @@ const RecentActivityAgenda = (props: RecentActivityAgenda) => {
       where(
         "householdId",
         "in",
-        props.userHouseholds?.map((data) => data.id) ?? [""]
+        !props.userHouseholds || props.userHouseholds?.length == 0
+          ? Array([""])
+          : props.userHouseholds?.map((data) => data.id)
       )
     )
   );
@@ -40,26 +39,24 @@ const RecentActivityAgenda = (props: RecentActivityAgenda) => {
       bookingsValue?.docs.map((doc) => {
         return {
           id: doc.id,
-          title: `🏠 ${doc.data().householdName} > 👤 ${
-            doc.data()?.userName
-          } > ${doc.data()?.amenityType} ${doc.data().amenityName}`,
+          title: `🏠 ${doc.data().householdName ?? ""} > 👤 ${
+            doc.data()?.userName ?? ""
+          } > ${doc.data()?.amenityType ?? ""} ${doc.data().amenityName ?? ""}`,
           start: new Date(doc.data()?.from.seconds * 1000),
           end: new Date(doc.data()?.to.seconds * 1000),
           resourceId: doc.data().amenityId,
-          description: doc.data()?.desc,
+          description: doc.data()?.desc ?? "",
         };
       })
     );
   }, [bookingsValue, props.userHouseholds]);
-
-  console.log(events);
 
   return (
     <div className="m-10">
       {bookingError && <strong>Error: {JSON.stringify(bookingError)}</strong>}
       {bookingLoading && <span>Collection: Loading...</span>}
       {bookingsValue && (
-        <div className="h-screen">
+        <div className="overflow-auto container h-screen shadow-md rounded-md">
           <BigCalendar
             localizer={localizer}
             events={events}
