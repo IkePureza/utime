@@ -10,10 +10,6 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../../firebase/clientApp";
-import {
-  reauthenticateWithCredential,
-  reauthenticateWithRedirect,
-} from "firebase/auth";
 
 interface inviteCardProps {
   houseId: string;
@@ -66,11 +62,11 @@ export default function InviteCard(props: inviteCardProps) {
     const createdAt = Timestamp.now().toDate();
     createdAt.setDate(createdAt.getDate() + expiresIn);
 
-    const expiry_date = Timestamp.fromDate(createdAt);
+    const expiryDate = Timestamp.fromDate(createdAt);
 
     const createInvite = await addDoc(invitesRef, {
       email: inviteEmail.value,
-      expiry_time: expiry_date,
+      expiryTime: expiryDate,
       houseId: props.houseId,
       invitee: currentUser?.userName || currentUser?.userEmail,
     });

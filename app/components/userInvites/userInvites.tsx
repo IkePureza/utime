@@ -13,7 +13,6 @@ import {
 import { useCollection } from "react-firebase-hooks/firestore";
 
 import { AuthContext } from "../../context/AuthContext";
-import { FieldValue } from "@google-cloud/firestore";
 import UserInviteCard from "./userInviteCard";
 
 export default function UserInvites() {
@@ -65,7 +64,7 @@ export default function UserInvites() {
               key={doc.id}
               inviteId={doc.id}
               houseId={doc.data().houseId}
-              expiry_time={doc.data().expiry_time.toDate()}
+              expiryTime={doc.data().expiry_time.toDate()}
               invitee={doc.data().invitee}
               acceptHandler={inviteAcceptHandler}
               deleteHandler={inviteDeleteHandler}

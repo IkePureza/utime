@@ -1,32 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
-import { auth, db } from "../../firebase/clientApp";
-import {
-  collection,
-  doc,
-  addDoc,
-  query,
-  where,
-  updateDoc,
-  deleteDoc,
-  Timestamp,
-  getDoc,
-} from "firebase/firestore";
-import {
-  useCollection,
-  useDocumentData,
-  useDocumentDataOnce,
-} from "react-firebase-hooks/firestore";
+import { db } from "../../firebase/clientApp";
+import { doc } from "firebase/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 import { AuthContext } from "../../context/AuthContext";
-import { FieldValue } from "@google-cloud/firestore";
 
 interface userInvitesProps {
   inviteId: string;
   houseId: string;
-  expiry_time: Date;
+  expiryTime: Date;
   icon?: string;
   invitee: string;
   acceptHandler: (event: any) => void;
@@ -98,7 +82,7 @@ export default function UserInviteCard(props: userInvitesProps) {
                   You`&apos;`ve been invited by {props.invitee} to join in a
                   UTime Group together!
                   <br></br>
-                  This invitation expires on {props.expiry_time.toString()}
+                  This invitation expires on {props.expiryTime.toString()}
                 </p>
                 <div className="modal-action">
                   <label
