@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { auth, db } from "../firebase/clientApp";
@@ -13,20 +13,22 @@ import Link from "next/link";
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
 import NewHouseForm from "../components/newHouseForm";
+import RecentActivityAgenda from "../components/recentActivityAgenda";
 
 function Index() {
   const appContext = useContext(AuthContext);
   const userData = appContext?.userData;
-  const [value, loading, error] = useCollection(
+  const [householdsValue, householdsLoading, householdsError] = useCollection(
     query(
       collection(db, "household"),
       where("users", "array-contains", userData?.userId ?? null)
     )
   );
+  const [userHouseholds, setUserHouseholds] = useState<any[] | undefined>([
+    { id: "", name: "" },
+  ]);
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
-
-  // Need to refernce input newHouse modal to close the model on submit
 
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
@@ -43,20 +45,42 @@ function Index() {
     }
   };
 
+  useEffect(() => {
+    setUserHouseholds(
+      householdsValue?.docs.map((doc) => {
+        return {
+          id: doc.id,
+          name: doc.data().name,
+        };
+      })
+    );
+  }, [householdsValue]);
+
   return (
     <AuthRoute>
       <NavBar></NavBar>
       <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
-        <div className="w-full">Recent Activity Goes Here</div>
+        <div className="w-full">
+          <h1 className="text-4xl text-center font-black mb-10">
+            Recent Activity
+          </h1>
+          <RecentActivityAgenda
+            userHouseholds={userHouseholds}
+          ></RecentActivityAgenda>
+        </div>
         <div className="w-full mx-auto flex flex-col items-center">
-          <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
+          <h1 className="text-4xl text-center font-black mb-10">Your Homes</h1>
           <div className="overflow-auto container h-1/2 shadow-md rounded-md">
             <p>
-              {error && <strong>Error: {JSON.stringify(error)}</strong>}
-              {loading && <span>Collection: Loading...</span>}
-              {value && (
+              {householdsError && (
+                <strong>Error: {JSON.stringify(householdsError)}</strong>
+              )}
+              {householdsLoading && (
+                <span>Collection: householdsLoading...</span>
+              )}
+              {householdsValue && (
                 <div className="flex flex-col justify-around items-center">
-                  {value.docs.map((doc) => (
+                  {householdsValue.docs.map((doc) => (
                     <HouseholdCard
                       desc=""
                       id={doc.id}
