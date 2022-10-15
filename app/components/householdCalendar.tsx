@@ -65,9 +65,6 @@ const HouseholdCalendar = (props: HouseholdCalendarProps) => {
     );
   }, [bookingsValue, amenityValue]);
 
-  console.log(events);
-  console.log(bookingsValue?.docs);
-
   return (
     <div className="m-10">
       {bookingError && amenityError && (

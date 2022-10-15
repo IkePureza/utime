@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-import { auth, db } from "../firebase/clientApp";
+import { db } from "../firebase/clientApp";
 import { collection, addDoc, query, where } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 
 import AuthRoute from "../HOC/authRoute";
 
 import { AuthContext } from "../context/AuthContext";
-import Link from "next/link";
 
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
@@ -98,7 +97,6 @@ function Index() {
           >
             + Add a new Household
           </label>
-          {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
         </div>
         <div className="w-full">
           <div className="mt-4 flex flex-col gap-y-2">

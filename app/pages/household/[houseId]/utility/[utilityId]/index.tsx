@@ -21,7 +21,7 @@ import NavBar from "../../../../../components/navBar";
 import UtilityBookingForm from "../../../../../components/utilityBookingForm";
 import UtilityCalendar from "../../../../../components/utilityCalendar";
 
-const Login = () => {
+const Utility = () => {
   const router = useRouter();
   const { houseId, utilityId }: any = router.query;
   const authContext = useContext(AuthContext);
@@ -191,4 +191,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Utility;

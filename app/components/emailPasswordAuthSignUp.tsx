@@ -13,7 +13,6 @@ const EmailPasswordAuthSignUp = () => {
       event.preventDefault();
       const { email, password } = event.target.elements;
       try {
-        console.log(email.value, password.value);
         await createUserWithEmailAndPassword(auth, email.value, password.value);
         Router.push("/");
       } catch (error) {

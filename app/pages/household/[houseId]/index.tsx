@@ -41,7 +41,6 @@ const Household = () => {
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }
-    console.log("Document written with ID: ", docRef.id);
   };
 
   return (
