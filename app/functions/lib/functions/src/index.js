@@ -44,10 +44,14 @@ var __importStar =
     return result;
   };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUserDocument = void 0;
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
+exports.sendInviteEmail = exports.createUserDocument = void 0;
+const functions = __importStar(require("firebase-functions"));
+const sgMail = __importStar(require("@sendgrid/mail"));
+const admin = __importStar(require("firebase-admin"));
 const serviceAccount = __importStar(require("../../serviceAccount.json"));
+// API Key for SendGrid Service, along with dynamic template ID
+const TEMPLATE_ID = functions.config().sendgrid.template;
+sgMail.setApiKey(functions.config().sendgrid.key);
 const params = {
   type: serviceAccount.type,
   projectId: serviceAccount.project_id,
@@ -81,4 +85,35 @@ exports.createUserDocument = functions
         return;
       });
   });
+// onCreate on collection inviteToken, send an invite email to the invited user.
+exports.sendInviteEmail = functions
+  .region("australia-southeast1")
+  .firestore.document("/inviteTokens/{documentId}")
+  .onCreate(async (snap, context) => {
+    const houseId = snap.data().houseId;
+    const houseDataQuery = await admin
+      .firestore()
+      .collection("household")
+      .where(admin.firestore.FieldPath.documentId(), "==", houseId)
+      .get();
+    const mailData = {
+      invitee: snap.data().invitee,
+      expiry: snap.data().expiry_time.toDate(),
+      houseName: houseDataQuery.docs[0].data().name,
+    };
+    return inviteEmail(snap.data().email, mailData);
+  });
+async function inviteEmail(email, data) {
+  const mailOptions = {
+    from: "utimeapp0@gmail.com",
+    to: email,
+    templateId: TEMPLATE_ID,
+    dynamic_template_data: {
+      invitee: data.invitee,
+      houseName: data.houseName,
+      expiry: data.expiry,
+    },
+  };
+  return sgMail.send(mailOptions);
+}
 //# sourceMappingURL=index.js.map

@@ -10,6 +10,8 @@ import NavBar from "../../../components/navBar";
 import UtilityCard from "../../../components/utilityCard";
 import NewUtilityForm from "../../../components/newUtilityForm";
 import HouseholdCalendar from "../../../components/householdCalendar";
+import HouseholdMembers from "../../../components/household/householdMembers";
+import InviteCard from "../../../components/userInvites/inviteCard";
 
 const Household = () => {
   const router = useRouter();
@@ -104,6 +106,8 @@ const Household = () => {
         </div>
         <div className="basis-1/4">
           <h1 className="text-center font-black text-2xl mb-2">Users</h1>
+          <HouseholdMembers houseId={houseId} />
+          <InviteCard houseId={houseId} />
         </div>
       </div>
     </>

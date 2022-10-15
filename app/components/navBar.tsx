@@ -28,6 +28,7 @@ const NavBar = () => {
               strokeWidth={1.5}
               stroke="currentColor"
               className="w-8 h-8 mr-1"
+              id="hamburger"
             >
               <path
                 strokeLinecap="round"
@@ -59,7 +60,9 @@ const NavBar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a onClick={signOutHandler}>Logout</a>
+              <Link href="/login">
+                <a onClick={signOutHandler}>Logout</a>
+              </Link>
             </li>
           </ul>
         </div>
