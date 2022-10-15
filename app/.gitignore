@@ -40,6 +40,7 @@ next-env.d.ts
 database-debug.log
 firestore-debug.log
 firebase-debug.log
+ui-debug.log
 
 # Cypress Test artifacts (folders are kept)
 cypress/screenshots/*
