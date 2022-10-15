@@ -39,7 +39,7 @@ const EmailPasswordAuthSignUp = () => {
           <input
             className="input input-bordered w-full max-w-xs"
             name="email"
-            id="email"
+            id="email-signup"
             type="email"
             placeholder="email"
           />
@@ -54,7 +54,7 @@ const EmailPasswordAuthSignUp = () => {
           <input
             className="input input-bordered max-w-xs shadow appearance-none border rounded w-full"
             name="password"
-            id="password"
+            id="password-signup"
             type="password"
             placeholder="******************"
           />

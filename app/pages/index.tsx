@@ -13,6 +13,7 @@ import Link from "next/link";
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
 import NewHouseForm from "../components/newHouseForm";
+import UserInvites from "../components/userInvites/userInvites";
 
 function Index() {
   const appContext = useContext(AuthContext);
@@ -35,6 +36,7 @@ function Index() {
 
     const docRef = await addDoc(collection(db, "household"), {
       name: houseName.value,
+      desc: houseDesc.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
     });
 
@@ -46,69 +48,47 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
-        <div className="w-full">Recent Activity Goes Here</div>
-        <div className="w-full mx-auto flex flex-col items-center">
+      <div className="flex flex-row max-h-screen min-w-full place-content-center gap-5 px-5 py-5 w-max mx-auto">
+        <div className="w-fit">Recent Activity Goes Here</div>
+        <div className="w-fit place-item-center mx-auto flex flex-col items-center">
           <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto container h-1/2 shadow-md rounded-md">
+          <div
+            className="overflow-auto container h-1/2 shadow-md rounded-md"
+            id="houseHolds"
+          >
             <p>
               {error && <strong>Error: {JSON.stringify(error)}</strong>}
               {loading && <span>Collection: Loading...</span>}
-              {value && (
+              {value && value.docs.length > 0 ? (
                 <div className="flex flex-col justify-around items-center">
                   {value.docs.map((doc) => (
                     <HouseholdCard
-                      desc=""
+                      desc={doc.data().desc}
                       id={doc.id}
                       key={doc.id}
                       name={doc.data().name}
                     />
                   ))}
                 </div>
+              ) : (
+                <p className="text-center text-2xl font-bold text-teal-500">
+                  Add a House by clicking the button below!
+                  <br />
+                </p>
               )}
             </p>
           </div>
           <label
             htmlFor="new-house-modal"
             className="btn btn-wide modal-button mt-10"
+            id="createHousehold"
           >
             + Add a new Household
           </label>
           {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
         </div>
-        <div className="w-full">
-          <div className="mt-4 flex flex-col gap-y-2">
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>Authentication method:</h4>
-              <h6>{userData?.userProviderId}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>userId:</h4>
-              <h6>{userData?.userId}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>display name:</h4>
-              <h6>{userData?.userName || "null"}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>email:</h4>
-              <h6>{userData?.userEmail}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>Profile picture</h4>
-              {userData?.userPhotoLink ? (
-                <Image
-                  className="rounded-full object-contain w-32 h-32"
-                  src={userData?.userPhotoLink}
-                  alt={userData?.userName ?? ""}
-                  width="32"
-                  height="32"
-                />
-              ) : (
-                "null"
-              )}
-            </div>
-          </div>
+        <div className="w-fit flex-col" id="userInvites">
+          <UserInvites />
         </div>
       </div>
 

@@ -9,6 +9,8 @@ import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import NavBar from "../../../components/navBar";
 import UtilityCard from "../../../components/utilityCard";
 import NewUtilityForm from "../../../components/newUtilityForm";
+import HouseholdMembers from "../../../components/household/householdMembers";
+import InviteCard from "../../../components/userInvites/inviteCard";
 
 const Login = () => {
   const router = useRouter();
@@ -103,6 +105,8 @@ const Login = () => {
         </div>
         <div className="basis-1/4">
           <h1 className="text-center font-black text-2xl mb-2">Users</h1>
+          <HouseholdMembers houseId={houseId} />
+          <InviteCard houseId={houseId} />
         </div>
       </div>
     </>

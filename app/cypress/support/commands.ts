@@ -4,7 +4,6 @@ import firebase from "firebase/compat/app";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
-import { attachCustomCommands } from "cypress-firebase";
 
 const fbConfig = {
   apiKey: Cypress.env("FIREBASE_API_KEY"),
@@ -41,4 +40,17 @@ if (functionsEmulatorHost) {
   console.debug(`Using Functions emulator: http://${functionsEmulatorHost}/`);
 }
 
-attachCustomCommands({ Cypress, cy, firebase });
+Cypress.Commands.add("login", () => {
+  cy.visit("/login");
+  cy.location("href").should("include", "/login");
+  cy.get("input[id=email-login]").type("cypresstest@mail.com");
+  cy.get("input[id=password-login]").type("123456");
+  cy.get("button[type=submit]").click();
+  cy.hash().should("eq", "");
+});
+
+Cypress.Commands.add("logout", () => {
+  cy.get("svg[id=hamburger]").click();
+  cy.contains("Logout").should("be.visible").click();
+  cy.location("href").should("include", "/login");
+});
