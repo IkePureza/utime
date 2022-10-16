@@ -55,7 +55,7 @@ const Household = () => {
             {amenityError && (
               <strong>Error: {JSON.stringify(amenityError)}</strong>
             )}
-            {amenityLoading && <span>Collection: Loading...</span>}
+            {amenityLoading && <span className="btn btn-ghost loading"></span>}
             {amenityValue && (
               <div className="flex flex-col justify-around items-center">
                 {amenityValue.docs.map((doc) => (

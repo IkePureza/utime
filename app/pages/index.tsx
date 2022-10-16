@@ -80,7 +80,7 @@ function Index() {
                 <strong>Error: {JSON.stringify(householdsError)}</strong>
               )}
               {householdsLoading && (
-                <span>Collection: householdsLoading...</span>
+                <span className="btn loading btn-ghost"></span>
               )}
               {householdsValue && householdsValue.docs.length > 0 ? (
                 <div className="flex flex-col justify-around items-center">

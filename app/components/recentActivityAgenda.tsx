@@ -54,7 +54,7 @@ const RecentActivityAgenda = (props: RecentActivityAgenda) => {
   return (
     <div className="my-10 mx-5 grid">
       {bookingError && <strong>Error: {JSON.stringify(bookingError)}</strong>}
-      {bookingLoading && <span>Collection: Loading...</span>}
+      {bookingLoading && <span className="btn btn-ghost loading"></span>}
       {bookingsValue && (
         <div className="overflow-auto container h-[75vh] mb-20 shadow-md rounded-md">
           <BigCalendar

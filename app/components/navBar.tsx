@@ -15,7 +15,7 @@ const NavBar = () => {
     <div className="navbar bg-base-100">
       <div className="flex-1">
         <Link href="/">
-          <a className="btn btn-ghost normal-case text-xl">Shitimes</a>
+          <a className="btn btn-ghost normal-case text-xl">UTime</a>
         </Link>
       </div>
       <div className="flex flex-row gap-2">

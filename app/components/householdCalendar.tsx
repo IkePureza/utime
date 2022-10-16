@@ -70,7 +70,9 @@ const HouseholdCalendar = (props: HouseholdCalendarProps) => {
       {bookingError && amenityError && (
         <strong>Error: {JSON.stringify(bookingError)}</strong>
       )}
-      {bookingLoading && amenityLoading && <span>Collection: Loading...</span>}
+      {bookingLoading && amenityLoading && (
+        <span className="btn btn-ghost loading"></span>
+      )}
       {bookingsValue && amenityValue && (
         <BigCalendar
           localizer={localizer}

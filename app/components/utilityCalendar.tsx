@@ -70,7 +70,7 @@ const UtilityCalendar = (props: UtilityCalendarProps) => {
   return (
     <div className="m-10">
       {bookingError && <strong>Error: {JSON.stringify(bookingError)}</strong>}
-      {bookingLoading && <span>Collection: Loading...</span>}
+      {bookingLoading && <span className="btn btn-ghost loading"></span>}
       {bookingsValue && (
         <BigCalendar
           components={components}

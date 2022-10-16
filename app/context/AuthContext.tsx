@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   if (loading) {
-    return <>Loading...</>;
+    return <span className="btn btn-ghost loading"></span>;
   }
 
   return (

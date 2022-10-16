@@ -38,7 +38,7 @@ export default function UserInviteCard(props: userInvitesProps) {
           className="rounded-r-xl"
         />
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Collection: Loading...</span>}
+        {loading && <span className="btn btn-ghost loading"></span>}
         {houseData && (
           <React.Fragment>
             <div className="card-body">

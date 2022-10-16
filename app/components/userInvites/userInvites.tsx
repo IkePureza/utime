@@ -56,7 +56,7 @@ export default function UserInvites() {
         </div>
       </div>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
-      {loading && <span>Loading...</span>}
+      {loading && <span className="btn btn-ghost loading"></span>}
       {invites && invites.docs.length > 0 ? (
         <div className="flex flex-col mx-auto">
           {invites.docs.map((doc) => (
