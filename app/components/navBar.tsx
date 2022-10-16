@@ -1,20 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useCallback } from "react";
+import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/clientApp";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
 const NavBar = () => {
   const signOutHandler = async () => {
     await signOut(auth);
+    document.location.reload();
   };
+
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
         <Link href="/">
-          <a className="btn btn-ghost normal-case text-xl">Shitimes</a>
+          <a className="btn btn-ghost normal-case text-xl">UTime</a>
         </Link>
       </div>
       <div className="flex flex-row gap-2">

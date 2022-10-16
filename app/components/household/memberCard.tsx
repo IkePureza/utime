@@ -18,7 +18,7 @@ export default function MemberCard(props: Props) {
   return (
     <div className="card card-side card-compact w-60 bg-base-100 shadow-xl mb-2">
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
-      {loading && <span>Loading...</span>}
+      {loading && <span className="btn btn-ghost loading"></span>}
       {userData && (
         <>
           <div className="avatar">

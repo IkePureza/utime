@@ -5,9 +5,14 @@ interface UtilityBookingFormProps {
 }
 
 function UtilityBookingForm(props: UtilityBookingFormProps) {
+  const [bookingFrom, setBookingFrom] = useState();
+
+  const handleBookingFromChange = (event: any) => {
+    setBookingFrom(event?.target?.value);
+  };
+
   return (
     <>
-      <h1 className="text-left font-black text-2xl mb-2">Book</h1>
       <form onSubmit={props.handleSubmit} action="#">
         <div className="form-control w-full max-w-xs">
           <label className="label">
@@ -17,7 +22,7 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
           <input
             id="desc"
             name="desc"
-            type="input w-full max-w-xs"
+            type="text"
             placeholder="Booking Description"
             className="input input-bordered error-"
             required
@@ -35,7 +40,10 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
               name="from"
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
-              className="input input-bordered error-"
+              className="input input-bordered w-full max-w-xs"
+              step="any"
+              min={new Date().toISOString().split(".")[0]}
+              onChange={handleBookingFromChange}
               required
             />
           </div>
@@ -52,7 +60,10 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
               name="to"
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
-              className="input input-bordered error-"
+              className="input input-bordered w-full max-w-xs"
+              disabled={!bookingFrom}
+              step="any"
+              min={bookingFrom}
               required
             />
           </div>

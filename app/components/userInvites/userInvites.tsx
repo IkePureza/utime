@@ -44,7 +44,7 @@ export default function UserInvites() {
   }
 
   return (
-    <div className="mx-10">
+    <div className="text-center">
       <div className="indicator">
         {invites && (
           <span className="indicator-item badge badge-primary">
@@ -52,11 +52,11 @@ export default function UserInvites() {
           </span>
         )}
         <div>
-          <h1 className="text-2xl text-center font-black mb-10">Invites</h1>
+          <h1 className="text-4xl font-black mb-10">Invites</h1>
         </div>
       </div>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
-      {loading && <span>Loading...</span>}
+      {loading && <span className="btn btn-ghost loading"></span>}
       {invites && invites.docs.length > 0 ? (
         <div className="flex flex-col mx-auto">
           {invites.docs.map((doc) => (
