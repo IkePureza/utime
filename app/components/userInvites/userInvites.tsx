@@ -44,7 +44,7 @@ export default function UserInvites() {
   }
 
   return (
-    <div className="mx-10">
+    <div className="text-center">
       <div className="indicator">
         {invites && (
           <span className="indicator-item badge badge-primary">
@@ -52,7 +52,7 @@ export default function UserInvites() {
           </span>
         )}
         <div>
-          <h1 className="text-2xl text-center font-black mb-10">Invites</h1>
+          <h1 className="text-4xl font-black mb-10">Invites</h1>
         </div>
       </div>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}

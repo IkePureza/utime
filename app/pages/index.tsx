@@ -60,8 +60,8 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full place-content-center gap-5 px-5 py-5 w-max mx-auto">
-        <div className="w-fit">
+      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
+        <div className="basis-1/3">
           <h1 className="text-4xl text-center font-black mb-10">
             Recent Activity
           </h1>
@@ -69,10 +69,10 @@ function Index() {
             userHouseholds={userHouseholds}
           ></RecentActivityAgenda>
         </div>
-        <div className="w-fit place-item-center mx-auto flex flex-col items-center">
+        <div className="basis-1/3 mx-auto flex flex-col items-center max-h-max">
           <h1 className="text-4xl text-center font-black mb-10">Your Homes</h1>
           <div
-            className="overflow-auto container h-2/3  shadow-md rounded-md"
+            className="overflow-auto container shadow-md rounded-md"
             id="houseHolds"
           >
             <p>
@@ -103,14 +103,14 @@ function Index() {
           </div>
           <label
             htmlFor="new-house-modal"
-            className="btn btn-wide modal-button mt-10"
+            className="btn btn-wide modal-button mt-10 mb-20"
             id="createHousehold"
           >
             + Add a new Household
           </label>
           {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
         </div>
-        <div className="w-fit flex-col" id="userInvites">
+        <div className="basis-1/3 flex-col" id="userInvites">
           <UserInvites />
         </div>
       </div>

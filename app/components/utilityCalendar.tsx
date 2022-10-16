@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Calendar as BigCalendar,
   momentLocalizer,
@@ -15,12 +15,33 @@ moment.locale("en-GB");
 //momentLocalizer(moment);
 const localizer = momentLocalizer(moment);
 
+interface EventProps {
+  event: any;
+}
+
+function Event(props: EventProps) {
+  return (
+    <span>
+      <strong className="mr-4">👤 {props.event.title}</strong>
+      📢 {props.event.desc}
+    </span>
+  );
+}
+
 interface UtilityCalendarProps {
   houseId: string;
   utilityId: string;
 }
 
 const UtilityCalendar = (props: UtilityCalendarProps) => {
+  const { components } = useMemo(
+    () => ({
+      components: {
+        event: Event,
+      },
+    }),
+    []
+  );
   const bookingsRef = collection(db, "booking");
   const [bookingsValue, bookingLoading, bookingError] = useCollection(
     query(
@@ -40,7 +61,7 @@ const UtilityCalendar = (props: UtilityCalendarProps) => {
           start: new Date(doc.data()?.from.seconds * 1000),
           end: new Date(doc.data()?.to.seconds * 1000),
           resourceId: doc.data().amenityId,
-          description: doc.data()?.desc,
+          desc: doc.data()?.desc,
         };
       })
     );
@@ -52,6 +73,7 @@ const UtilityCalendar = (props: UtilityCalendarProps) => {
       {bookingLoading && <span>Collection: Loading...</span>}
       {bookingsValue && (
         <BigCalendar
+          components={components}
           localizer={localizer}
           events={events}
           defaultView={Views.DAY}
