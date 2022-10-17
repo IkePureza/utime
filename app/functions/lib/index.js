@@ -80,6 +80,7 @@ exports.sendInviteEmail = functions
   .region("australia-southeast1")
   .firestore.document("/inviteTokens/{documentId}")
   .onCreate(async (snap, context) => {
+    var _a;
     const houseId = snap.data().houseId;
     const houseDataQuery = await admin
       .firestore()
@@ -88,7 +89,10 @@ exports.sendInviteEmail = functions
       .get();
     const mailData = {
       invitee: snap.data().invitee,
-      expiry: snap.data().expiry_time.toDate(),
+      expiry:
+        (_a = snap.data()) === null || _a === void 0
+          ? void 0
+          : _a.expiryTime.toDate(),
       houseName: houseDataQuery.docs[0].data().name,
     };
     return inviteEmail(snap.data().email, mailData);
