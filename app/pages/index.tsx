@@ -1,32 +1,34 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-import { auth, db } from "../firebase/clientApp";
+import { db } from "../firebase/clientApp";
 import { collection, addDoc, query, where } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 
 import AuthRoute from "../HOC/authRoute";
 
 import { AuthContext } from "../context/AuthContext";
-import Link from "next/link";
 
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
 import NewHouseForm from "../components/newHouseForm";
+import RecentActivityAgenda from "../components/recentActivityAgenda";
+import UserInvites from "../components/userInvites/userInvites";
 
 function Index() {
   const appContext = useContext(AuthContext);
   const userData = appContext?.userData;
-  const [value, loading, error] = useCollection(
+  const [householdsValue, householdsLoading, householdsError] = useCollection(
     query(
       collection(db, "household"),
       where("users", "array-contains", userData?.userId ?? null)
     )
   );
+  const [userHouseholds, setUserHouseholds] = useState<any[] | undefined>([
+    { id: "", name: "" },
+  ]);
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
-
-  // Need to refernce input newHouse modal to close the model on submit
 
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
@@ -35,6 +37,7 @@ function Index() {
 
     const docRef = await addDoc(collection(db, "household"), {
       name: houseName.value,
+      desc: houseDesc.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
     });
 
@@ -43,72 +46,72 @@ function Index() {
     }
   };
 
+  useEffect(() => {
+    setUserHouseholds(
+      householdsValue?.docs.map((doc) => {
+        return {
+          id: doc.id,
+          name: doc.data().name,
+        };
+      })
+    );
+  }, [householdsValue]);
+
   return (
     <AuthRoute>
       <NavBar></NavBar>
       <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
-        <div className="w-full">Recent Activity Goes Here</div>
-        <div className="w-full mx-auto flex flex-col items-center">
-          <h1 className="text-6xl text-center font-black mb-10">Your Homes</h1>
-          <div className="overflow-auto container h-1/2 shadow-md rounded-md">
+        <div className="basis-1/3">
+          <h1 className="text-4xl text-center font-black mb-10">
+            Recent Activity
+          </h1>
+          <RecentActivityAgenda
+            userHouseholds={userHouseholds}
+          ></RecentActivityAgenda>
+        </div>
+        <div className="basis-1/3 mx-auto flex flex-col items-center max-h-max">
+          <h1 className="text-4xl text-center font-black mb-10">Your Homes</h1>
+          <div
+            className="overflow-auto container shadow-md rounded-md"
+            id="houseHolds"
+          >
             <p>
-              {error && <strong>Error: {JSON.stringify(error)}</strong>}
-              {loading && <span>Collection: Loading...</span>}
-              {value && (
+              {householdsError && (
+                <strong>Error: {JSON.stringify(householdsError)}</strong>
+              )}
+              {householdsLoading && (
+                <span className="btn loading btn-ghost"></span>
+              )}
+              {householdsValue && householdsValue.docs.length > 0 ? (
                 <div className="flex flex-col justify-around items-center">
-                  {value.docs.map((doc) => (
+                  {householdsValue.docs.map((doc) => (
                     <HouseholdCard
-                      desc=""
+                      desc={doc.data().desc}
                       id={doc.id}
                       key={doc.id}
                       name={doc.data().name}
                     />
                   ))}
                 </div>
+              ) : (
+                <p className="text-center text-2xl font-bold text-teal-500">
+                  Add a House by clicking the button below!
+                  <br />
+                </p>
               )}
             </p>
           </div>
           <label
             htmlFor="new-house-modal"
-            className="btn btn-wide modal-button mt-10"
+            className="btn btn-wide modal-button mt-10 mb-20"
+            id="createHousehold"
           >
             + Add a new Household
           </label>
           {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
         </div>
-        <div className="w-full">
-          <div className="mt-4 flex flex-col gap-y-2">
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>Authentication method:</h4>
-              <h6>{userData?.userProviderId}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>userId:</h4>
-              <h6>{userData?.userId}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>display name:</h4>
-              <h6>{userData?.userName || "null"}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>email:</h4>
-              <h6>{userData?.userEmail}</h6>
-            </div>
-            <div className="flex gap-x-3 items-center justify-center">
-              <h4>Profile picture</h4>
-              {userData?.userPhotoLink ? (
-                <Image
-                  className="rounded-full object-contain w-32 h-32"
-                  src={userData?.userPhotoLink}
-                  alt={userData?.userName ?? ""}
-                  width="32"
-                  height="32"
-                />
-              ) : (
-                "null"
-              )}
-            </div>
-          </div>
+        <div className="basis-1/3 flex-col" id="userInvites">
+          <UserInvites />
         </div>
       </div>
 

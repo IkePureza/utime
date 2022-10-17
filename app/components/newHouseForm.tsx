@@ -6,7 +6,7 @@ interface NewHouseFormProps {
 
 function NewHouseForm(props: NewHouseFormProps) {
   return (
-    <form onSubmit={props.handleClick} action="#">
+    <form onSubmit={props.handleClick} action="#" id="createHouse">
       <div className="form-control w-full max-w-xs">
         <label className="label">
           <span className="label-text">House Name</span>
@@ -15,7 +15,7 @@ function NewHouseForm(props: NewHouseFormProps) {
         <input
           id="houseName"
           name="houseName"
-          type="input w-full max-w-xs"
+          type="text"
           placeholder="House Name"
           className="input input-bordered"
           required
@@ -28,8 +28,8 @@ function NewHouseForm(props: NewHouseFormProps) {
           <span className="label-text-alt">Maximum 50 words</span>
         </label>
         <textarea
-          id="house_desc"
-          name="house_desc"
+          id="houseDesc"
+          name="houseDesc"
           className="textarea textarea-bordered h-24"
           placeholder="Description"
           maxLength={50}

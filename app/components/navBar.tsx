@@ -1,20 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useCallback } from "react";
+import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/clientApp";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
 const NavBar = () => {
   const signOutHandler = async () => {
     await signOut(auth);
+    document.location.reload();
   };
+
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
         <Link href="/">
-          <a className="btn btn-ghost normal-case text-xl">Shitimes</a>
+          <a className="btn btn-ghost normal-case text-xl">UTime</a>
         </Link>
       </div>
       <div className="flex flex-row gap-2">
@@ -27,6 +28,7 @@ const NavBar = () => {
               strokeWidth={1.5}
               stroke="currentColor"
               className="w-8 h-8 mr-1"
+              id="hamburger"
             >
               <path
                 strokeLinecap="round"
@@ -58,7 +60,9 @@ const NavBar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a onClick={signOutHandler}>Logout</a>
+              <Link href="/login">
+                <a onClick={signOutHandler}>Logout</a>
+              </Link>
             </li>
           </ul>
         </div>

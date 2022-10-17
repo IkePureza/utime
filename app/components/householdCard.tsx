@@ -12,6 +12,8 @@ interface HouseHoldCardProps {
 function HouseholdCard(props: HouseHoldCardProps) {
   const icon = props.icon || "https://placeimg.com/148/148/arch";
 
+  console.log("desc: ", props.desc, ".");
+
   return (
     <React.Fragment key={props.id}>
       <div className="card card-side card-compact w-96 bg-base-100 shadow-xl mb-2">
@@ -24,12 +26,11 @@ function HouseholdCard(props: HouseHoldCardProps) {
         />
 
         <div className="card-body">
-          <h2 className="card-title">{props.name}</h2>
-          {props.desc ? (
-            <p>{props.desc}</p>
-          ) : (
-            <p>Description of {props.name}</p>
-          )}
+          <h2 className="card-title" id="houseName">
+            {props.name}
+          </h2>
+          <p id="houseDesc">{props.desc}</p>
+
           <div className="card-actions justify-end">
             <Link href="household/[houseId]" as={`household/${props.id}`}>
               <a className="btn btn-primary ml-5 mt-2"> Go to House</a>
@@ -37,10 +38,6 @@ function HouseholdCard(props: HouseHoldCardProps) {
           </div>
         </div>
       </div>
-
-      {/* <div className="justify-center flex-1 block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-        
-        </div> */}
     </React.Fragment>
   );
 }

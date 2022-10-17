@@ -20,8 +20,11 @@ import UtilityCard from "../../../components/utilityCard";
 import NewUtilityForm from "../../../components/newUtilityForm";
 import DeleteHouseForm from "../../../components/deleteHouseForm";
 import LeaveHouseForm from "../../../components/leaveHouseForm";
+import HouseholdCalendar from "../../../components/householdCalendar";
+import HouseholdMembers from "../../../components/household/householdMembers";
+import InviteCard from "../../../components/userInvites/inviteCard";
 
-const Login = () => {
+const Household = () => {
   const router = useRouter();
   const { houseId }: any = router.query;
   const authContext = useContext(AuthContext);
@@ -54,7 +57,6 @@ const Login = () => {
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }
-    console.log("Document written with ID: ", docRef.id);
   };
 
   const handleDeleteHouse = async (event: any) => {
@@ -95,7 +97,7 @@ const Login = () => {
             {amenityError && (
               <strong>Error: {JSON.stringify(amenityError)}</strong>
             )}
-            {amenityLoading && <span>Collection: Loading...</span>}
+            {amenityLoading && <span className="btn btn-ghost loading"></span>}
             {amenityValue && (
               <div className="flex flex-col justify-around items-center">
                 {amenityValue.docs.map((doc) => (
@@ -202,9 +204,12 @@ const Login = () => {
               </ul>
             </div>
           </h1>
+          <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
         </div>
         <div className="basis-1/4">
           <h1 className="text-center font-black text-2xl mb-2">Users</h1>
+          <HouseholdMembers houseId={houseId} />
+          <InviteCard houseId={houseId} />
         </div>
         
       </div> 
@@ -212,4 +217,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Household;
