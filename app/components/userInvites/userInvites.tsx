@@ -64,7 +64,7 @@ export default function UserInvites() {
               key={doc.id}
               inviteId={doc.id}
               houseId={doc.data().houseId}
-              expiryTime={doc.data().expiry_time.toDate()}
+              expiryTime={doc.data().expiryTime.toDate()}
               invitee={doc.data().invitee}
               acceptHandler={inviteAcceptHandler}
               deleteHandler={inviteDeleteHandler}
