@@ -14,7 +14,6 @@ const EmailPasswordAuthSignUp = () => {
       event.preventDefault();
       const { email, password, displayName } = event.target.elements;
       try {
-        console.log(email.value, password.value);
         await createUserWithEmailAndPassword(auth, email.value, password.value)
           //Update Display name for firebase auth account and firestore user document
           .then(async (user) => {

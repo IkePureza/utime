@@ -26,14 +26,14 @@ export default function HouseholdMembers(props: Props) {
   return (
     <React.Fragment>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
-      {loading && <span>Loading...</span>}
+      {loading && <span className="btn btn-ghost loading"></span>}
       {members && (
         <div className="flex flex-col justify-around items-center">
           {members.users.map((userId: string) => (
             <MemberCard key={userId} userId={userId} />
           ))}
         </div>
-      )} 
+      )}
     </React.Fragment>
   );
 }

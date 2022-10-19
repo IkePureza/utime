@@ -44,7 +44,7 @@ export const sendInviteEmail = functions
 
     const mailData = {
       invitee: snap.data().invitee,
-      expiry: snap.data().expiry_time.toDate(),
+      expiry: snap.data()?.expiryTime.toDate(),
       houseName: houseDataQuery.docs[0].data().name,
     };
 
