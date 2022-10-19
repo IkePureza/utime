@@ -10,6 +10,7 @@ import AuthRoute from "../HOC/authRoute";
 import { AuthContext } from "../context/AuthContext";
 
 import NavBar from "../components/navBar";
+import UserStats from "../components/userStats";
 
 function Profile() {
   const appContext = useContext(AuthContext);
@@ -40,7 +41,7 @@ function Profile() {
             width={200}
             alt="profile pic"
           />
-          <div className="mt-5 flex flex-row items-end justify-between">
+          <div className="mt-5 flex flex-col">
             {userData && userData.userName ? (
               <h3 className="text-4xl font-bold">{userData.userName}</h3>
             ) : (
@@ -50,23 +51,26 @@ function Profile() {
             )}
             <label
               htmlFor="usernameChangeModal"
-              className="btn btn-xs btn-outline modal-button mb-1"
+              className="btn btn-xs btn-outline modal-button mt-2"
             >
               edit
             </label>
           </div>
         </div>
-        <div className="rounded-xl border shadow-xl p-10 mt-4 h-1/2">
-          <h2 className="text-2xl font-bold">User Profile</h2>
-          <br />
-          <div className="grid grid-cols-2 gap-x-5">
-            <h3 className="font-bold">Email Address:</h3>
-            <p>{userData?.userEmail}</p>
-            <h3 className="font-bold">Authentication Method:</h3>
-            <p>
-              {userData?.userProviderId === "password" ? "Email" : "Google"}
-            </p>
+        <div className="mt-4">
+          <div className="rounded-xl border shadow-lg p-10 h-1/2 mb-10">
+            <h2 className="text-2xl font-bold">User Profile</h2>
+            <br />
+            <div className="grid grid-cols-2 gap-x-5">
+              <h3 className="font-bold">Email Address:</h3>
+              <p>{userData?.userEmail}</p>
+              <h3 className="font-bold">Authentication Method:</h3>
+              <p>
+                {userData?.userProviderId === "password" ? "Email" : "Google"}
+              </p>
+            </div>
           </div>
+          <UserStats />
         </div>
       </div>
 
