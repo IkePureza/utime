@@ -87,7 +87,9 @@ function Profile() {
           </label>
           <div className="mt-5 flex flex-col">
             {userData && userData.userName ? (
-              <h3 className="text-4xl font-bold">{userData.userName}</h3>
+              <h3 className="text-4xl font-bold" id="profileUsername">
+                {userData.userName}
+              </h3>
             ) : (
               <p>
                 Please reload... <span className="btn loading btn-ghost"></span>
@@ -107,9 +109,9 @@ function Profile() {
             <br />
             <div className="grid grid-cols-2 gap-x-5">
               <h3 className="font-bold">Email Address:</h3>
-              <p>{userData?.userEmail}</p>
+              <p id="profileEmail">{userData?.userEmail}</p>
               <h3 className="font-bold">Authentication Method:</h3>
-              <p>
+              <p id="profileAuth">
                 {userData?.userProviderId === "password" ? "Email" : "Google"}
               </p>
             </div>
