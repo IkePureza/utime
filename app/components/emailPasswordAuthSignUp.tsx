@@ -19,10 +19,9 @@ const EmailPasswordAuthSignUp = () => {
           .then(async (user) => {
             await updateProfile(user.user, {
               displayName: displayName.value,
-            }).then(async () => {
-              await updateDoc(doc(db, "users", user.user.uid), {
-                "data.displayName": displayName.value,
-              });
+            });
+            await updateDoc(doc(db, "users", user.user.uid), {
+              "data.displayName": displayName.value,
             });
           })
           .catch((error) => {

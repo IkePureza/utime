@@ -7,6 +7,7 @@ import {
   Firestore,
 } from "firebase/firestore";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 const clientCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -29,12 +30,14 @@ try {
   db = getFirestore(app);
 }
 const functions = getFunctions(app);
+const storage = getStorage(app);
 var node_env = process.env.NODE_ENV || "development";
 
 if (node_env !== "production") {
   connectFirestoreEmulator(db, "localhost", 8080);
   connectAuthEmulator(auth, "http://localhost:9099");
   connectFunctionsEmulator(functions, "localhost", 5001);
+  connectStorageEmulator(storage, "localhost", 9199);
 }
 
-export { app, auth, db };
+export { app, auth, db, storage };

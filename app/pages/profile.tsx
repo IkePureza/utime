@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-import { db } from "../firebase/clientApp";
+import { db, storage } from "../firebase/clientApp";
 import { doc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
@@ -11,10 +12,16 @@ import { AuthContext } from "../context/AuthContext";
 
 import NavBar from "../components/navBar";
 import UserStats from "../components/userStats";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+import { v4 } from "uuid";
 
 function Profile() {
+  const router = useRouter();
   const appContext = useContext(AuthContext);
   const userData = appContext?.userData;
+  const [imageUpload, setImageUpload] = useState<File | null>();
+  const [imageError, setImageError] = useState(false);
 
   const handleUsernameChange = async (event: any) => {
     const newUsername = event.target.elements.newUsername.value;
@@ -30,18 +37,54 @@ function Profile() {
     }
   };
 
+  // Handler that uploads user profile image and
+  // updates user auth instance photoURL
+  const handleUploadImage = async (event: any) => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `profile/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then(async () => {
+      // After new image is uploaded, change user display image
+      if (appContext && appContext.currentUser) {
+        const user = appContext.currentUser;
+        const newPhotoLink = await getDownloadURL(imageRef);
+        await updateProfile(user, {
+          photoURL: newPhotoLink,
+        });
+        await updateDoc(doc(db, "users", user.uid), {
+          "data.photoURL": newPhotoLink,
+        });
+      }
+    });
+    router.reload();
+  };
+
   return (
     <AuthRoute>
       <NavBar></NavBar>
       <div className="flex flex-row max-h-screen min-w-full place-content-center px-5 py-5 gap-x-20 mx-auto">
         <div className="mt-4 flex flex-col">
-          <Image
-            className="rounded-xl avatar"
-            src={userData?.userPhotoLink || "https://placeimg.com/80/80/people"}
-            height={200}
-            width={200}
-            alt="profile pic"
-          />
+          <label htmlFor="imageUploadModal" className="modal-button">
+            <div className="relative border-2 rounded-xl">
+              <Image
+                className="rounded-xl avatar"
+                src={
+                  userData?.userPhotoLink || "https://placeimg.com/80/80/people"
+                }
+                height={200}
+                width={200}
+                alt="profile pic"
+              />
+              <div className="absolute top-0 left-0 w-full h-full bg-white rounded-xl opacity-0 flex justify-center items-center transition-opacity hover:opacity-50 duration-500">
+                <Image
+                  className=""
+                  src="/accountCircle.png"
+                  height={50}
+                  width={50}
+                  alt="uploadIcon"
+                />
+              </div>
+            </div>
+          </label>
           <div className="mt-5 flex flex-col">
             {userData && userData.userName ? (
               <h3 className="text-4xl font-bold">{userData.userName}</h3>
@@ -108,6 +151,72 @@ function Profile() {
               </label>
             </div>
           </form>
+        </div>
+      </div>
+
+      <input type="checkbox" id="imageUploadModal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box relative">
+          <label
+            htmlFor="imageUploadModal"
+            className="btn btn-sm btn-circle absolute right-2 top-2"
+          >
+            ✕
+          </label>
+          <div className="flex flex-col">
+            <h3 className="text-lg font-bold">Upload your Profile Picture!</h3>
+            <div className=" border-4 rounded-lg my-5 w-50 h-50 place-self-center justify-self-center">
+              {imageUpload && (
+                <Image
+                  src={URL.createObjectURL(imageUpload)}
+                  alt="No image"
+                  height={50}
+                  width={50}
+                ></Image>
+              )}
+            </div>
+            {imageError && (
+              <div className="alert alert-error shadow-lg">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="stroke-current flex-shrink-0 w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  <span>
+                    File size is too big! &#40;Ensure it is less than 1MB&#41;
+                  </span>
+                </div>
+              </div>
+            )}
+            <input
+              type="file"
+              onChange={(event) => {
+                // Make sure photo is uploaded and is less than 1MB in size.
+                if (event.target.files) {
+                  if (event.target.files[0].size > 1000 * 1000) {
+                    setImageError(true);
+                  } else {
+                    setImageError(false);
+                    setImageUpload(event.target.files[0]);
+                  }
+                }
+              }}
+              className=""
+              accept=".png,.jpg,.jpeg"
+            />
+            <button onClick={handleUploadImage} className="btn mt-10">
+              Upload
+            </button>
+          </div>
         </div>
       </div>
     </AuthRoute>

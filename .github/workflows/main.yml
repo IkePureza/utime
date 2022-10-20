@@ -89,6 +89,7 @@ jobs:
           FIRESTORE_EMULATOR_HOST: localhost:8080
           FIRESTORE_AUTH_EMULATOR_HOST: localhost:9099
           FIRESTORE_FUNCTIONS_EMULATOR_HOST: localhost:5001
+          FIRESTORE_STORAGE_EMULATOR_HOST: localhost:9199
 
       # Store Cypress test screenshot if failed
       - uses: actions/upload-artifact@v2
