@@ -10,6 +10,8 @@ import {
   Timestamp,
   where,
   query,
+  updateDoc,
+  increment,
 } from "firebase/firestore";
 import { db } from "../../../../../firebase/clientApp";
 import {
@@ -72,6 +74,21 @@ const Utility = () => {
       userId: currentUser?.userId,
       userName: currentUser?.userName || currentUser?.userEmail,
     });
+
+    // Booking duration in hrs (1 decimal place)
+    const duration =
+      Math.round(
+        ((new Date(to.value).getTime() - new Date(from.value).getTime()) /
+          3600000) *
+          10
+      ) / 10;
+
+    // Add user stat field
+    if (currentUser) {
+      await updateDoc(doc(db, "users", currentUser?.userId), {
+        totalMinutes: increment(duration),
+      });
+    }
 
     if (modalCheckboxRef.current !== null) {
       modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;

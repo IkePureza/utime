@@ -22,9 +22,10 @@ function Profile() {
       const user = appContext.currentUser;
       await updateProfile(user, {
         displayName: newUsername,
-      });
-      await updateDoc(doc(db, "users", user.uid), {
-        "data.displayName": newUsername,
+      }).then(async () => {
+        await updateDoc(doc(db, "users", user.uid), {
+          "data.displayName": newUsername,
+        });
       });
     }
   };
@@ -45,9 +46,9 @@ function Profile() {
             {userData && userData.userName ? (
               <h3 className="text-4xl font-bold">{userData.userName}</h3>
             ) : (
-              <h3 className="text-xl font-bold text-red-500">
-                Display Name not set!
-              </h3>
+              <p>
+                Please reload... <span className="btn loading btn-ghost"></span>
+              </p>
             )}
             <label
               htmlFor="usernameChangeModal"
@@ -58,7 +59,7 @@ function Profile() {
           </div>
         </div>
         <div className="mt-4">
-          <div className="rounded-xl border shadow-lg p-10 h-1/2 mb-10">
+          <div className="rounded-xl border shadow-lg p-10 h-fit mb-10">
             <h2 className="text-2xl font-bold">User Profile</h2>
             <br />
             <div className="grid grid-cols-2 gap-x-5">
