@@ -11,6 +11,7 @@ import { AuthContext } from "../context/AuthContext";
 
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
+import NewHouseCard from "../components/newhouseCard";
 import NewHouseForm from "../components/newHouseForm";
 import RecentActivityAgenda from "../components/recentActivityAgenda";
 import UserInvites from "../components/userInvites/userInvites";
@@ -60,7 +61,7 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
+      <div className="flex flex-row max-h-screen min-w-full px-5 pt-24 pb-10 w-max mx-auto">
         <div className="basis-1/3">
           <h1 className="text-4xl text-center font-black mb-10">
             Recent Activity
@@ -69,12 +70,10 @@ function Index() {
             userHouseholds={userHouseholds}
           ></RecentActivityAgenda>
         </div>
-        <div className="basis-1/3 mx-auto flex flex-col items-center max-h-max">
-          <h1 className="text-4xl text-center font-black mb-10">Your Homes</h1>
-          <div
-            className="overflow-auto container shadow-md rounded-md"
-            id="houseHolds"
-          >
+        
+        <div className="w-full mx-auto flex flex-col items-center">
+          <a className="text-4xl text-center mb-8 font-semibold">Your Homes</a>
+          <div className="overflow-auto container h-3/5 rounded-md">
             <p>
               {householdsError && (
                 <strong>Error: {JSON.stringify(householdsError)}</strong>
@@ -101,14 +100,16 @@ function Index() {
               )}
             </p>
           </div>
+          {/*
           <label
             htmlFor="new-house-modal"
             className="btn btn-wide modal-button mt-10 mb-20"
             id="createHousehold"
+            className="btn btn-wide btn-primary modal-button mt-10 normal-case text-base shadow-lg"
           >
-            + Add a new Household
-          </label>
-          {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
+            New House
+                  </label>*/}
+          <label htmlFor="new-house-modal"><NewHouseCard id="" name="" /></label>
         </div>
         <div className="basis-1/3 flex-col" id="userInvites">
           <UserInvites />
