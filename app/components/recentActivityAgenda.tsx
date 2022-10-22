@@ -52,12 +52,13 @@ const RecentActivityAgenda = (props: RecentActivityAgenda) => {
   }, [bookingsValue, props.userHouseholds]);
 
   return (
-    <div className="my-10 mx-5 grid">
+    <div className="my-4 mx-5 grid">
       {bookingError && <strong>Error: {JSON.stringify(bookingError)}</strong>}
       {bookingLoading && <span className="btn btn-ghost loading"></span>}
       {bookingsValue && (
-        <div className="overflow-auto container h-[75vh] mb-20 shadow-md rounded-md">
+        <div className="overflow-auto container h-[75vh] mb-5 shadow-md rounded-md">
           <BigCalendar
+            className="px-4"
             localizer={localizer}
             events={events}
             defaultView={Views.AGENDA}

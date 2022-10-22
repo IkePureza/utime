@@ -62,8 +62,8 @@ function Index() {
     <AuthRoute>
       <NavBar></NavBar>
       <div className="flex flex-row max-h-screen min-w-full px-5 pt-24 pb-10 w-max mx-auto">
-        <div className="basis-1/3">
-          <h1 className="text-4xl text-center font-black mb-10">
+        <div className="basis-1/3 mt-10">
+          <h1 className="text-2xl px-10 font-semibold">
             Recent Activity
           </h1>
           <RecentActivityAgenda
@@ -71,7 +71,7 @@ function Index() {
           ></RecentActivityAgenda>
         </div>
         
-        <div className="w-full mx-auto flex flex-col items-center">
+        <div className="basis-1/3 mx-auto flex flex-col items-center">
           <a className="text-4xl text-center mb-8 font-semibold">Your Homes</a>
           <div className="overflow-auto container h-3/5 rounded-md">
             <p>
@@ -111,7 +111,7 @@ function Index() {
                   </label>*/}
           <label htmlFor="new-house-modal"><NewHouseCard id="" name="" /></label>
         </div>
-        <div className="basis-1/3 flex-col" id="userInvites">
+        <div className="basis-1/3 flex-col justify-around items-center" id="userInvites">
           <UserInvites />
         </div>
       </div>
@@ -140,3 +140,4 @@ function Index() {
 }
 
 export default Index;
+
