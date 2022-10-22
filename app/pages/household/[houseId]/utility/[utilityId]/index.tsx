@@ -146,6 +146,7 @@ const Utility = () => {
           {amenityValue?.desc ?? "No Description"}
         </p>
         <label
+          id="newBookingButton"
           htmlFor="new-booking-modal"
           className="btn btn-wide btn-primary modal-button mb-4"
         >
@@ -160,6 +161,7 @@ const Utility = () => {
         <div className="modal">
           <div className="modal-box relative">
             <label
+              id="closeBookingModal"
               htmlFor="new-booking-modal"
               className="btn btn-sm btn-circle absolute right-2 top-2"
             >
