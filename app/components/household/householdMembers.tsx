@@ -30,7 +30,11 @@ export default function HouseholdMembers(props: Props) {
       {members && (
         <div className="flex flex-col justify-around items-center">
           {members.users.map((userId: string) => (
-            <MemberCard key={userId} userId={userId} />
+            <MemberCard
+              key={userId}
+              userId={userId}
+              isOwner={members.owner === userId}
+            />
           ))}
         </div>
       )}

@@ -39,6 +39,7 @@ function Index() {
       name: houseName.value,
       desc: houseDesc.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
+      owner: userData?.userId,
     });
 
     if (modalCheckboxRef.current !== null) {
