@@ -1,5 +1,3 @@
-import { _grpc_channelz_v1_ChannelConnectivityState_State } from "@grpc/grpc-js/build/src/generated/grpc/channelz/v1/ChannelConnectivityState";
-
 describe("Household utilites", () => {
   before(() => {
     cy.login();
