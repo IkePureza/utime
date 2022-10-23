@@ -14,7 +14,7 @@ const NavBar = () => {
 
   return (
     <div className="navbar bg-base-100 shadow h-max absolute">
-      <div className="flex-1">
+      <div className="flex-1 ">
       <Image
           src={"/logo.png"}
           width={50}
@@ -71,59 +71,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-/*
-removed:
-<svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-8 h-8 mr-1"
-              id="hamburger"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-            <div className="w-10">
-              <Image
-                className="rounded-full avatar"
-                src="https://placeimg.com/80/80/people"
-                height={80}
-                width={80}
-                alt="profile pic"
-              />
-            </div>
-          </label>
-          <ul
-            tabIndex={0}
-            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <Link href="/login">
-                <a onClick={signOutHandler}>Logout</a>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-};
-            from under:
-                      <label tabIndex={0} className="btn btn-ghost">
-
-*/

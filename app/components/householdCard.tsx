@@ -16,7 +16,7 @@ function HouseholdCard(props: HouseHoldCardProps) {
 
   return (
     <React.Fragment key={props.id}>
-      <div className="card card-side card-compact w-96 shadow-xl mb-2 bg-zinc-100 rounded-xl">
+      <div className="card card-side card-compact xl:w-96 w-80 shadow-xl mb-2 bg-zinc-100 rounded-xl">
         <Image
           src={"/houseDefault.jpg"}
           width={80}

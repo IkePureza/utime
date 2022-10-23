@@ -16,7 +16,7 @@ export default function MemberCard(props: Props) {
   );
 
   return (
-    <div className="card card-side card-compact w-96 bg-zinc-100 shadow-xl mb-2 rounded-xl break-normal">
+    <div className="card card-side card-compact xl:w-96 w-80 bg-zinc-100 shadow-xl mb-2 rounded-xl break-normal">
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span className="btn btn-ghost loading"></span>}
       {userData && (

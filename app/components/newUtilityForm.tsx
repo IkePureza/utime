@@ -38,6 +38,7 @@ function NewUtilityForm(props: NewUtilityFormProps) {
           type="input w-full max-w-xs"
           placeholder="Utility Name"
           className="input input-bordered error-"
+          maxLength={30}
           required
         />
       </div>

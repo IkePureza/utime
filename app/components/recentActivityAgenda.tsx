@@ -56,7 +56,7 @@ const RecentActivityAgenda = (props: RecentActivityAgenda) => {
       {bookingError && <strong>Error: {JSON.stringify(bookingError)}</strong>}
       {bookingLoading && <span className="btn btn-ghost loading"></span>}
       {bookingsValue && (
-        <div className="overflow-auto container h-[75vh] mb-5 shadow-md rounded-md">
+        <div className="overflow-auto container h-[75vh] mb-5 shadow-md rounded-md w-[85vw] xl:w-max">
           <BigCalendar
             className="px-4"
             localizer={localizer}

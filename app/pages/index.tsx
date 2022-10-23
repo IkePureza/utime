@@ -61,17 +61,10 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 pt-24 pb-10 w-max mx-auto">
-        <div className="basis-1/3 mt-10">
-          <h1 className="text-2xl px-10 font-semibold">
-            Recent Activity
-          </h1>
-          <RecentActivityAgenda
-            userHouseholds={userHouseholds}
-          ></RecentActivityAgenda>
-        </div>
+      <div className="flex xl:flex-row flex-col max-h-screen px-5 pt-24 pb-10 max-w-screen mx-auto ">
         
-        <div className="basis-1/3 mx-auto flex flex-col items-center">
+        
+        <div className="xl:order-2 xl:basis-1/3 mx-auto flex flex-col items-center">
           <a className="text-4xl text-center mb-8 font-semibold">Your Homes</a>
           <div className="overflow-auto container h-3/5 rounded-md">
             <p>
@@ -93,7 +86,7 @@ function Index() {
                   ))}
                 </div>
               ) : (
-                <p className="text-center text-2xl font-bold text-teal-500">
+                <p className="text-center xl:text-2xl font-bold text-teal-500 break-normal break-words">
                   Add a House by clicking the button below!
                   <br />
                 </p>
@@ -111,8 +104,17 @@ function Index() {
                   </label>*/}
           <label htmlFor="new-house-modal"><NewHouseCard id="" name="" /></label>
         </div>
-        <div className="basis-1/3 flex-col justify-around items-center" id="userInvites">
+        <div className="xl:order-3 xl:basis-1/3 flex-col justify-around items-center" id="userInvites">
           <UserInvites />
+        </div>
+        
+        <div className="xl:order-1 xl:basis-1/3 mt-10">
+          <h1 className="text-2xl px-10 font-semibold">
+            Recent Activity
+          </h1>
+          <RecentActivityAgenda
+            userHouseholds={userHouseholds}
+          ></RecentActivityAgenda>
         </div>
       </div>
 
