@@ -44,21 +44,21 @@ export default function UserInvites() {
   }
 
   return (
-    <div className="text-center">
+    <div className="text-center mt-10">
       <div className="indicator">
         {invites && (
-          <span className="indicator-item badge badge-primary">
+          <span className="indicator-item badge badge-primary badge-sm">
             {invites.docs.length}
           </span>
         )}
         <div>
-          <h1 className="text-4xl font-black mb-10">Invites</h1>
+          <h1 className="text-2xl text-center mb-4 font-semibold">Invites</h1>
         </div>
       </div>
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span className="btn btn-ghost loading"></span>}
       {invites && invites.docs.length > 0 ? (
-        <div className="flex flex-col mx-auto">
+        <div className="flex flex-col justify-around items-center">
           {invites.docs.map((doc) => (
             <UserInviteCard
               key={doc.id}

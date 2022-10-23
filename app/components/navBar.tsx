@@ -15,8 +15,16 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-100 shadow h-max absolute">
       <div className="flex-1">
+      <Image
+          src={"/logo.png"}
+          width={50}
+          height={50}
+          alt="Shoes"
+          className="rounded-r-xl object-cover shadow-md"
+        />
         <Link href="/">
-          <a className="btn btn-ghost normal-case text-3xl px-5 h-max rounded-2xl">U-Time</a>
+          
+          <a className="btn btn-ghost normal-case text-3xl px-2 h-max rounded-2xl">U-Time</a>
         </Link>
       </div>
       <div className="flex flex-row gap-2">

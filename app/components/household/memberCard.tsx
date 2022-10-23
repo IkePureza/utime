@@ -16,7 +16,7 @@ export default function MemberCard(props: Props) {
   );
 
   return (
-    <div className="card card-side card-compact w-60 bg-base-100 shadow-xl mb-2">
+    <div className="card card-side card-compact w-96 bg-zinc-100 shadow-xl mb-2 rounded-xl break-normal">
       {error && <strong>Error: {JSON.stringify(error)}</strong>}
       {loading && <span className="btn btn-ghost loading"></span>}
       {userData && (
@@ -27,14 +27,17 @@ export default function MemberCard(props: Props) {
                 src={userData.data.photoURL || "/user.png"}
                 alt={userData.data.displayName ?? ""}
                 layout="fill"
+                width={80}
+                height={100}
+                className="rounded-r-xl object-cover shadow-md"
               />
             </div>
           </div>
-          <div className="card-body">
-            <h2 className="card-title">
+          <div className="card-body gap-0">
+            <h2 className="card-title leading-4 break-normal">
               {userData.data.displayName || userData.data.email}
             </h2>
-            <p>Member</p>
+            <p className="text-xs" >Member</p>
           </div>
         </>
       )}
