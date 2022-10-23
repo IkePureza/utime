@@ -48,21 +48,9 @@ const Household = () => {
   return (
     <>
       <NavBar></NavBar>
-      <h1 className="text-center font-semibold text-4xl mb-2 pt-24">
-        {" "}
-        {value?.data()?.name}
-      </h1>
-      <div className="flex flex-row max-h-screen min-w-full px-5 pb-5 w-max mx-auto">
-        
-        <div className="basis-3/4">
-          
-          <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
-        </div>
-        <div className="basis-1/4 items-center content-center justify-content">
-          <h1 className="text-center font-semibold text-2xl mb-2">Users</h1>
-          <HouseholdMembers houseId={houseId} />
-          <InviteCard houseId={houseId} />
-          <h1 className="text-center font-semibold text-2xl mb-2 mt-4">Utilities</h1>
+      <div className="flex flex-row max-h-screen min-w-full px-5 pb-5 pt-24 w-max mx-auto">
+        <div className="flex flex-col basis-1/4 items-center justify-start">
+          <h1 className="text-center font-black text-2xl mb-2">Utilities</h1>
           <div className="flex flex-col gap-y-3 w-full">
             {amenityError && (
               <strong>Error: {JSON.stringify(amenityError)}</strong>
@@ -81,14 +69,12 @@ const Household = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-col justify-around items-center">
-            <label
-              htmlFor="new-utility-modal"
-              className="btn btn-wide btn-accent modal-button mb-4"
-            >
-              + Add a new Utility
-            </label>
-          </div>
+          <label
+            htmlFor="new-utility-modal"
+            className="btn btn-wide btn-primary modal-button mb-4"
+          >
+            + Add a new Utility
+          </label>
           <input
             type="checkbox"
             id="new-utility-modal"
@@ -110,6 +96,18 @@ const Household = () => {
               <NewUtilityForm handleSubmit={handleCreateAmenity} />
             </div>
           </div>
+        </div>
+        <div className="basis-1/2">
+          <h1 className="text-center font-black text-3xl mb-2">
+            {" "}
+            Household {value?.data()?.name}
+          </h1>
+          <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
+        </div>
+        <div className="basis-1/4">
+          <h1 className="text-center font-black text-2xl mb-2">Users</h1>
+          <HouseholdMembers houseId={houseId} />
+          <InviteCard houseId={houseId} />
         </div>
       </div>
     </>

@@ -78,8 +78,8 @@ export default function InviteCard(props: inviteCardProps) {
 
   return (
     <>
-      <div className="text-lg text-center font-semibold mt-4">
-        Invite New Member
+      <div className="text-xl text-center font-black mt-10">
+        Invite By Email Address
       </div>
       <div className="flex flex-col place-items-center mt-2">
         <form onSubmit={handleUserInvite} action="#">
@@ -94,7 +94,7 @@ export default function InviteCard(props: inviteCardProps) {
                 required
               />
               <input
-                className="btn btn-accent btn-sm justify-end"
+                className="btn btn-primary btn-sm justify-end"
                 id="submitInvite"
                 type="submit"
                 value="Add"

@@ -29,28 +29,28 @@ export default function UserInviteCard(props: userInvitesProps) {
 
   return (
     <React.Fragment key={props.inviteId}>
-      <div className="card card-side card-compact w-96 rounded-xl bg-zinc-100 shadow-xl mb-2">
+      <div className="card card-side card-compact w-64 h-fit bg-base-100 shadow-xl mb-2">
         <Image
           src={icon}
-          width={80}
-          height={100}
+          width={50}
+          height={50}
           alt="Shoes"
-          className="rounded-r-xl object-cover shadow-md"
+          className="rounded-r-xl"
         />
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
         {loading && <span className="btn btn-ghost loading"></span>}
         {houseData && (
           <React.Fragment>
-            <div className="card-body gap-0">
+            <div className="card-body">
               <label
                 htmlFor={`modal-${props.inviteId}`}
-                className="card-title text-left btn-ghost normal-case rounded-xl px-2 hover:cursor-pointer"
+                className="card-title btn btn-ghost modal-button"
               >
                 {houseData.name}
               </label>
-              <div className="card-actions justify-end mt-2">
+              <div className="card-actions justify-end">
                 <button
-                  className="btn btn-accent btn-xs"
+                  className="btn btn-primary btn-xs"
                   onClick={props.acceptHandler}
                   data-arg1={props.inviteId}
                   data-arg2={props.houseId}
@@ -89,7 +89,7 @@ export default function UserInviteCard(props: userInvitesProps) {
                     htmlFor={`modal-${props.inviteId}`}
                     className="btn h-fit w-fit"
                   >
-                    OK!
+                    Yay!
                   </label>
                 </div>
               </div>

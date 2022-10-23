@@ -24,12 +24,11 @@ function HouseholdCard(props: HouseHoldCardProps) {
           alt="Shoes"
           className="rounded-r-xl object-cover shadow-md"
         />
-
         <div className="card-body gap-0">
           <h2 className="card-title leading-4" id="houseName">
             {props.name}
           </h2>
-          <p className = "text-xs break-normal break-words" id="houseDesc">{props.desc}</p>
+          <p className = "text-xs break-normal break-words id="houseDesc">{props.desc}</p>
 
           <div className="card-actions justify-end">
             <Link href="household/[houseId]" as={`household/${props.id}`}>

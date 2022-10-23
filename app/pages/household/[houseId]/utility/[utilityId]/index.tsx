@@ -82,13 +82,13 @@ const Utility = () => {
     <>
       <NavBar></NavBar>
       <div className="flex flex-row justify-center items-center">
-        <h1 className="text-center font-black text-5xl mb-2 mt-24">
+        <h1 className="text-center font-black text-8xl mb-2">
           {amenityValue?.type}
         </h1>
-        <h1 className="text-center font-semibold text-2xl mb-2 mr-1 ml-3 mt-24">
+        <h1 className="text-center font-black text-2xl mb-2 mr-1">
           {amenityValue?.name}
         </h1>
-        <div className="dropdown dropdown-right mt-24">
+        <div className="dropdown dropdown-right">
           <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -122,13 +122,15 @@ const Utility = () => {
         </div>
       </div>
       <div className="flex flex-col justify-center items-center ">
-        
+        <h2 className="text-lg text-center font-semibold text-bo">
+          Description
+        </h2>
         <p className="text-center mb-8">
           {amenityValue?.desc ?? "No Description"}
         </p>
         <label
           htmlFor="new-booking-modal"
-          className="btn btn-wide btn-accent modal-button mb-4 shadow-md"
+          className="btn btn-wide btn-primary modal-button mb-4"
         >
           Book
         </label>
