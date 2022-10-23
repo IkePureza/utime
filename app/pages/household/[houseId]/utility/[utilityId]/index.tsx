@@ -88,7 +88,7 @@ const Utility = () => {
         <h1 className="text-center font-semibold text-2xl mb-2 mr-1 ml-3 mt-24">
           {amenityValue?.name}
         </h1>
-        <div className="dropdown dropdown-right mt-24">
+        <div className="dropdown md:dropdown-right dropdown-left mt-24">
           <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs">
             <svg
               xmlns="http://www.w3.org/2000/svg"

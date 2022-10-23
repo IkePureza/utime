@@ -52,7 +52,7 @@ const Household = () => {
         {" "}
         {value?.data()?.name}
       </h1>
-      <div className="flex xl:flex-row flex-col max-h-screen min-w-full xl:px-5 pb-5 max-w-screen mx-auto">
+      <div className="flex xl:flex-row flex-col max-h-screen xl:px-5 pb-5 max-w-screen mx-auto">
         
         <div className="xl:basis-3/4 order-2 xl:order-1">
           
