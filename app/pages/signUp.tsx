@@ -18,14 +18,15 @@ const Signup = () => {
     return <></>;
   } else {
     return (
-      <div className="grid place-content-center px-10 py-10 shadow-lg w-max mx-auto mt-6">
-        <h1 className="text-center font-black text-3xl mb-2">Sign Up</h1>
-        <div className="flex flex-col gap-y-3">
+      <div className="flex-col content-center justify-center px-10 py-5 shadow-lg w-96 mx-auto mt-6 mb-4">
+        <img src="./logo.png" alt="..." className="justify-center px-7"/>
+        <h1 className="text-center text-3xl font-normal mb-2">Sign Up</h1>
+        <div className="flex flex-col gap-y-1">
           <EmailPasswordAuthSignUp />
-          <div className="divider">OR</div>
+          <div className="divider text-sm mb-0">OR</div>
           <GoogleSignIn />
-        </div>
       </div>
+  </div>
     );
   }
 };

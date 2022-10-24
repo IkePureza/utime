@@ -48,9 +48,23 @@ const Household = () => {
   return (
     <>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
-        <div className="flex flex-col basis-1/4 items-center justify-start">
-          <h1 className="text-center font-black text-2xl mb-2">Utilities</h1>
+      <h1 className="text-center font-semibold text-4xl mb-2 pt-24">
+        {" "}
+        {value?.data()?.name}
+      </h1>
+      <div className="flex xl:flex-row flex-col max-h-screen xl:px-5 pb-5 max-w-screen mx-auto">
+        
+        <div className="xl:basis-3/4 order-2 xl:order-1">
+          
+          <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
+        </div>
+        <div className="xl:basis-1/4 items-center content-center justify-content order-1 xl:order-2">
+          
+          <h1 className="text-center font-semibold text-2xl mb-2">Users</h1>
+          <HouseholdMembers houseId={houseId} />
+          <InviteCard houseId={houseId} />
+
+          <h1 className="text-center font-semibold text-2xl mb-2 mt-4">Utilities</h1>
           <div className="flex flex-col gap-y-3 w-full">
             {amenityError && (
               <strong>Error: {JSON.stringify(amenityError)}</strong>
@@ -69,13 +83,15 @@ const Household = () => {
               </div>
             )}
           </div>
-          <label
-            id="newUtilityButton"
-            htmlFor="new-utility-modal"
-            className="btn btn-wide btn-primary modal-button mb-4"
-          >
-            + Add a new Utility
-          </label>
+          <div className="flex flex-col justify-around items-center">
+            <label
+              id="newUtilityButton"
+              htmlFor="new-utility-modal"
+              className="btn btn-wide btn-accent modal-button mb-4"
+            >
+              + Add a new Utility
+            </label>
+          </div>
           <input
             type="checkbox"
             id="new-utility-modal"
@@ -97,18 +113,6 @@ const Household = () => {
               <NewUtilityForm handleSubmit={handleCreateAmenity} />
             </div>
           </div>
-        </div>
-        <div className="basis-1/2">
-          <h1 className="text-center font-black text-3xl mb-2">
-            {" "}
-            Household {value?.data()?.name}
-          </h1>
-          <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
-        </div>
-        <div className="basis-1/4">
-          <h1 className="text-center font-black text-2xl mb-2">Users</h1>
-          <HouseholdMembers houseId={houseId} />
-          <InviteCard houseId={houseId} />
         </div>
       </div>
     </>
