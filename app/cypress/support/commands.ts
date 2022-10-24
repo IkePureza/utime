@@ -4,6 +4,7 @@ import firebase from "firebase/compat/app";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+import { getStorage, connectStorageEmulator } from "firebase/storage";
 
 const fbConfig = {
   apiKey: Cypress.env("FIREBASE_API_KEY"),
@@ -18,6 +19,7 @@ const app = firebase.initializeApp(fbConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 const functions = getFunctions(app);
+const storage = getStorage(app);
 
 // Emulate Firestore if Env variable is passed
 const firestoreEmulatorHost = Cypress.env("FIRESTORE_EMULATOR_HOST");
@@ -40,6 +42,12 @@ if (functionsEmulatorHost) {
   console.debug(`Using Functions emulator: http://${functionsEmulatorHost}/`);
 }
 
+// Emulate Firebase Storage if Env variable is passed
+const storageEmulatorHost = Cypress.env("FIREBASE_STORAGE_EMULATOR_HOST");
+if (storageEmulatorHost) {
+  connectStorageEmulator(storage, "localhost", 9199);
+}
+
 Cypress.Commands.add("login", () => {
   cy.visit("/login");
   cy.location("href").should("include", "/login");
@@ -47,9 +55,13 @@ Cypress.Commands.add("login", () => {
   cy.get("input[id=password-login]").type("123456");
   cy.get("button[type=submit]").click();
   cy.hash().should("eq", "");
+  cy.wait(2000);
+  cy.get(".loading").should("not.exist");
 });
 
 Cypress.Commands.add("logout", () => {
+  cy.wait(1000);
+  cy.get(".loading").should("not.exist");
   cy.get("svg[id=hamburger]").click();
   cy.contains("Logout").should("be.visible").click();
   cy.location("href").should("include", "/login");

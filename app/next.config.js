@@ -26,6 +26,7 @@ const nextConfig = {
       "www.freepnglogos.com",
       "lh3.googleusercontent.com",
       "placeimg.com",
+      "localhost",
     ],
   },
 };

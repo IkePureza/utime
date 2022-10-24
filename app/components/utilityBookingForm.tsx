@@ -20,7 +20,7 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
             <span className="label-text-alt">(Required)</span>
           </label>
           <input
-            id="desc"
+            id="bookingDesc"
             name="desc"
             type="text"
             placeholder="Booking Description"
@@ -36,7 +36,7 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
           </label>
           <div className="input-group">
             <input
-              id="from"
+              id="bookingFrom"
               name="from"
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
@@ -56,7 +56,7 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
           </label>
           <div className="input-group">
             <input
-              id="to"
+              id="bookingTo"
               name="to"
               type="datetime-local"
               placeholder="DD/MM/YYYY HH:MM"
@@ -70,7 +70,12 @@ function UtilityBookingForm(props: UtilityBookingFormProps) {
         </div>
         <br />
         <div className="min-w-full flex place-content-center">
-          <input className="btn" type="submit" value="Book"></input>
+          <input
+            id="bookingSubmit"
+            className="btn"
+            type="submit"
+            value="Book"
+          ></input>
         </div>
       </form>
     </>

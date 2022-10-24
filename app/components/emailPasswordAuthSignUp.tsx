@@ -1,9 +1,10 @@
 import React, { useCallback } from "react";
 import { useRouter } from "next/router";
-import { auth } from "../firebase/clientApp";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebase/clientApp";
+import { updateProfile, createUserWithEmailAndPassword } from "firebase/auth";
 
 import Link from "next/link";
+import { updateDoc, doc } from "firebase/firestore";
 
 const EmailPasswordAuthSignUp = () => {
   const Router = useRouter();
@@ -11,9 +12,21 @@ const EmailPasswordAuthSignUp = () => {
   const signupHandler = useCallback(
     async (event: any) => {
       event.preventDefault();
-      const { email, password } = event.target.elements;
+      const { email, password, displayName } = event.target.elements;
       try {
-        await createUserWithEmailAndPassword(auth, email.value, password.value);
+        await createUserWithEmailAndPassword(auth, email.value, password.value)
+          //Update Display name for firebase auth account and firestore user document
+          .then(async (user) => {
+            await updateProfile(user.user, {
+              displayName: displayName.value,
+            });
+            await updateDoc(doc(db, "users", user.user.uid), {
+              "data.displayName": displayName.value,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         Router.push("/");
       } catch (error) {
         alert(error);
@@ -28,6 +41,22 @@ const EmailPasswordAuthSignUp = () => {
         onSubmit={signupHandler}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
+        <div className="form-control w-full max-w-md mb-4">
+          <label
+            className="label text-grey-700t text-sm font-bold mb-2"
+            htmlFor="displayName"
+          >
+            Display Name
+          </label>
+          <input
+            className="input input-bordered w-full max-w-xs"
+            name="displayName"
+            id="displayName-signup"
+            type="text"
+            placeholder="Display Name"
+            required
+          />
+        </div>
         <div className="form-control w-full max-w-md mb-4">
           <label
             className="label text-grey-700t text-sm font-bold mb-2"

@@ -1,11 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useContext } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/clientApp";
 import Image from "next/image";
 import Link from "next/link";
 
+import { AuthContext } from "../context/AuthContext";
+
 const NavBar = () => {
+  const appContext = useContext(AuthContext);
+
   const signOutHandler = async () => {
     await signOut(auth);
     document.location.reload();
@@ -39,7 +43,10 @@ const NavBar = () => {
             <div className="w-10">
               <Image
                 className="rounded-full avatar"
-                src="https://placeimg.com/80/80/people"
+                src={
+                  appContext?.userData?.userPhotoLink ||
+                  "https://placeimg.com/80/80/people"
+                }
                 height={80}
                 width={80}
                 alt="profile pic"
@@ -51,13 +58,12 @@ const NavBar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
+              <Link href="/profile">
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </Link>
             </li>
             <li>
               <Link href="/login">

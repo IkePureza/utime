@@ -132,6 +132,7 @@ const Household = () => {
             </div>
           </div>
           <label
+            id="newUtilityButton"
             htmlFor="new-utility-modal"
             className="btn btn-wide btn-primary modal-button mb-4"
           >
