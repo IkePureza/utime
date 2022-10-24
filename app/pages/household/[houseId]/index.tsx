@@ -125,14 +125,12 @@ const Household = () => {
                 onClick={handleLeaveHouse}
                 value="leave house instead"
               ></input>
-              {/* <LeaveHouseForm handleClick={handleLeaveHouse} /> */}
               <br></br>
               <input
                 className="btn"
                 onClick={handleDeleteHouse}
                 value="delete house"
               ></input>
-              {/* <DeleteHouseForm handleClick={handleDeleteHouse} /> */}
             </div>
           </div>
           <label
