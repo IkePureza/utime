@@ -43,8 +43,6 @@ const Household = () => {
   const [amenityValue, amenityLoading, amenityError] =
     useCollection(amenityRef);
 
-  const Router = useRouter();
-
   const handleCreateAmenity = async (event: any) => {
     event.preventDefault();
     const { name, type, desc } = event.target.elements;
@@ -60,19 +58,13 @@ const Household = () => {
   };
 
   const handleDeleteHouse = async (event: any) => {
-    event.preventDefault();
-    Router.push("/");
+    router.push("/");
     const docRef = await deleteDoc(doc(db, "household", householdRef.id));
-
-    if (modalCheckboxRef.current !== null) {
-      modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
-    }
     console.log("House deleted");
   };
 
   const handleLeaveHouse = async (event: any) => {
-    event.preventDefault();
-    Router.push("/");
+    router.push("/");
     const currentUserId = currentUser?.userId;
     const docRef = doc(db, "household", householdRef.id);
     try {
@@ -80,9 +72,6 @@ const Household = () => {
     } catch (error) {
       console.log("error");
       alert(error);
-    }
-    if (modalCheckboxRef.current !== null) {
-      modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
     }
     console.log("House left");
   };
@@ -112,30 +101,40 @@ const Household = () => {
             )}
           </div>
           <input
-          type="checkbox"
-          id="delete-house-modal"
-          ref={modalCheckboxRef}
-          className="modal-toggle"
-        />
-        <div className="modal">
-          <div className="modal-box relative">
-            <label
-              htmlFor="delete-house-modal"
-              className="btn btn-sm btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">
-              Are you sure you want to delete the house?
-            </h3>
-            <p className="py-4">
-              This action will delete the house for all users.
-            </p>
-            <LeaveHouseForm handleClick={handleLeaveHouse} />
-            <br></br>
-            <DeleteHouseForm handleClick={handleDeleteHouse} />
+            type="checkbox"
+            id="delete-house-modal"
+            ref={modalCheckboxRef}
+            className="modal-toggle"
+          />
+          <div className="modal">
+            <div className="modal-box relative">
+              <label
+                htmlFor="delete-house-modal"
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <h3 className="text-lg font-bold">
+                Are you sure you want to delete the house?
+              </h3>
+              <p className="py-4">
+                This action will delete the house for all users.
+              </p>
+              <input
+                className="btn"
+                onClick={handleLeaveHouse}
+                value="leave house instead"
+              ></input>
+              {/* <LeaveHouseForm handleClick={handleLeaveHouse} /> */}
+              <br></br>
+              <input
+                className="btn"
+                onClick={handleDeleteHouse}
+                value="delete house"
+              ></input>
+              {/* <DeleteHouseForm handleClick={handleDeleteHouse} /> */}
+            </div>
           </div>
-        </div>
           <label
             htmlFor="new-utility-modal"
             className="btn btn-wide btn-primary modal-button mb-4"
@@ -211,8 +210,7 @@ const Household = () => {
           <HouseholdMembers houseId={houseId} />
           <InviteCard houseId={houseId} />
         </div>
-        
-      </div> 
+      </div>
     </>
   );
 };
