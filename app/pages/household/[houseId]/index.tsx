@@ -3,7 +3,16 @@ import React, { useContext, useRef } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useRouter } from "next/router";
 
-import { addDoc, doc, collection, where, query } from "firebase/firestore";
+import {
+  addDoc,
+  deleteDoc,
+  updateDoc,
+  arrayRemove,
+  doc,
+  collection,
+  where,
+  query,
+} from "firebase/firestore";
 import { db } from "../../../firebase/clientApp";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import NavBar from "../../../components/navBar";
@@ -20,6 +29,7 @@ const Household = () => {
   const currentUser = authContext?.userData;
   const householdRef = doc(db, "household", houseId);
   const amenityRef = collection(householdRef, "amenity");
+  //const userRef = doc(householdRef, "users");
   const bookingsRef = collection(db, "booking");
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
@@ -45,6 +55,25 @@ const Household = () => {
     }
   };
 
+  const handleDeleteHouse = async (event: any) => {
+    router.push("/");
+    const docRef = await deleteDoc(doc(db, "household", householdRef.id));
+    console.log("House deleted");
+  };
+
+  const handleLeaveHouse = async (event: any) => {
+    router.push("/");
+    const currentUserId = currentUser?.userId;
+    const docRef = doc(db, "household", householdRef.id);
+    try {
+      await updateDoc(docRef, { users: arrayRemove(currentUserId) });
+    } catch (error) {
+      console.log("error");
+      alert(error);
+    }
+    console.log("House left");
+  };
+
   return (
     <>
       <NavBar></NavBar>
@@ -68,6 +97,39 @@ const Household = () => {
                 ))}
               </div>
             )}
+          </div>
+          <input
+            type="checkbox"
+            id="delete-house-modal"
+            ref={modalCheckboxRef}
+            className="modal-toggle"
+          />
+          <div className="modal">
+            <div className="modal-box relative">
+              <label
+                htmlFor="delete-house-modal"
+                className="btn btn-sm btn-circle absolute right-2 top-2"
+              >
+                ✕
+              </label>
+              <h3 className="text-lg font-bold">
+                Are you sure you want to delete the house?
+              </h3>
+              <p className="py-4">
+                This action will delete the house for all users.
+              </p>
+              <input
+                className="btn"
+                onClick={handleLeaveHouse}
+                value="leave house instead"
+              ></input>
+              <br></br>
+              <input
+                className="btn"
+                onClick={handleDeleteHouse}
+                value="delete house"
+              ></input>
+            </div>
           </div>
           <label
             htmlFor="new-utility-modal"
@@ -101,6 +163,41 @@ const Household = () => {
           <h1 className="text-center font-black text-3xl mb-2">
             {" "}
             Household {value?.data()?.name}
+            <div className="dropdown dropdown-right">
+              <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                  />
+                </svg>
+              </label>
+              <ul
+                tabIndex={0}
+                className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <a className="justify-between">Edit</a>
+                </li>
+                <li>
+                  <label htmlFor="delete-house-modal" className="text-red-500">
+                    Delete
+                  </label>
+                  {/*
+                  <label htmlFor="leave-house-modal" className="text-red-500">
+                    Leave
+                    </label>*/}
+                </li>
+              </ul>
+            </div>
           </h1>
           <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
         </div>
