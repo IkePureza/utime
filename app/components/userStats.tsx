@@ -72,11 +72,15 @@ const UserStats = (props: UserStatsProps) => {
         {userDoc && (
           <>
             <div className="stat-value text-secondary">
-              {userDoc.totalMinutes || 0} <span className="text-sm">hrs</span>
+              {userDoc?.totalMinutes || 0} <span className="text-sm">hrs</span>
             </div>
             <div className="stat-desc">
-              {Math.round((userDoc.totalMinutes / 700800) * 10000) / 100 || 0}%
-              of your lifespan spent on the loo!
+              {Math.round(
+                userDoc?.totalMinutes
+                  ? ((userDoc?.totalMinutes / 700800) * 10000) / 100
+                  : 0
+              )}
+              % of your lifespan spent on the loo!
             </div>
           </>
         )}

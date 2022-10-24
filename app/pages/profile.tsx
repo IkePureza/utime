@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-import { db, storage } from "../firebase/clientApp";
+import { auth, db, storage } from "../firebase/clientApp";
 import { doc, updateDoc } from "firebase/firestore";
-import { updateProfile } from "firebase/auth";
 
 import AuthRoute from "../HOC/authRoute";
 
@@ -12,7 +11,14 @@ import { AuthContext } from "../context/AuthContext";
 
 import NavBar from "../components/navBar";
 import UserStats from "../components/userStats";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
+
+import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
 
 import { v4 } from "uuid";
 
@@ -22,12 +28,17 @@ function Profile() {
   const userData = appContext?.userData;
   const [imageUpload, setImageUpload] = useState<File | null>();
   const [imageError, setImageError] = useState(false);
+  const [user, userLoading, userError] = useAuthState(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+  const usernameModalCheckboxRef = useRef<HTMLInputElement>(null);
+  const imageModalCheckboxRef = useRef<HTMLInputElement>(null);
 
   const handleUsernameChange = async (event: any) => {
+    event.preventDefault();
     const newUsername = event.target.elements.newUsername.value;
-    if (appContext && appContext.currentUser) {
-      const user = appContext.currentUser;
-      await updateProfile(user, {
+    if (user) {
+      await updateProfile({
         displayName: newUsername,
       }).then(async () => {
         await updateDoc(doc(db, "users", user.uid), {
@@ -35,19 +46,39 @@ function Profile() {
         });
       });
     }
+    if (usernameModalCheckboxRef.current !== null) {
+      usernameModalCheckboxRef.current.checked =
+        !usernameModalCheckboxRef.current.checked;
+    }
+  };
+
+  const handleImageUpload = (event: any) => {
+    if (event.target.files) {
+      if (event.target.files[0].size > 1000 * 1000) {
+        setImageError(true);
+      } else {
+        setImageError(false);
+        setImageUpload(event.target.files[0]);
+      }
+    }
   };
 
   // Handler that uploads user profile image and
   // updates user auth instance photoURL
-  const handleUploadImage = async (event: any) => {
+  const handleImageSubmit = async (event: any) => {
     if (imageUpload == null) return;
     const imageRef = ref(storage, `profile/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload).then(async () => {
+      // Delete old profile pic
+      if (user?.photoURL) {
+        const oldImageRef = ref(storage, user?.photoURL);
+        await deleteObject(oldImageRef);
+      }
       // After new image is uploaded, change user display image
       if (appContext && appContext.currentUser) {
         const user = appContext.currentUser;
         const newPhotoLink = await getDownloadURL(imageRef);
-        await updateProfile(user, {
+        await updateProfile({
           photoURL: newPhotoLink,
         });
         await updateDoc(doc(db, "users", user.uid), {
@@ -55,7 +86,10 @@ function Profile() {
         });
       }
     });
-    router.reload();
+    if (imageModalCheckboxRef.current !== null) {
+      imageModalCheckboxRef.current.checked =
+        !imageModalCheckboxRef.current.checked;
+    }
   };
 
   return (
@@ -65,15 +99,25 @@ function Profile() {
         <div className="mt-4 flex flex-col">
           <label htmlFor="imageUploadModal" className="modal-button">
             <div className="relative border-2 rounded-xl">
-              <Image
-                className="rounded-xl avatar"
-                src={
-                  userData?.userPhotoLink || "https://placeimg.com/80/80/people"
-                }
-                height={200}
-                width={200}
-                alt="profile pic"
-              />
+              {userError && <strong>Error: {JSON.stringify(userError)}</strong>}
+              {userLoading && (
+                <span className="btn loading btn-ghost place-item-center"></span>
+              )}
+              {user &&
+                (updating ? (
+                  <span className="btn loading btn-ghost place-item-center"></span>
+                ) : (
+                  <Image
+                    className="rounded-xl avatar"
+                    src={user?.photoURL || "https://placeimg.com/80/80/people"}
+                    height={200}
+                    width={200}
+                    alt="profile pic"
+                  />
+                ))}
+              {updateError && (
+                <strong>Error: {JSON.stringify(userError)}</strong>
+              )}
               <div className="absolute top-0 left-0 w-full h-full bg-white rounded-xl opacity-0 flex justify-center items-center transition-opacity hover:opacity-50 duration-500">
                 <Image
                   className=""
@@ -86,15 +130,16 @@ function Profile() {
             </div>
           </label>
           <div className="mt-5 flex flex-col">
-            {userData && userData.userName ? (
-              <h3 className="text-4xl font-bold" id="profileUsername">
-                {userData.userName}
-              </h3>
-            ) : (
-              <p>
-                Please reload... <span className="btn loading btn-ghost"></span>
-              </p>
-            )}
+            {userError && <strong>Error: {JSON.stringify(userError)}</strong>}
+            {userLoading}
+            {user &&
+              (updating ? (
+                <span className="btn loading btn-ghost place-item-center"></span>
+              ) : (
+                <h3 className="text-4xl font-bold" id="profileUsername">
+                  {user.displayName}
+                </h3>
+              ))}
             <label
               htmlFor="usernameChangeModal"
               className="btn btn-xs btn-outline modal-button mt-2"
@@ -109,7 +154,7 @@ function Profile() {
             <br />
             <div className="grid grid-cols-2 gap-x-5">
               <h3 className="font-bold">Email Address:</h3>
-              <p id="profileEmail">{userData?.userEmail}</p>
+              <p id="profileEmail">{user?.email}</p>
               <h3 className="font-bold">Authentication Method:</h3>
               <p id="profileAuth">
                 {userData?.userProviderId === "password" ? "Email" : "Google"}
@@ -124,6 +169,7 @@ function Profile() {
         type="checkbox"
         id="usernameChangeModal"
         className="modal-toggle"
+        ref={usernameModalCheckboxRef}
       />
       <div className="modal">
         <div className="modal-box">
@@ -134,9 +180,7 @@ function Profile() {
             <input
               type="text"
               id="newUsername"
-              placeholder={
-                userData?.userName || "Enter your display name here!"
-              }
+              placeholder={user?.displayName || "Enter your display name here!"}
               className="input input-bordered w-full max-w-xs"
             />
             <div className="modal-action">
@@ -156,7 +200,12 @@ function Profile() {
         </div>
       </div>
 
-      <input type="checkbox" id="imageUploadModal" className="modal-toggle" />
+      <input
+        type="checkbox"
+        id="imageUploadModal"
+        className="modal-toggle"
+        ref={imageModalCheckboxRef}
+      />
       <div className="modal">
         <div className="modal-box relative">
           <label
@@ -201,21 +250,11 @@ function Profile() {
             )}
             <input
               type="file"
-              onChange={(event) => {
-                // Make sure photo is uploaded and is less than 1MB in size.
-                if (event.target.files) {
-                  if (event.target.files[0].size > 1000 * 1000) {
-                    setImageError(true);
-                  } else {
-                    setImageError(false);
-                    setImageUpload(event.target.files[0]);
-                  }
-                }
-              }}
+              onChange={handleImageUpload}
               className=""
               accept=".png,.jpg,.jpeg"
             />
-            <button onClick={handleUploadImage} className="btn mt-10">
+            <button onClick={handleImageSubmit} className="btn mt-10">
               Upload
             </button>
           </div>
