@@ -1,8 +1,9 @@
-describe("User Invitations", () => {
-  beforeEach(() => {
+describe("User Household Tests", () => {
+  before(() => {
     cy.login();
   });
-  afterEach(() => {
+  after(() => {
+    cy.visit("/");
     cy.logout();
   });
 
@@ -16,27 +17,29 @@ describe("User Invitations", () => {
     cy.contains("Test in progress");
   });
 
-  it("User can send an invite to a user", () => {
-    cy.get(".card-actions > .btn").click();
-    cy.contains("Household testHouse");
-    cy.get("#inviteEmail").type("cypresstest2@mail.com");
-    cy.get("#submitInvite").click();
-    cy.get("#inviteEmail").should("have.value", "Sent!");
-  });
+  describe("User Invitations", () => {
+    beforeEach(() => {
+      cy.visit("/");
+      cy.get(".card-actions > .btn").click();
+      cy.contains("Household testHouse");
+    });
 
-  it("User tries to send invite to themself", () => {
-    cy.get(".card-actions > .btn").click();
-    cy.contains("Household testHouse");
-    cy.get("#inviteEmail").type("cypresstest@mail.com");
-    cy.get("#submitInvite").click();
-    cy.contains("You can't invite yourself LOL");
-  });
+    it("User can send an invite to a user", () => {
+      cy.get("#inviteEmail").type("cypresstest2@mail.com");
+      cy.get("#submitInvite").click();
+      cy.get("#inviteEmail").should("have.value", "Sent!");
+    });
 
-  it("User tries to invite an already invited user", () => {
-    cy.get(".card-actions > .btn").click();
-    cy.contains("Household testHouse");
-    cy.get("#inviteEmail").type("cypresstest2@mail.com");
-    cy.get("#submitInvite").click();
-    cy.contains("Invite already sent to this email address!");
+    it("User tries to send invite to themself", () => {
+      cy.get("#inviteEmail").type("cypresstest@mail.com");
+      cy.get("#submitInvite").click();
+      cy.contains("You can't invite yourself LOL");
+    });
+
+    it("User tries to invite an already invited user", () => {
+      cy.get("#inviteEmail").type("cypresstest2@mail.com");
+      cy.get("#submitInvite").click();
+      cy.contains("Invite already sent to this email address!");
+    });
   });
 });

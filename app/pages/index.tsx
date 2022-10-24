@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { db } from "../firebase/clientApp";
 import { collection, addDoc, query, where } from "firebase/firestore";
@@ -29,6 +29,8 @@ function Index() {
   ]);
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
+
+  const Router = useRouter();
 
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();

@@ -55,10 +55,13 @@ Cypress.Commands.add("login", () => {
   cy.get("input[id=password-login]").type("123456");
   cy.get("button[type=submit]").click();
   cy.hash().should("eq", "");
+  cy.wait(2000);
+  cy.get(".loading").should("not.exist");
 });
 
 Cypress.Commands.add("logout", () => {
   cy.wait(1000);
+  cy.get(".loading").should("not.exist");
   cy.get("svg[id=hamburger]").click();
   cy.contains("Logout").should("be.visible").click();
   cy.location("href").should("include", "/login");
