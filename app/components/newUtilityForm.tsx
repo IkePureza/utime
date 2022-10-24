@@ -33,7 +33,7 @@ function NewUtilityForm(props: NewUtilityFormProps) {
           <span className="label-text-alt">(Required)</span>
         </label>
         <input
-          id="name"
+          id="utilityName"
           name="name"
           type="input w-full max-w-xs"
           placeholder="Utility Name"
@@ -48,7 +48,7 @@ function NewUtilityForm(props: NewUtilityFormProps) {
           <span className="label-text-alt">Maximum 50 words</span>
         </label>
         <textarea
-          id="desc"
+          id="utilityDesc"
           name="desc"
           className="textarea textarea-bordered h-24"
           placeholder="Description"
@@ -58,7 +58,7 @@ function NewUtilityForm(props: NewUtilityFormProps) {
       <br />
       <div className="min-w-full flex place-content-center">
         <input
-          id="new-utility-modal"
+          id="createUtilityButton"
           className="btn"
           type="submit"
           value="Create Utility"

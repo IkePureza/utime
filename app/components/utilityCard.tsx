@@ -18,6 +18,7 @@ function UtilityCard(props: UtilityCardProps) {
           <p>{props.data?.desc}</p>
           <div className="card-actions justify-end">
             <Link
+              id="toUtilityButton"
               href="/household/[houseId]/utility/[utilityId]"
               as={`/household/${props.houseId}/utility/${props.id}`}
             >
