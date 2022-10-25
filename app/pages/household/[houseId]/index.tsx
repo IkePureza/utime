@@ -1,6 +1,8 @@
 import React, { useContext, useRef } from "react";
 
 import { AuthContext } from "../../../context/AuthContext";
+import AlertContext from "../../../context/alertProvider";
+
 import { useRouter } from "next/router";
 
 import {
@@ -26,6 +28,7 @@ const Household = () => {
   const router = useRouter();
   const { houseId }: any = router.query;
   const authContext = useContext(AuthContext);
+  const alert = useContext(AlertContext);
   const currentUser = authContext?.userData;
   const householdRef = doc(db, "household", houseId);
   const amenityRef = collection(householdRef, "amenity");
@@ -56,22 +59,28 @@ const Household = () => {
   };
 
   const handleDeleteHouse = async (event: any) => {
-    router.push("/");
     const docRef = await deleteDoc(doc(db, "household", householdRef.id));
     console.log("House deleted");
+
+    router.push("/");
+    const message = `Successfully deleted ${value?.data()?.name}`;
+    alert?.success(message, 5);
   };
 
   const handleLeaveHouse = async (event: any) => {
-    router.push("/");
     const currentUserId = currentUser?.userId;
     const docRef = doc(db, "household", householdRef.id);
     try {
       await updateDoc(docRef, { users: arrayRemove(currentUserId) });
     } catch (error) {
       console.log("error");
-      alert(error);
+      alert?.error(`An error has occured.`, 5);
     }
     console.log("House left");
+
+    router.push("/");
+    const message = `Successfully left ${value?.data()?.name}`;
+    alert?.success(message, 5);
   };
 
   return (
