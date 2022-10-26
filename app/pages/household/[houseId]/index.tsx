@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 
 import { AuthContext } from "../../../context/AuthContext";
 import AlertContext from "../../../context/alertProvider";
@@ -12,8 +12,7 @@ import {
   arrayRemove,
   doc,
   collection,
-  where,
-  query,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../../firebase/clientApp";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
@@ -23,6 +22,7 @@ import NewUtilityForm from "../../../components/newUtilityForm";
 import HouseholdCalendar from "../../../components/householdCalendar";
 import HouseholdMembers from "../../../components/household/householdMembers";
 import InviteCard from "../../../components/userInvites/inviteCard";
+import Alert from "../../../components/alert";
 
 const Household = () => {
   const router = useRouter();
@@ -30,19 +30,52 @@ const Household = () => {
   const authContext = useContext(AuthContext);
   const alert = useContext(AlertContext);
   const currentUser = authContext?.userData;
+
   const householdRef = doc(db, "household", houseId);
   const amenityRef = collection(householdRef, "amenity");
-  //const userRef = doc(householdRef, "users");
-  const bookingsRef = collection(db, "booking");
 
-  const modalCheckboxRef = useRef<HTMLInputElement>(null);
+  const createUtilityModalRef = useRef<HTMLInputElement>(null);
+  0;
+  const deleteModalCheckboxRef = useRef<HTMLInputElement>(null);
 
-  const [value, loading, error] = useDocument(householdRef);
-  const [bookingValue, bookingLoading, bookingError] = useCollection(
-    query(bookingsRef, where("householdId", "==", houseId))
-  );
+  const [household, loading, error] = useDocument(householdRef);
   const [amenityValue, amenityLoading, amenityError] =
     useCollection(amenityRef);
+
+  const [householdMembers, setHouseholdMembers] = useState<any[]>();
+
+  useEffect(() => {
+    let active = true;
+    loadMembers();
+    return () => {
+      active = false;
+    };
+
+    async function loadMembers() {
+      if (household) {
+        const allMembers = await Promise.all(
+          household?.data()?.users.map(async (memberId: any) => {
+            const memberRef = doc(db, "users", memberId);
+            const memberName = await getDoc(memberRef).then((data) => {
+              return data.data()?.data.displayName;
+            });
+            return [memberId, memberName];
+          })
+        );
+        const withoutUser = allMembers.filter((e: any, i: any, a: any) => {
+          return e[0] !== currentUser?.userId;
+        });
+        if (!active) {
+          return;
+        }
+        setHouseholdMembers(withoutUser);
+      }
+    }
+  }, []);
+
+  const isOwner = (): boolean => {
+    return household?.data()?.owner === currentUser?.userId;
+  };
 
   const handleCreateAmenity = async (event: any) => {
     event.preventDefault();
@@ -53,23 +86,34 @@ const Household = () => {
       type: type.value,
       desc: desc.value,
     });
-    if (modalCheckboxRef.current !== null) {
-      modalCheckboxRef.current.checked = !modalCheckboxRef.current.checked;
+    if (createUtilityModalRef.current !== null) {
+      createUtilityModalRef.current.checked =
+        !createUtilityModalRef.current.checked;
     }
   };
 
+  // Delete a household if the user is the owner of the household
   const handleDeleteHouse = async (event: any) => {
+    if (!isOwner()) {
+      alert?.error("Need owner permission to delete household!", 5);
+      return;
+    }
+    router.push("/");
     const docRef = await deleteDoc(doc(db, "household", householdRef.id));
     console.log("House deleted");
 
-    router.push("/");
-    const message = `Successfully deleted ${value?.data()?.name}`;
+    const message = `Successfully deleted ${household?.data()?.name}`;
     alert?.success(message, 5);
   };
 
+  /** Leave a household.
+   * Cannot leave if user is the owner of Household (Need to delegate ownership).
+   * This automatically means that the last member (the owner) cannot leave the household.
+   * */
   const handleLeaveHouse = async (event: any) => {
     const currentUserId = currentUser?.userId;
     const docRef = doc(db, "household", householdRef.id);
+    router.push("/");
     try {
       await updateDoc(docRef, { users: arrayRemove(currentUserId) });
     } catch (error) {
@@ -78,9 +122,28 @@ const Household = () => {
     }
     console.log("House left");
 
-    router.push("/");
-    const message = `Successfully left ${value?.data()?.name}`;
+    const message = `Successfully left ${household?.data()?.name}`;
     alert?.success(message, 5);
+  };
+
+  /**
+   * Handler that delegates the ownership of the household to another user.
+   */
+  const handleDelegateOwner = async (event: any) => {
+    event.preventDefault();
+    const newOwnerId = event.target.elements.newOwner.value.split(",")[0];
+    const newOwnerName = event.target.elements.newOwner.value.split(",")[1];
+
+    const updateOwner = await updateDoc(householdRef, {
+      owner: newOwnerId,
+    }).then(() => {
+      alert?.success(`Delegated ownership to ${newOwnerName}`, 5);
+    });
+
+    if (deleteModalCheckboxRef.current !== null) {
+      deleteModalCheckboxRef.current.checked =
+        !deleteModalCheckboxRef.current.checked;
+    }
   };
 
   return (
@@ -110,7 +173,7 @@ const Household = () => {
           <input
             type="checkbox"
             id="delete-house-modal"
-            ref={modalCheckboxRef}
+            ref={deleteModalCheckboxRef}
             className="modal-toggle"
           />
           <div className="modal">
@@ -121,23 +184,102 @@ const Household = () => {
               >
                 ✕
               </label>
-              <h3 className="text-lg font-bold">
-                Are you sure you want to delete the house?
-              </h3>
-              <p className="py-4">
-                This action will delete the house for all users.
-              </p>
-              <input
-                className="btn"
-                onClick={handleLeaveHouse}
-                value="leave house instead"
-              ></input>
+              <h3 className="text-lg font-bold">Household Settings</h3>
+              {!isOwner() && (
+                <div className="flex flex-col mt-5">
+                  <h3 className="text-xl font-bold">Leave House</h3>
+                  <p>
+                    You&apos;ll need a new invitation to join this house again!
+                  </p>
+                  <input
+                    className="btn btn-error rounded-lg place-self-center mt-5"
+                    onClick={handleLeaveHouse}
+                    value="leave house"
+                  ></input>
+                </div>
+              )}
               <br></br>
-              <input
-                className="btn"
-                onClick={handleDeleteHouse}
-                value="delete house"
-              ></input>
+              {isOwner() && (
+                <div className="flex flex-col">
+                  <form action="#" onSubmit={handleDelegateOwner}>
+                    <h3 className="text-xl font-bold">Delegate Ownership</h3>
+                    <p>
+                      Choose someone to handover the ownership of this UHouse!
+                    </p>
+                    <br />
+                    <div className="flex gap-x-5">
+                      {householdMembers && householdMembers.length > 0 ? (
+                        <>
+                          <select
+                            name="newOwner"
+                            id="newOwner"
+                            className="select select-primary w-full max-w-xs"
+                          >
+                            <option disabled selected>
+                              Select the new owner!
+                            </option>
+                            {householdMembers.map((member: any) => {
+                              return (
+                                <option key={member[0]} value={member}>
+                                  {member[1]}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <input
+                            type="submit"
+                            className="btn btn-warning"
+                            value="Delegate"
+                          ></input>
+                        </>
+                      ) : (
+                        <>
+                          <select
+                            name="newOwner"
+                            id="newOwner"
+                            className="select w-full max-w-xs"
+                            disabled
+                          >
+                            <option>You&apos;re the only one left!</option>
+                          </select>
+                          <input
+                            type="submit"
+                            className="btn btn-primary"
+                            value="Delegate"
+                            disabled
+                          ></input>
+                        </>
+                      )}
+                    </div>
+                  </form>
+                  <br />
+                  <h3 className="text-xl font-bold">Delete Household</h3>
+                  <div className="alert alert-warning shadow-lg">
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-current flex-shrink-0 h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeWidth="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                      <span>Warning: You cannot undo this action!</span>
+                    </div>
+                  </div>
+                  <button
+                    className="mt-5 btn btn-error rounded-lg place-self-center"
+                    onClick={handleDeleteHouse}
+                    id="deleteHouseholdButton"
+                  >
+                    delete house
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <label
@@ -150,7 +292,7 @@ const Household = () => {
           <input
             type="checkbox"
             id="new-utility-modal"
-            ref={modalCheckboxRef}
+            ref={createUtilityModalRef}
             className="modal-toggle"
           />
           <div className="modal">
@@ -172,9 +314,13 @@ const Household = () => {
         <div className="basis-1/2">
           <h1 className="text-center font-black text-3xl mb-2">
             {" "}
-            Household {value?.data()?.name}
+            Household {household?.data()?.name}
             <div className="dropdown dropdown-right">
-              <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs">
+              <label
+                tabIndex={0}
+                id="householdMenu"
+                className="btn btn-circle btn-ghost btn-xs"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -198,8 +344,12 @@ const Household = () => {
                   <a className="justify-between">Edit</a>
                 </li>
                 <li>
-                  <label htmlFor="delete-house-modal" className="text-red-500">
-                    Delete
+                  <label
+                    id="householdDeleteSettings"
+                    htmlFor="delete-house-modal"
+                    className="text-red-500"
+                  >
+                    Delete/Delegate
                   </label>
                   {/*
                   <label htmlFor="leave-house-modal" className="text-red-500">
@@ -216,6 +366,7 @@ const Household = () => {
           <HouseholdMembers houseId={houseId} />
           <InviteCard houseId={houseId} />
         </div>
+        <Alert />
       </div>
     </>
   );

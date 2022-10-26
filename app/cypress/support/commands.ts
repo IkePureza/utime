@@ -66,3 +66,18 @@ Cypress.Commands.add("logout", () => {
   cy.contains("Logout").should("be.visible").click();
   cy.location("href").should("include", "/login");
 });
+
+Cypress.Commands.add("createHousehold", () => {
+  cy.get("#createHousehold").click();
+  cy.get("input[id=houseName]").click().type("testHouse");
+  cy.get("textarea[id=houseDesc]").click().type("Test in progress");
+  cy.get(".min-w-full > .btn").click();
+  cy.wait(1000);
+  cy.contains("testHouse");
+  cy.contains("Test in progress");
+});
+
+Cypress.Commands.add("loadWait", () => {
+  cy.wait(1000);
+  cy.get(".loading").should("not.exist");
+});
