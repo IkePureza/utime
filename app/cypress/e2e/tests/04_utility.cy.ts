@@ -1,6 +1,11 @@
 describe("Household utilites", () => {
   before(() => {
     cy.login();
+    cy.get("#createHousehold").click();
+    cy.get("input[id=houseName]").click().type("testHouse");
+    cy.get("textarea[id=houseDesc]").click().type("Test in progress");
+    cy.get(".min-w-full > .btn").click();
+    cy.wait(1000);
     cy.get(".card-actions > .btn").click();
     cy.contains("Household testHouse");
   });

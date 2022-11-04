@@ -3,7 +3,6 @@ describe("User Household Tests", () => {
     cy.login();
   });
   after(() => {
-    cy.visit("/");
     cy.logout();
   });
 
@@ -18,7 +17,7 @@ describe("User Household Tests", () => {
   });
 
   describe("User Invitations", () => {
-    beforeEach(() => {
+    before(() => {
       cy.visit("/");
       cy.get(".card-actions > .btn").click();
       cy.contains("Household testHouse");
@@ -31,15 +30,46 @@ describe("User Household Tests", () => {
     });
 
     it("User tries to send invite to themself", () => {
-      cy.get("#inviteEmail").type("cypresstest@mail.com");
+      cy.get("#inviteEmail").clear().type("cypresstest@mail.com");
       cy.get("#submitInvite").click();
       cy.contains("You can't invite yourself LOL");
     });
 
     it("User tries to invite an already invited user", () => {
-      cy.get("#inviteEmail").type("cypresstest2@mail.com");
+      cy.get("#inviteEmail").clear().type("cypresstest2@mail.com");
       cy.get("#submitInvite").click();
       cy.contains("Invite already sent to this email address!");
+    });
+  });
+
+  describe("Edit House", () => {
+    before(() => {
+      cy.visit("/");
+      cy.wait(1000);
+      cy.get(".loading").should("not.exist");
+      cy.get(".card-actions > .btn").click();
+      cy.contains("Household testHouse");
+      cy.wait(1000);
+      cy.get(".loading").should("not.exist");
+    });
+
+    it("can edit house name and description", () => {
+      cy.get("#householdMenu").click();
+      cy.get("#householdEditSettings").should("be.visible").click();
+      cy.get("#newHouseName").type("New House Name");
+      cy.get("#newHouseDesc").type("New House Desc");
+      cy.get("#submitEditHouse").click();
+      cy.wait(1000);
+      cy.contains("Household New House Name");
+    });
+
+    it("can delete household", () => {
+      cy.get("#householdMenu").click();
+      cy.get("#householdDeleteSettings").should("be.visible").click();
+      cy.get("#deleteHouseholdButton").click();
+      cy.wait(1000);
+      cy.get(".loading").should("not.exist");
+      cy.get(".alert-success").should("exist");
     });
   });
 });

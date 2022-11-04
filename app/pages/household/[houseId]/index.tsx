@@ -24,6 +24,8 @@ import HouseholdMembers from "../../../components/household/householdMembers";
 import InviteCard from "../../../components/userInvites/inviteCard";
 import Alert from "../../../components/alert";
 
+import HouseholdEditModal from "../../../components/modals/householdEditModal";
+
 const Household = () => {
   const router = useRouter();
   const { houseId }: any = router.query;
@@ -341,7 +343,9 @@ const Household = () => {
                 className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <a className="justify-between">Edit</a>
+                  <label id="householdEditSettings" htmlFor="edit-house-modal">
+                    Edit
+                  </label>
                 </li>
                 <li>
                   <label
@@ -368,6 +372,7 @@ const Household = () => {
         </div>
         <Alert />
       </div>
+      {household && <HouseholdEditModal houseId={houseId} />}
     </>
   );
 };
