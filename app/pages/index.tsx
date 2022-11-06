@@ -95,6 +95,7 @@ function Index() {
                       id={doc.id}
                       key={doc.id}
                       name={doc.data().name}
+                      icon={doc.data().photoURL}
                     />
                   ))}
                 </div>
