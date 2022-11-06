@@ -93,7 +93,7 @@ function Index() {
               )}
             </p>
           </div>
-          {/*
+          
           <label
             htmlFor="new-house-modal"
             className="btn btn-wide modal-button mt-10 mb-20"
@@ -101,8 +101,8 @@ function Index() {
             className="btn btn-wide btn-primary modal-button mt-10 normal-case text-base shadow-lg"
           >
             New House
-                  </label>*/}
-          <label htmlFor="new-house-modal"><NewHouseCard id="" name="" /></label>
+                  </label>{/*
+              <label htmlFor="new-house-modal"><NewHouseCard id="" name="" /></label>*/}
         </div>
         <div className="xl:order-3 xl:basis-1/3 flex-col justify-around items-center" id="userInvites">
           <UserInvites />
