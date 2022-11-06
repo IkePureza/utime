@@ -96,7 +96,7 @@ function Index() {
           
           <label
             htmlFor="new-house-modal"
-            className="btn btn-wide modal-button mt-10 mb-20"
+            //className="btn btn-wide modal-button mt-10 mb-20"
             id="createHousehold"
             className="btn btn-wide btn-primary modal-button mt-10 normal-case text-base shadow-lg"
           >
