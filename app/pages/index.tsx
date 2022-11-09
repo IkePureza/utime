@@ -31,9 +31,6 @@ function Index() {
 
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
-  const Router = useRouter();
-  const { message } = Router.query;
-
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
     const houseName = event.target.elements.houseName;

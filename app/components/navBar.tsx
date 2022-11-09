@@ -68,7 +68,7 @@ const NavBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/login">
+              <Link href="/loading">
                 <a onClick={signOutHandler}>Logout</a>
               </Link>
             </li>

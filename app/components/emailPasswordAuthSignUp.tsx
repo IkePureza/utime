@@ -4,7 +4,7 @@ import { auth, db } from "../firebase/clientApp";
 import { updateProfile, createUserWithEmailAndPassword } from "firebase/auth";
 
 import Link from "next/link";
-import { updateDoc, doc } from "firebase/firestore";
+import { updateDoc, doc, getDoc } from "firebase/firestore";
 
 const EmailPasswordAuthSignUp = () => {
   const Router = useRouter();
@@ -15,14 +15,26 @@ const EmailPasswordAuthSignUp = () => {
       const { email, password, displayName } = event.target.elements;
       try {
         createUserWithEmailAndPassword(auth, email.value, password.value)
-          //Update Display name for firebase auth account and firestore user document
           .then(async (user) => {
+            //Update Display name for firebase auth account and firestore user document
             await updateProfile(user.user, {
               displayName: displayName.value,
             });
-            await updateDoc(doc(db, "users", user.user.uid), {
-              "data.displayName": displayName.value,
-            });
+
+            const userRef = doc(db, "users", user.user.uid);
+
+            async function waitUserDoc() {
+              const userDoc = await getDoc(userRef);
+              if (!userDoc.exists()) {
+                window.setTimeout(waitUserDoc, 100);
+              } else {
+                await updateDoc(userRef, {
+                  "data.displayName": displayName.value,
+                });
+              }
+            }
+            Router.push("/loading");
+            await waitUserDoc();
             Router.push("/");
           })
           .catch((error) => {
