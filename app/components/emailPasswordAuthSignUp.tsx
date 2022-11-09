@@ -14,7 +14,7 @@ const EmailPasswordAuthSignUp = () => {
       event.preventDefault();
       const { email, password, displayName } = event.target.elements;
       try {
-        await createUserWithEmailAndPassword(auth, email.value, password.value)
+        createUserWithEmailAndPassword(auth, email.value, password.value)
           //Update Display name for firebase auth account and firestore user document
           .then(async (user) => {
             await updateProfile(user.user, {
@@ -23,11 +23,11 @@ const EmailPasswordAuthSignUp = () => {
             await updateDoc(doc(db, "users", user.user.uid), {
               "data.displayName": displayName.value,
             });
+            Router.push("/");
           })
           .catch((error) => {
             console.log(error);
           });
-        Router.push("/");
       } catch (error) {
         alert(error);
       }
