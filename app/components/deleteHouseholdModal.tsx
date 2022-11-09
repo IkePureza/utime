@@ -54,7 +54,7 @@ const DeleteHouseholdModal = (props: DeleteHouseholdModalProps) => {
     };
 
     getHouseMembers();
-  }, []);
+  });
 
   /** Leave a household.
    * Cannot leave if user is the owner of Household (Need to delegate ownership).
