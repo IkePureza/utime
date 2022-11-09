@@ -27,6 +27,7 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "placeimg.com",
       "localhost",
+      "firebasestorage.googleapis.com",
     ],
   },
 };
