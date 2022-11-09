@@ -326,7 +326,7 @@ const Household = () => {
               }
               width={90}
               height={90}
-              alt="profile pic"
+              alt="household pic"
             />
             <h1 className="text-center font-black text-3xl mb-5">
               Household {household?.data()?.name}
