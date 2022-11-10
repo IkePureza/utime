@@ -46,7 +46,7 @@ function NewUtilityForm(props: NewUtilityFormProps) {
       <div className="form-control">
         <label className="label">
           <span className="label-text">Description (Optional)</span>
-          <span className="label-text-alt">Maximum 50 words</span>
+          <span className="label-text-alt">Maximum 50 characters</span>
         </label>
         <textarea
           id="utilityDesc"

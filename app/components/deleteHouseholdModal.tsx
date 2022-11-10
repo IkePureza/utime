@@ -130,7 +130,7 @@ const DeleteHouseholdModal = (props: DeleteHouseholdModalProps) => {
           {!props.isOwner && (
             <div className="flex flex-col mt-5">
               <h3 className="text-xl font-bold">Leave House</h3>
-              <p>You&apos;ll need a new invitation to join this house again!</p>
+              <p>You will need a new invitation to join this house again!</p>
               <input
                 className="btn btn-error rounded-lg place-self-center mt-5"
                 onClick={handleLeaveHouse}
@@ -143,7 +143,7 @@ const DeleteHouseholdModal = (props: DeleteHouseholdModalProps) => {
             <div className="flex flex-col">
               <form action="#" onSubmit={handleDelegateOwner}>
                 <h3 className="text-xl font-bold">Delegate Ownership</h3>
-                <p>Choose someone to handover the ownership of this UHouse!</p>
+                <p>Choose someone to handover the ownership of this U-House!</p>
                 <br />
                 <div className="flex gap-x-5">
                   {householdMembers && householdMembers.length > 0 ? (

@@ -65,6 +65,7 @@ const EmailPasswordAuthSignUp = () => {
             id="displayName-signup"
             type="text"
             placeholder="Display Name"
+            maxLength={20}
             required
           />
         </div>

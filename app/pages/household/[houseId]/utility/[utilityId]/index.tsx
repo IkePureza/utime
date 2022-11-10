@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 
 import { AuthContext } from "../../../../../context/AuthContext";
 import { useRouter } from "next/router";
+import Link from "next/link"
 
 import {
   addDoc,
@@ -112,6 +113,7 @@ const Utility = () => {
   return (
     <>
       <NavBar></NavBar>
+      
       <div className="flex flex-row justify-center items-center">
         <h1 className="text-center font-black text-5xl mb-2 mt-24">
           {amenityValue?.type}
@@ -140,11 +142,13 @@ const Utility = () => {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
+            {/* for future implementation 
             <li>
               <a className="justify-between">Edit</a>
-            </li>
+            </li>*/}
             <li>
-              <DeleteUtilityForm handleClick={handleDeleteUtility} />
+              
+              <DeleteUtilityForm handleClick={handleDeleteUtility}/>
             </li>
           </ul>
         </div>
@@ -211,6 +215,11 @@ const Utility = () => {
           </div>
         </div>
       </div>
+      <div className="card-actions justify-center">
+            <Link href="../" as={`../../${houseId}`}>
+              <a className="btn btn-primary btn-sm text-xs mt-2 rounded-lg normal-case shadow-md">Back to House</a>
+            </Link>
+          </div>
       <UtilityCalendar
         houseId={houseId}
         utilityId={utilityId}

@@ -14,7 +14,7 @@ function HouseholdCard(props: HouseHoldCardProps) {
 
   return (
     <React.Fragment key={props.id}>
-      <div className="card card-side card-compact xl:w-96 w-80 shadow-xl mb-2 bg-zinc-100 rounded-xl">
+      <div className="card card-side card-compact xl:w-96 w-80 max-w-7xl shadow-xl mb-2 bg-zinc-100 rounded-xl">
         <Image
           src={props.icon || "/houseDefault.jpg"}
           width={80}
@@ -24,10 +24,10 @@ function HouseholdCard(props: HouseHoldCardProps) {
         />
 
         <div className="card-body gap-0">
-          <h2 className="card-title leading-4" id="houseName">
+          <h2 className="font-semibold text-lg pb-1 leading-4 break-normal break-words w-48 xl:w-64" id="houseName">
             {props.name}
           </h2>
-          <p className = "text-xs break-normal break-words" id="houseDesc">{props.desc}</p>
+          <p className = "text-xs break-normal break-words w-48 xl:w-64" id="houseDesc">{props.desc}</p>
 
           <div className="card-actions justify-end">
             <Link href="household/[houseId]" as={`household/${props.id}`}>

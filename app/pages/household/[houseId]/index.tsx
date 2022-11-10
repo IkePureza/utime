@@ -61,11 +61,71 @@ const Household = () => {
   return (
     <>
       <NavBar></NavBar>
-      <h1 className="text-center font-semibold text-4xl mb-2 pt-24">
-        {" "}
-        {value?.data()?.name}
-      </h1>
-      <div className="flex xl:flex-row flex-col max-h-screen xl:px-5 pb-5 max-w-screen mx-auto">
+     
+      <div className="flex xl:flex-row flex-col items-center justify-center pt-20 pb-4 mb-2 shadow-sm max-w-full">
+            <Image
+              className="rounded-xl avatar shadow-md"
+              src={
+                household?.data()?.photoURL ||
+                "/houseDefault.jpg"
+              }
+              width={90}
+              height={90}
+              alt="household pic"
+            />
+            <div className = "flex flex-row pt-2">
+              <h1 className="pl-5 text-center font-semibold xl:text-4xl max-w-full text-3xl mb-5 break-normal break-words">
+                {household?.data()?.name}
+              </h1>
+              <div className="dropdown dropdown-left xl:dropdown-right mb-4">
+                <label
+                  tabIndex={0}
+                  id="householdMenu"
+                  className="btn btn-circle btn-ghost btn-xs"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                    />
+                  </svg>
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+                >
+                  {isOwner() && (
+                    <li>
+                      <label
+                        id="householdEditSettings"
+                        htmlFor={householdEditModalId}
+                      >
+                        Edit
+                      </label>
+                    </li>
+                  )}
+                  <li>
+                    <label
+                      id="householdDeleteSettings"
+                      htmlFor={DeleteHouseholdModalId}
+                      className="text-red-500"
+                    >
+                      Delete/Delegate/Leave
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      <div className="flex xl:flex-row flex-col xl:px-5 pb-5 max-w-screen mx-auto">
         
         <div className="xl:basis-3/4 order-2 xl:order-1">
           
@@ -109,7 +169,7 @@ const Household = () => {
           <input
             type="checkbox"
             id="new-utility-modal"
-            ref={createUtilityModalRef}
+            ref={createUtilityModalRef}//modalCHeckboxRef?
             className="modal-toggle"
           />
           <div className="modal">
@@ -128,75 +188,7 @@ const Household = () => {
             </div>
           </div>
         </div>
-        <div className="basis-1/2">
-          <div className="gap-x-5 flex items-end justify-center">
-            <Image
-              className="rounded-xl avatar"
-              src={
-                household?.data()?.photoURL ||
-                "https://placeimg.com/80/80/house"
-              }
-              width={90}
-              height={90}
-              alt="household pic"
-            />
-            <h1 className="text-center font-black text-3xl mb-5">
-              Household {household?.data()?.name}
-            </h1>
-            <div className="dropdown dropdown-right mb-5">
-              <label
-                tabIndex={0}
-                id="householdMenu"
-                className="btn btn-circle btn-ghost btn-xs"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                  />
-                </svg>
-              </label>
-              <ul
-                tabIndex={0}
-                className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-              >
-                {isOwner() && (
-                  <li>
-                    <label
-                      id="householdEditSettings"
-                      htmlFor={householdEditModalId}
-                    >
-                      Edit
-                    </label>
-                  </li>
-                )}
-                <li>
-                  <label
-                    id="householdDeleteSettings"
-                    htmlFor={DeleteHouseholdModalId}
-                    className="text-red-500"
-                  >
-                    Delete/Delegate/Leave
-                  </label>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
-        </div>
-        <div className="basis-1/4">
-          <h1 className="text-center font-black text-2xl mb-2">Users</h1>
-          <HouseholdMembers houseId={houseId} />
-          <InviteCard houseId={houseId} />
-        </div>
+
         <Alert />
       </div>
       {isOwner() && <HouseholdEditModal houseId={houseId} />}

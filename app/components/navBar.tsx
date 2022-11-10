@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { AuthContext } from "../context/AuthContext";
+import icon from '../public/defaultProfile.png'
+
 
 
 const NavBar = () => {
@@ -55,10 +57,10 @@ const NavBar = () => {
             </svg>
             <div className="w-11">
               <Image
-                className="rounded-full avatar"
+                className="rounded-full avatar object-cover"
                 src={
                   appContext?.userData?.userPhotoLink ||
-                  "https://placeimg.com/80/80/people"
+                  icon
                 }
                 height={80}
                 width={80}

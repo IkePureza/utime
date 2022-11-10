@@ -15,8 +15,8 @@ function UtilityCard(props: UtilityCardProps) {
           <p className="text-5xl my-auto mx-3">{props.data?.type}</p>
         </div>  
         <div className="card-body gap-0">
-          <h2 className="card-title leading-4">{props.data?.name}</h2>
-          <p className = "text-xs break-normal break-words">{props.data?.desc}</p>
+          <h2 className="font-semibold text-lg pb-1 leading-4 break-normal break-words w-48 xl:w-64">{props.data?.name}</h2>
+          <p className = "text-xs break-normal break-words w-48 xl:w-64">{props.data?.desc}</p>
           <div className="card-actions justify-end">
             <Link
               id="toUtilityButton"

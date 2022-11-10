@@ -80,8 +80,8 @@ export default function UserInviteCard(props: userInvitesProps) {
                   Invitation to {houseData.name}
                 </h3>
                 <p className="py-4">
-                  You`&apos;`ve been invited by {props.invitee} to join in a
-                  UTime Group together!
+                  You have been invited by {props.invitee} to join in a
+                  U-Time Group together!
                   <br></br>
                   This invitation expires on {props.expiryTime.toString()}
                 </p>
