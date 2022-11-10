@@ -5,12 +5,13 @@ import { useRouter } from "next/router";
 
 import {
   addDoc,
+  deleteDoc,
+  updateDoc,
   doc,
   collection,
   Timestamp,
   where,
   query,
-  updateDoc,
   increment,
 } from "firebase/firestore";
 import { db } from "../../../../../firebase/clientApp";
@@ -20,6 +21,7 @@ import {
 } from "react-firebase-hooks/firestore";
 import { DocumentData } from "@google-cloud/firestore";
 import NavBar from "../../../../../components/navBar";
+import DeleteUtilityForm from "../../../../../components/deleteUtilityForm";
 import UtilityBookingForm from "../../../../../components/utilityBookingForm";
 import UtilityCalendar from "../../../../../components/utilityCalendar";
 
@@ -95,6 +97,18 @@ const Utility = () => {
     }
   };
 
+  const Router = useRouter();
+
+  const handleDeleteUtility = async (event: any) => {
+    event.preventDefault();
+    //Router.push("/");
+    Router.push({
+      pathname: '/household/[houseId]',
+      query: { houseId },
+    })
+    await deleteDoc(amenityRef);
+  };
+
   return (
     <>
       <NavBar></NavBar>
@@ -130,10 +144,7 @@ const Utility = () => {
               <a className="justify-between">Edit</a>
             </li>
             <li>
-              <a className="text-red-500">
-                Delete
-                <span className="badge badge-error">!</span>
-              </a>
+              <DeleteUtilityForm handleClick={handleDeleteUtility} />
             </li>
           </ul>
         </div>
