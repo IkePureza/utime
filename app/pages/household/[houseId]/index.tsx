@@ -165,7 +165,6 @@ const Household = () => {
             >
               + Add a new Utility
             </label>
-          </div>
           <input
             type="checkbox"
             id="new-utility-modal"
@@ -187,6 +186,8 @@ const Household = () => {
               <NewUtilityForm handleSubmit={handleCreateAmenity} />
             </div>
           </div>
+          </div>
+
         </div>
 
         <Alert />
