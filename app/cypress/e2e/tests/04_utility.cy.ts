@@ -7,7 +7,7 @@ describe("Household utilites", () => {
     cy.get(".min-w-full > .btn").click();
     cy.wait(1000);
     cy.get(".card-actions > .btn").click();
-    cy.contains("Household testHouse");
+    cy.contains("testHouse");
   });
   after(() => {
     cy.logout();

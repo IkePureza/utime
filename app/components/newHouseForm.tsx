@@ -18,6 +18,7 @@ function NewHouseForm(props: NewHouseFormProps) {
           type="text"
           placeholder="House Name"
           className="input input-bordered"
+          maxLength={20}
           required
         />
       </div>
@@ -25,7 +26,7 @@ function NewHouseForm(props: NewHouseFormProps) {
       <div className="form-control">
         <label className="label">
           <span className="label-text">Description (Optional)</span>
-          <span className="label-text-alt">Maximum 50 words</span>
+          <span className="label-text-alt">Maximum 50 characters</span>
         </label>
         <textarea
           id="houseDesc"
@@ -44,3 +45,5 @@ function NewHouseForm(props: NewHouseFormProps) {
 }
 
 export default NewHouseForm;
+
+//description not working. Does it save correctly to the DB?

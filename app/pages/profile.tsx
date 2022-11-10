@@ -21,6 +21,8 @@ import {
 import { useAuthState, useUpdateProfile } from "react-firebase-hooks/auth";
 
 import { v4 } from "uuid";
+import icon from '../public/defaultProfile.png'
+
 
 function Profile() {
   const router = useRouter();
@@ -95,8 +97,8 @@ function Profile() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full place-content-center px-5 py-5 gap-x-20 mx-auto">
-        <div className="mt-4 flex flex-col">
+      <div className="flex flex-col xl:flex-row min-w-full place-content-center content-center px-5 py-5 gap-x-20 mx-auto pt-24">
+        <div className="mt-4 flex xl:flex-col flex-row">
           <label htmlFor="imageUploadModal" className="modal-button">
             <div className="relative border-2 rounded-xl">
               {userError && <strong>Error: {JSON.stringify(userError)}</strong>}
@@ -108,8 +110,9 @@ function Profile() {
                   <span className="btn loading btn-ghost place-item-center"></span>
                 ) : (
                   <Image
-                    className="rounded-xl avatar"
-                    src={user?.photoURL || "https://placeimg.com/80/80/people"}
+                    className="rounded-xl avatar object-cover"
+                    src={user?.photoURL || icon}
+                    object-fit= "contain"
                     height={200}
                     width={200}
                     alt="profile pic"
@@ -129,14 +132,14 @@ function Profile() {
               </div>
             </div>
           </label>
-          <div className="mt-5 flex flex-col">
+          <div className="mt-5 flex flex-col mx-auto">
             {userError && <strong>Error: {JSON.stringify(userError)}</strong>}
             {userLoading}
             {user &&
               (updating ? (
                 <span className="btn loading btn-ghost place-item-center"></span>
               ) : (
-                <h3 className="text-4xl font-bold" id="profileUsername">
+                <h3 className="text-4xl font-bold break-words w-48" id="profileUsername">
                   {user.displayName}
                 </h3>
               ))}
@@ -154,7 +157,7 @@ function Profile() {
             <br />
             <div className="grid grid-cols-2 gap-x-5">
               <h3 className="font-bold">Email Address:</h3>
-              <p id="profileEmail">{user?.email}</p>
+              <p className="break-words" id="profileEmail">{user?.email}</p>
               <h3 className="font-bold">Authentication Method:</h3>
               <p id="profileAuth">
                 {userData?.userProviderId === "password" ? "Email" : "Google"}
@@ -182,6 +185,8 @@ function Profile() {
               id="newUsername"
               placeholder={user?.displayName || "Enter your display name here!"}
               className="input input-bordered w-full max-w-xs"
+              maxLength={20}
+
             />
             <div className="modal-action">
               <label

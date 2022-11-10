@@ -29,28 +29,29 @@ export default function UserInviteCard(props: userInvitesProps) {
 
   return (
     <React.Fragment key={props.inviteId}>
-      <div className="card card-side card-compact w-64 h-fit bg-base-100 shadow-xl mb-2 place-self-center">
+      {/*<div className="card card-side card-compact w-64 h-fit bg-base-100 shadow-xl mb-2 place-self-center">*/}
+      <div className="card card-side card-compact xl:w-96 w-80 rounded-xl bg-zinc-100 shadow-xl mb-2">
         <Image
           src={icon}
-          width={50}
-          height={50}
+          width={80}
+          height={100}
           alt="Shoes"
-          className="rounded-r-xl"
+          className="rounded-r-xl object-cover shadow-md"
         />
         {error && <strong>Error: {JSON.stringify(error)}</strong>}
         {loading && <span className="btn btn-ghost loading"></span>}
         {houseData && (
           <React.Fragment>
-            <div className="card-body">
+            <div className="card-body gap-0">
               <label
                 htmlFor={`modal-${props.inviteId}`}
-                className="card-title btn btn-ghost modal-button"
+                className="card-title text-left btn-ghost normal-case rounded-xl px-2 hover:cursor-pointer"
               >
                 {houseData.name}
               </label>
-              <div className="card-actions justify-end">
+              <div className="card-actions justify-end mt-2">
                 <button
-                  className="btn btn-primary btn-xs"
+                  className="btn btn-accent btn-xs"
                   onClick={props.acceptHandler}
                   data-arg1={props.inviteId}
                   data-arg2={props.houseId}
@@ -79,8 +80,8 @@ export default function UserInviteCard(props: userInvitesProps) {
                   Invitation to {houseData.name}
                 </h3>
                 <p className="py-4">
-                  You`&apos;`ve been invited by {props.invitee} to join in a
-                  UTime Group together!
+                  You have been invited by {props.invitee} to join in a
+                  U-Time Group together!
                   <br></br>
                   This invitation expires on {props.expiryTime.toString()}
                 </p>
@@ -89,7 +90,7 @@ export default function UserInviteCard(props: userInvitesProps) {
                     htmlFor={`modal-${props.inviteId}`}
                     className="btn h-fit w-fit"
                   >
-                    Yay!
+                    OK!
                   </label>
                 </div>
               </div>

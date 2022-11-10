@@ -38,6 +38,7 @@ function NewUtilityForm(props: NewUtilityFormProps) {
           type="input w-full max-w-xs"
           placeholder="Utility Name"
           className="input input-bordered error-"
+          maxLength={30}
           required
         />
       </div>
@@ -45,7 +46,7 @@ function NewUtilityForm(props: NewUtilityFormProps) {
       <div className="form-control">
         <label className="label">
           <span className="label-text">Description (Optional)</span>
-          <span className="label-text-alt">Maximum 50 words</span>
+          <span className="label-text-alt">Maximum 50 characters</span>
         </label>
         <textarea
           id="utilityDesc"

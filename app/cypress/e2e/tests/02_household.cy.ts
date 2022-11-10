@@ -20,7 +20,7 @@ describe("User Household Tests", () => {
     before(() => {
       cy.visit("/");
       cy.get(".card-actions > .btn").click();
-      cy.contains("Household testHouse");
+      cy.contains("testHouse");
     });
 
     it("User can send an invite to a user", () => {
@@ -48,7 +48,7 @@ describe("User Household Tests", () => {
       cy.wait(1000);
       cy.get(".loading").should("not.exist");
       cy.get(".card-actions > .btn").click();
-      cy.contains("Household testHouse");
+      cy.contains("testHouse");
       cy.wait(1000);
       cy.get(".loading").should("not.exist");
     });
@@ -60,7 +60,7 @@ describe("User Household Tests", () => {
       cy.get("#newHouseDesc").type("New House Desc");
       cy.get("#submitEditHouse").click();
       cy.wait(1000);
-      cy.contains("Household New House Name");
+      cy.contains("New House Name");
     });
 
     it("can delete household", () => {

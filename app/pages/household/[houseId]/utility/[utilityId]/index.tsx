@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 
 import { AuthContext } from "../../../../../context/AuthContext";
 import { useRouter } from "next/router";
+import Link from "next/link"
 
 import {
   addDoc,
@@ -112,14 +113,15 @@ const Utility = () => {
   return (
     <>
       <NavBar></NavBar>
+      
       <div className="flex flex-row justify-center items-center">
-        <h1 className="text-center font-black text-8xl mb-2">
+        <h1 className="text-center font-black text-5xl mb-2 mt-24">
           {amenityValue?.type}
         </h1>
-        <h1 className="text-center font-black text-2xl mb-2 mr-1">
+        <h1 className="text-center font-semibold text-2xl mb-2 mr-1 ml-3 mt-24">
           {amenityValue?.name}
         </h1>
-        <div className="dropdown dropdown-right">
+        <div className="dropdown md:dropdown-right dropdown-left mt-24">
           <label tabIndex={0} className="btn btn-circle btn-ghost btn-xs">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -140,26 +142,26 @@ const Utility = () => {
             tabIndex={0}
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
+            {/* for future implementation 
             <li>
               <a className="justify-between">Edit</a>
-            </li>
+            </li>*/}
             <li>
-              <DeleteUtilityForm handleClick={handleDeleteUtility} />
+              
+              <DeleteUtilityForm handleClick={handleDeleteUtility}/>
             </li>
           </ul>
         </div>
       </div>
       <div className="flex flex-col justify-center items-center ">
-        <h2 className="text-lg text-center font-semibold text-bo">
-          Description
-        </h2>
+        
         <p className="text-center mb-8">
           {amenityValue?.desc ?? "No Description"}
         </p>
         <label
           id="newBookingButton"
           htmlFor="new-booking-modal"
-          className="btn btn-wide btn-primary modal-button mb-4"
+          className="btn btn-wide btn-accent modal-button mb-4 shadow-md"
         >
           Book
         </label>
@@ -213,6 +215,11 @@ const Utility = () => {
           </div>
         </div>
       </div>
+      <div className="card-actions justify-center">
+            <Link href="../" as={`../../${houseId}`}>
+              <a className="btn btn-primary btn-sm text-xs mt-2 rounded-lg normal-case shadow-md">Back to House</a>
+            </Link>
+          </div>
       <UtilityCalendar
         houseId={houseId}
         utilityId={utilityId}

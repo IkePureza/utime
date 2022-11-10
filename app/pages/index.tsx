@@ -11,6 +11,7 @@ import Alert from "../components/alert";
 
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
+import NewHouseCard from "../components/newhouseCard";
 import NewHouseForm from "../components/newHouseForm";
 import RecentActivityAgenda from "../components/recentActivityAgenda";
 import UserInvites from "../components/userInvites/userInvites";
@@ -61,19 +62,12 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="relative flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
-        <div className="basis-1/3">
-          <h1 className="text-4xl text-center font-black mb-10">
-            Recent Activity
-          </h1>
-          <RecentActivityAgenda
-            userHouseholds={userHouseholds}
-          ></RecentActivityAgenda>
-        </div>
-        <div className="basis-1/3 mx-auto flex flex-col items-center max-h-max">
-          <h1 className="text-4xl text-center font-black mb-10">Your Homes</h1>
+      <div className="flex xl:flex-row flex-col max-h-screen px-5 pt-24 pb-10 max-w-screen mx-auto">
+        
+        <div className="xl:order-2 xl:basis-1/3 mx-auto flex flex-col items-center">
+          <h1 className="text-4xl text-center mb-8 font-semibold">Your Homes</h1>
           <div
-            className="overflow-auto container shadow-md rounded-md"
+            className="overflow-auto container h-3/5 rounded-md"
             id="houseHolds"
           >
             <p>
@@ -96,26 +90,37 @@ function Index() {
                   ))}
                 </div>
               ) : (
-                <p className="text-center text-2xl font-bold text-teal-500">
+                <p className="text-center xl:text-2xl font-bold text-teal-500 break-normal break-words">
                   Add a House by clicking the button below!
                   <br />
                 </p>
               )}
             </p>
           </div>
+          
           <label
             htmlFor="new-house-modal"
-            className="btn btn-wide modal-button mt-10 mb-20"
+            //className="btn btn-wide modal-button mt-10 mb-20"
             id="createHousehold"
+            className="btn btn-wide btn-primary modal-button mt-10 normal-case text-base shadow-lg"
           >
-            + Add a new Household
-          </label>
-          {/* <HouseholdCard icon="/plus.png" desc="Add a new household" id="" name="New House"/> */}
+            New House
+                  </label>{/*
+              <label htmlFor="new-house-modal"><NewHouseCard id="" name="" /></label>*/}
         </div>
-        <div className="basis-1/3 flex-col" id="userInvites">
+        <div className="xl:order-3 xl:basis-1/3 flex-col justify-around items-center" id="userInvites">
           <UserInvites />
         </div>
         <Alert />
+        
+        <div className="xl:order-1 xl:basis-1/3 mt-10">
+          <h1 className="text-2xl px-10 font-semibold">
+            Recent Activity
+          </h1>
+          <RecentActivityAgenda
+            userHouseholds={userHouseholds}
+          ></RecentActivityAgenda>
+        </div>
       </div>
 
       <input
@@ -142,3 +147,4 @@ function Index() {
 }
 
 export default Index;
+

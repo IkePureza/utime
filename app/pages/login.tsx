@@ -4,6 +4,8 @@ import { AuthContext } from "../context/AuthContext";
 import { useRouter } from "next/router";
 import EmailPasswordAuthLogin from "../components/emailPasswordAuthLogin";
 import GoogleSignIn from "../components/googleSignIn";
+import Image from 'next/image'
+import logo from '../public/logo.png'
 
 const Login = () => {
   const authContext = useContext(AuthContext);
@@ -15,11 +17,12 @@ const Login = () => {
     return <></>;
   } else {
     return (
-      <div className="grid place-content-center px-10 py-10 shadow-lg w-max mx-auto mt-6">
-        <h1 className="text-center font-black text-3xl mb-2">Login</h1>
-        <div className="flex flex-col gap-y-3">
+      <div className="flex-col content-center justify-center px-10 py-5 shadow-lg w-96 mx-auto mt-6 mb-4">
+        <Image src={logo} alt="..." className="justify-center px-7"/>
+        <h1 className="text-center text-3xl font-normal mb-2">Login</h1>
+        <div className="flex flex-col gap-y-1">
           <EmailPasswordAuthLogin />
-          <div className="divider">OR</div>
+          <div className="divider text-sm mb-0">OR</div>
           <GoogleSignIn />
         </div>
       </div>

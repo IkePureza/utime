@@ -75,6 +75,7 @@ const HouseholdCalendar = (props: HouseholdCalendarProps) => {
       )}
       {bookingsValue && amenityValue && (
         <BigCalendar
+          className = "overflow-auto container h-[75vh] mb-5 shadow-md rounded-md"
           localizer={localizer}
           events={events}
           defaultView={Views.DAY}

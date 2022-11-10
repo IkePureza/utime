@@ -21,7 +21,7 @@ const UserStats = (props: UserStatsProps) => {
   );
 
   return (
-    <div className="stats shadow">
+    <div className="stats stats-vertical xl:stats-horizontal shadow">
       <div className="stat">
         <div className="stat-figure text-primary">
           <svg
