@@ -4,15 +4,18 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase/clientApp";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { AuthContext } from "../context/AuthContext";
 
 const NavBar = () => {
   const appContext = useContext(AuthContext);
+  const router = useRouter();
 
-  const signOutHandler = async () => {
-    await signOut(auth);
-    document.location.reload();
+  const signOutHandler = () => {
+    signOut(auth).then(() => {
+      router.push("/login");
+    });
   };
 
   return (
@@ -66,9 +69,7 @@ const NavBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/login">
-                <a onClick={signOutHandler}>Logout</a>
-              </Link>
+              <a onClick={signOutHandler}>Logout</a>
             </li>
           </ul>
         </div>
