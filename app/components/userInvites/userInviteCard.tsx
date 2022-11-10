@@ -29,7 +29,7 @@ export default function UserInviteCard(props: userInvitesProps) {
 
   return (
     <React.Fragment key={props.inviteId}>
-      <div className="card card-side card-compact w-64 h-fit bg-base-100 shadow-xl mb-2">
+      <div className="card card-side card-compact w-64 h-fit bg-base-100 shadow-xl mb-2 place-self-center">
         <Image
           src={icon}
           width={50}

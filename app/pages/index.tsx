@@ -8,6 +8,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import AuthRoute from "../HOC/authRoute";
 
 import { AuthContext } from "../context/AuthContext";
+import Alert from "../components/alert";
 
 import NavBar from "../components/navBar";
 import HouseholdCard from "../components/householdCard";
@@ -31,6 +32,7 @@ function Index() {
   const modalCheckboxRef = useRef<HTMLInputElement>(null);
 
   const Router = useRouter();
+  const { message } = Router.query;
 
   const handleCreateHousehold = async (event: any) => {
     event.preventDefault();
@@ -41,6 +43,7 @@ function Index() {
       name: houseName.value,
       desc: houseDesc.value,
       users: [userData?.userId], //need to change this bit to match the form inputs
+      owner: userData?.userId,
     });
 
     if (modalCheckboxRef.current !== null) {
@@ -62,7 +65,7 @@ function Index() {
   return (
     <AuthRoute>
       <NavBar></NavBar>
-      <div className="flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
+      <div className="relative flex flex-row max-h-screen min-w-full px-5 py-5 w-max mx-auto">
         <div className="basis-1/3">
           <h1 className="text-4xl text-center font-black mb-10">
             Recent Activity
@@ -92,6 +95,7 @@ function Index() {
                       id={doc.id}
                       key={doc.id}
                       name={doc.data().name}
+                      icon={doc.data().photoURL}
                     />
                   ))}
                 </div>
@@ -115,6 +119,7 @@ function Index() {
         <div className="basis-1/3 flex-col" id="userInvites">
           <UserInvites />
         </div>
+        <Alert />
       </div>
 
       <input

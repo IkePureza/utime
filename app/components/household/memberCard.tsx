@@ -8,6 +8,7 @@ import { doc } from "firebase/firestore";
 
 interface Props {
   userId: string;
+  isOwner: boolean;
 }
 
 export default function MemberCard(props: Props) {
@@ -34,7 +35,7 @@ export default function MemberCard(props: Props) {
             <h2 className="card-title">
               {userData.data.displayName || userData.data.email}
             </h2>
-            <p>Member</p>
+            <p>{props.isOwner ? "Owner" : "Member"}</p>
           </div>
         </>
       )}

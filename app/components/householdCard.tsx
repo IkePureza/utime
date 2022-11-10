@@ -10,15 +10,13 @@ interface HouseHoldCardProps {
 }
 
 function HouseholdCard(props: HouseHoldCardProps) {
-  const icon = props.icon || "https://placeimg.com/148/148/arch";
-
   console.log("desc: ", props.desc, ".");
 
   return (
     <React.Fragment key={props.id}>
       <div className="card card-side card-compact w-96 bg-base-100 shadow-xl mb-2">
         <Image
-          src={icon}
+          src={props.icon || "https://placeimg.com/148/148/arch"}
           width={148}
           height={148}
           alt="Shoes"

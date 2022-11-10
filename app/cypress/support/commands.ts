@@ -62,7 +62,7 @@ Cypress.Commands.add("login", () => {
 Cypress.Commands.add("logout", () => {
   cy.wait(1000);
   cy.get(".loading").should("not.exist");
-  cy.get("svg[id=hamburger]").click();
+  cy.get("#hamburger").click();
   cy.contains("Logout").should("be.visible").click();
   cy.location("href").should("include", "/login");
 });
