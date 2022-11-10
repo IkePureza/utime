@@ -25,47 +25,48 @@ const EmailPasswordAuthLogin = () => {
     <div className="">
       <form
         onSubmit={loginHandler}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-md rounded px-8 pt-3 pb-4"
       >
-        <div className="form-control w-full max-w-md mb-4">
+        <div className="form-control w-full max-w-md">
           <label
-            className="label text-gray-700 text-sm font-bold mb-2"
+            className="label text-gray-700 text-base font-semibold"
             htmlFor="email"
           >
             Email
           </label>
           <input
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full text-xs rounded-lg h-8"
             name="email"
             id="email-login"
             type="email"
             placeholder="email"
           />
         </div>
-        <div className="form-control w-full max-w-md mb-6">
+        <div className="form-control w-full max-w-md mb-4">
           <label
-            className="label text-gray-700 text-sm font-bold mb-2"
+            className="label text-gray-700 text-base font-semibold"
             htmlFor="password"
+            
           >
             Password
           </label>
           <input
-            className="input input-bordered max-w-xs shadow appearance-none w-full"
+            className="input input-bordered shadow appearance-none w-full text-xs rounded-lg h-8"
             name="password"
             id="password-login"
             type="password"
-            placeholder="******************"
+            placeholder="*************"
           />
         </div>
         <button
-          className="btn btn-primary btn-wide transition-all duration-500 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="btn btn-primary transition-all duration-500 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full mb-1 text-sm"
           type="submit"
         >
           Sign In
         </button>
         <br />
         <Link href="/signUp">
-          <a className="link link-primary link-hover transition-all duration-500">
+          <a className="link link-primary link-hover transition-all duration-500 text-sm">
             Sign up?
           </a>
         </Link>

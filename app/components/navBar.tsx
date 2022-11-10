@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 import { AuthContext } from "../context/AuthContext";
 
+
 const NavBar = () => {
   const appContext = useContext(AuthContext);
   const router = useRouter();
@@ -19,16 +20,25 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100">
-      <div className="flex-1">
+    <div className="navbar bg-base-100 shadow h-max absolute">
+      <div className="flex-1 ">
+      <Image
+          src={"/logo.png"}
+          width={50}
+          height={50}
+          alt="Shoes"
+          className="rounded-r-xl object-cover shadow-md"
+        />
         <Link href="/">
-          <a className="btn btn-ghost normal-case text-xl">UTime</a>
+          
+          <a className="btn btn-ghost normal-case text-3xl px-2 h-max rounded-2xl">U-Time</a>
         </Link>
       </div>
       <div className="flex flex-row gap-2">
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost">
-            <svg
+          <label tabIndex={0} className="btn btn-ghost h-max rounded-2xl w-max">
+            
+          <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -43,7 +53,7 @@ const NavBar = () => {
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
               />
             </svg>
-            <div className="w-10">
+            <div className="w-11">
               <Image
                 className="rounded-full avatar"
                 src={
@@ -58,11 +68,11 @@ const NavBar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-48"
           >
             <li>
               <Link href="/profile">
-                <a className="justify-between">
+                <a className="justify-between text-base">
                   Profile
                   <span className="badge">New</span>
                 </a>
