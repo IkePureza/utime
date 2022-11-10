@@ -12,9 +12,10 @@ const NavBar = () => {
   const appContext = useContext(AuthContext);
   const router = useRouter();
 
-  const signOutHandler = async () => {
-    await signOut(auth);
-    router.push("/login");
+  const signOutHandler = () => {
+    signOut(auth).then(() => {
+      router.push("/login");
+    });
   };
 
   return (
@@ -68,9 +69,7 @@ const NavBar = () => {
               </Link>
             </li>
             <li>
-              <Link href="/loading">
-                <a onClick={signOutHandler}>Logout</a>
-              </Link>
+              <a onClick={signOutHandler}>Logout</a>
             </li>
           </ul>
         </div>

@@ -1,8 +1,10 @@
 import React, { useContext, useRef } from "react";
 
 import { AuthContext } from "../../../context/AuthContext";
+import AlertContext from "../../../context/alertProvider";
 
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { addDoc, doc, collection } from "firebase/firestore";
 import { db } from "../../../firebase/clientApp";
@@ -17,6 +19,10 @@ import Alert from "../../../components/alert";
 import DeleteHouseholdModal, {
   DeleteHouseholdModalId,
 } from "../../../components/deleteHouseholdModal";
+
+import HouseholdEditModal, {
+  householdEditModalId,
+} from "../../../components/modals/householdEditModal";
 
 const Household = () => {
   const router = useRouter();
@@ -107,10 +113,21 @@ const Household = () => {
           </div>
         </div>
         <div className="basis-1/2">
-          <h1 className="text-center font-black text-3xl mb-2">
-            {" "}
-            Household {household?.data()?.name}
-            <div className="dropdown dropdown-right">
+          <div className="gap-x-5 flex items-end justify-center">
+            <Image
+              className="rounded-xl avatar"
+              src={
+                household?.data()?.photoURL ||
+                "https://placeimg.com/80/80/house"
+              }
+              width={90}
+              height={90}
+              alt="household pic"
+            />
+            <h1 className="text-center font-black text-3xl mb-5">
+              Household {household?.data()?.name}
+            </h1>
+            <div className="dropdown dropdown-right mb-5">
               <label
                 tabIndex={0}
                 id="householdMenu"
@@ -135,25 +152,28 @@ const Household = () => {
                 tabIndex={0}
                 className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
               >
-                <li>
-                  <a className="justify-between">Edit</a>
-                </li>
+                {isOwner() && (
+                  <li>
+                    <label
+                      id="householdEditSettings"
+                      htmlFor={householdEditModalId}
+                    >
+                      Edit
+                    </label>
+                  </li>
+                )}
                 <li>
                   <label
                     id="householdDeleteSettings"
                     htmlFor={DeleteHouseholdModalId}
                     className="text-red-500"
                   >
-                    Delete/Delegate
+                    Delete/Delegate/Leave
                   </label>
-                  {/*
-                  <label htmlFor="leave-house-modal" className="text-red-500">
-                    Leave
-                    </label>*/}
                 </li>
               </ul>
             </div>
-          </h1>
+          </div>
           <HouseholdCalendar houseId={houseId}></HouseholdCalendar>
         </div>
         <div className="basis-1/4">
@@ -163,6 +183,7 @@ const Household = () => {
         </div>
         <Alert />
       </div>
+      {isOwner() && <HouseholdEditModal houseId={houseId} />}
     </>
   );
 };

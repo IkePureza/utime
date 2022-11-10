@@ -33,7 +33,6 @@ const EmailPasswordAuthSignUp = () => {
                 });
               }
             }
-            Router.push("/loading");
             await waitUserDoc();
             Router.push("/");
           })

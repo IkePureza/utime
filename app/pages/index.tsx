@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
 
 import { db } from "../firebase/clientApp";
 import { collection, addDoc, query, where } from "firebase/firestore";
@@ -92,6 +91,7 @@ function Index() {
                       id={doc.id}
                       key={doc.id}
                       name={doc.data().name}
+                      icon={doc.data().photoURL}
                     />
                   ))}
                 </div>
