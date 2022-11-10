@@ -101,7 +101,11 @@ const Utility = () => {
 
   const handleDeleteUtility = async (event: any) => {
     event.preventDefault();
-    Router.push("/");
+    //Router.push("/");
+    Router.push({
+      pathname: '/household/[houseId]',
+      query: { houseId },
+    })
     await deleteDoc(amenityRef);
   };
 
