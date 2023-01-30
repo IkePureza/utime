@@ -2,6 +2,9 @@
 
 Welcome to COMP30022 Moist-Blast team Capstone project repository. Utime is a CRUD app that aims to make utility sharing between housemates easier.
 
+## Overview
+![alt text](https://github.com/IkePureza/shitimes/blob/main/docs/images/storage/confluence_overview_ss.png?raw=true)
+
 ## Technology
 
 - Nextjs
